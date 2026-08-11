@@ -12,7 +12,8 @@
 <script>
 (async function(){
   try {
-    const ids = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16];
+    const ids = [];
+    for (let i = 1; i <= 32; i++) ids.push(i);
     const parts = await Promise.all(ids.map(i =>
       fetch('./parts/p'+i+'.txt', {cache:'no-store'}).then(r => {
         if(!r.ok) throw new Error('part '+i+' '+r.status);
