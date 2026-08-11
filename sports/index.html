@@ -35,7 +35,8 @@
     throw new Error('DecompressionStream not supported in this browser');
   }
   try {
-    const ids = [1,2,3,4,5];
+    const ids = [];
+    for (let i = 1; i <= 10; i++) ids.push(i);
     const chunks = await Promise.all(ids.map(i =>
       fetch('./parts/g' + i + '.txt', { cache: 'no-store' }).then(r => {
         if (!r.ok) throw new Error('chunk g' + i + ' ' + r.status);
