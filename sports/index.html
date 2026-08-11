@@ -4,18 +4,24 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Sports Operations Center (SOC) · Get Outside Mid-Atlantic</title>
-<style>body{margin:0;background:#0b1220;color:#e8eef7;font-family:system-ui,sans-serif}
-#boot{padding:2rem;text-align:center;line-height:1.5}</style>
+<style>
+body{margin:0;background:#0b1220;color:#e8eef7;font-family:system-ui,sans-serif}
+#boot{padding:2.5rem;text-align:center;line-height:1.6;max-width:36rem;margin:0 auto}
+a{color:#7dd3fc}
+code{background:#1e293b;padding:.15rem .4rem;border-radius:4px;font-size:.9em}
+</style>
 </head>
 <body>
 <div id="boot">Loading Sports Operations Center…</div>
 <script>
 (async function () {
   const boot = document.getElementById('boot');
-  function fail(e) {
-    boot.innerHTML = '<p>SOC failed to load.</p><p style="opacity:.7">' +
-      (e && e.message ? e.message : e) + '</p><p><a style="color:#7dd3fc" href="/">Home</a></p>';
-    console.error(e);
+  function fail(msg) {
+    boot.innerHTML = '<p style="font-size:1.15rem;font-weight:600">SOC map not fully deployed yet</p>' +
+      '<p style="opacity:.8;margin:1rem 0">' + (msg || '') + '</p>' +
+      '<p style="opacity:.7;font-size:.9rem">Netlify is still serving the previous build. Switch Continuous Deployment to <code>getoutsidemidatlantic/getoutside</code> (branch <code>main</code>), then hard-refresh.</p>' +
+      '<p style="margin-top:1.5rem"><a href="/">← Home</a></p>';
+    console.error(msg);
   }
   function paint(html) {
     document.open();
@@ -26,39 +32,26 @@
     const bin = atob(b64);
     const bytes = new Uint8Array(bin.length);
     for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
-    if (typeof DecompressionStream !== 'undefined') {
-      const ds = new DecompressionStream('gzip');
-      const stream = new Blob([bytes]).stream().pipeThrough(ds);
-      const ab = await new Response(stream).arrayBuffer();
-      return new TextDecoder().decode(ab);
-    }
-    throw new Error('DecompressionStream not supported in this browser');
+    if (typeof DecompressionStream === 'undefined') throw new Error('Browser missing DecompressionStream');
+    const ds = new DecompressionStream('gzip');
+    const stream = new Blob([bytes]).stream().pipeThrough(ds);
+    const ab = await new Response(stream).arrayBuffer();
+    return new TextDecoder().decode(ab);
   }
   try {
-    const ids = [];
-    for (let i = 1; i <= 10; i++) ids.push(i);
+    const ids = [1,2,3,4,5,6,7,8,9,10];
     const chunks = await Promise.all(ids.map(i =>
       fetch('./parts/g' + i + '.txt', { cache: 'no-store' }).then(r => {
-        if (!r.ok) throw new Error('chunk g' + i + ' ' + r.status);
+        if (!r.ok) throw new Error('Missing chunk g' + i + ' (HTTP ' + r.status + ')');
         return r.text();
       })
     ));
     const b64 = chunks.join('').trim();
     const html = await gunzipBase64(b64);
-    if (html.indexOf('<!DOCTYPE') === -1) throw new Error('decoded payload is not HTML');
+    if (html.indexOf('<!DOCTYPE') === -1) throw new Error('Decoded payload is not HTML');
     paint(html);
   } catch (e) {
-    try {
-      boot.textContent = 'Loading map from backup source…';
-      const r = await fetch(
-        'https://raw.githubusercontent.com/getoutsidemidatl/getoutside/main/sports/index.html',
-        { cache: 'no-store' }
-      );
-      if (!r.ok) throw new Error('backup HTTP ' + r.status);
-      paint(await r.text());
-    } catch (e2) {
-      fail(e2);
-    }
+    fail(e && e.message ? e.message : String(e));
   }
 })();
 </script>
