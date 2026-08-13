@@ -26,26 +26,12 @@ a{color:#7dd3fc}
       (document.head||document.documentElement).appendChild(link);
     } catch(e){}
   }
-  async function gunzipBase64(b64) {
-    const bin = atob(b64);
-    const bytes = new Uint8Array(bin.length);
-    for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
-    const ds = new DecompressionStream('gzip');
-    const stream = new Blob([bytes]).stream().pipeThrough(ds);
-    return new TextDecoder().decode(await new Response(stream).arrayBuffer());
-  }
   try {
-    const n = 40;
-    const ids = Array.from({length:n}, (_,i)=>i+1);
-    const chunks = await Promise.all(ids.map(i => {
-      const id = String(i).padStart(2,'0');
-      return fetch('./parts/t'+id+'.txt',{cache:'no-store'}).then(r => {
-        if (!r.ok) throw new Error('Missing t'+id+' ('+r.status+')');
-        return r.text();
-      });
-    }));
-    const html = await gunzipBase64(chunks.join('').trim());
-    if (html.indexOf('<!DOCTYPE') === -1) throw new Error('Decoded payload is not HTML');
+    const r = await fetch('./map.html', { cache: 'no-store' });
+    if (!r.ok) throw new Error('map.html HTTP ' + r.status);
+    const html = await r.text();
+    if (html.indexOf('<!DOCTYPE') === -1 && html.indexOf('<html') === -1)
+      throw new Error('map.html is not HTML');
     paint(html);
   } catch (e) {
     fail(e && e.message ? e.message : String(e));
