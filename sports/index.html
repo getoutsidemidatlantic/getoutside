@@ -17,9 +17,8 @@ code{background:#1e293b;padding:.15rem .4rem;border-radius:4px;font-size:.9em}
 (async function () {
   const boot = document.getElementById('boot');
   function fail(msg) {
-    boot.innerHTML = '<p style="font-size:1.15rem;font-weight:600">Ops Center map not fully deployed yet</p>' +
+    boot.innerHTML = '<p style="font-size:1.15rem;font-weight:600">Ops Center failed to load</p>' +
       '<p style="opacity:.8;margin:1rem 0">' + (msg || '') + '</p>' +
-      '<p style="opacity:.7;font-size:.9rem">Netlify is still serving the previous build. Switch Continuous Deployment to <code>getoutsidemidatlantic/getoutside</code> (branch <code>main</code>), then hard-refresh.</p>' +
       '<p style="margin-top:1.5rem"><a href="/">← Home</a></p>';
     console.error(msg);
   }
@@ -34,27 +33,12 @@ code{background:#1e293b;padding:.15rem .4rem;border-radius:4px;font-size:.9em}
       (document.head || document.documentElement).appendChild(link);
     } catch (e) { console.warn('ops-layers.css inject failed', e); }
   }
-  async function gunzipBase64(b64) {
-    const bin = atob(b64);
-    const bytes = new Uint8Array(bin.length);
-    for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
-    if (typeof DecompressionStream === 'undefined') throw new Error('Browser missing DecompressionStream');
-    const ds = new DecompressionStream('gzip');
-    const stream = new Blob([bytes]).stream().pipeThrough(ds);
-    const ab = await new Response(stream).arrayBuffer();
-    return new TextDecoder().decode(ab);
-  }
   try {
-    const ids = [1,2,3,4,5,6,7,8,9,10];
-    const chunks = await Promise.all(ids.map(i =>
-      fetch('./parts/g' + i + '.txt', { cache: 'no-store' }).then(r => {
-        if (!r.ok) throw new Error('Missing chunk g' + i + ' (HTTP ' + r.status + ')');
-        return r.text();
-      })
-    ));
-    const b64 = chunks.join('').trim();
-    const html = await gunzipBase64(b64);
-    if (html.indexOf('<!DOCTYPE') === -1) throw new Error('Decoded payload is not HTML');
+    const r = await fetch('./map.html', { cache: 'no-store' });
+    if (!r.ok) throw new Error('map.html HTTP ' + r.status);
+    const html = await r.text();
+    if (html.indexOf('<!DOCTYPE') === -1 && html.indexOf('<html') === -1)
+      throw new Error('map.html is not HTML');
     paint(html);
   } catch (e) {
     fail(e && e.message ? e.message : String(e));
