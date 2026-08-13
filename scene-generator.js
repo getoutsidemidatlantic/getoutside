@@ -1,142 +1,122 @@
 /*
-  Get Outside Mid Atlantic — automated scene banner generator.
-
-  No photos, no manual image picking. Each card banner is an SVG rendered
-  entirely from that card's own headline text (data-scene attribute).
-  A weekly content update just changes the text — the artwork updates
-  itself by keyword match. Add new templates/motifs below as the
-  content vocabulary grows.
+  Get Outside Mid Atlantic — scene banner generator v2
+  Region-aware landscapes + bold state label + event motifs.
+  Still fully SVG, no stock photos — weekly text still drives motifs.
 */
 (function () {
-  var TEMPLATES = {
-    nightlife: function () {
-      return '<rect width="300" height="170" fill="#1e1b4b"/>' +
-        '<rect x="0" y="105" width="60" height="65" fill="#312e81"/>' +
-        '<rect x="55" y="85" width="55" height="85" fill="#1e1b4b"/>' +
-        '<rect x="105" y="115" width="70" height="55" fill="#312e81"/>' +
-        '<rect x="170" y="95" width="50" height="75" fill="#1e1b4b"/>' +
-        '<rect x="215" y="125" width="85" height="45" fill="#312e81"/>' +
-        '<path d="M0 90 Q75 122 150 90 T300 90" stroke="#fbbf24" stroke-width="2" fill="none"/>' +
-        '<circle cx="30" cy="94" r="3" fill="#fbbf24"/>' +
-        '<circle cx="90" cy="106" r="3" fill="#fbbf24"/>' +
-        '<circle cx="150" cy="95" r="3" fill="#fbbf24"/>' +
-        '<circle cx="210" cy="106" r="3" fill="#fbbf24"/>' +
-        '<circle cx="270" cy="94" r="3" fill="#fbbf24"/>';
+  var REGIONS = {
+    maryland: {
+      label: 'MARYLAND',
+      sky: ['#0c4a6e', '#075985'],
+      land: '#0f172a',
+      accent: '#38bdf8',
+      scene: function () {
+        return ''
+          + '<defs><linearGradient id="mdSky" x1="0" y1="0" x2="0" y2="1">'
+          + '<stop offset="0%" stop-color="#0c4a6e"/><stop offset="100%" stop-color="#082f49"/></linearGradient>'
+          + '<linearGradient id="mdWater" x1="0" y1="0" x2="0" y2="1">'
+          + '<stop offset="0%" stop-color="#0ea5e9"/><stop offset="100%" stop-color="#0369a1"/></linearGradient></defs>'
+          + '<rect width="400" height="220" fill="url(#mdSky)"/>'
+          + '<circle cx="320" cy="48" r="28" fill="#fbbf24" opacity="0.9"/>'
+          + '<path d="M0 95 L40 88 L70 100 L110 82 L150 98 L190 78 L230 96 L270 85 L310 100 L350 90 L400 98 L400 130 L0 130 Z" fill="#1e3a5f"/>'
+          + '<rect x="0" y="128" width="400" height="92" fill="url(#mdWater)"/>'
+          + '<path d="M0 140 Q50 132 100 142 T200 138 T300 146 T400 140" stroke="#bae6fd" stroke-width="2" fill="none" opacity="0.5"/>'
+          + '<path d="M0 160 Q60 150 120 162 T240 158 T360 166 T400 160" stroke="#e0f2fe" stroke-width="1.5" fill="none" opacity="0.35"/>'
+          + '<ellipse cx="70" cy="175" rx="22" ry="10" fill="#0c4a6e" opacity="0.5"/>'
+          + '<path d="M55 175 q15 -18 30 0" stroke="#f97316" stroke-width="2.5" fill="none"/>'
+          + '<circle cx="70" cy="168" r="3" fill="#fbbf24"/>';
+      }
     },
-    waterfront: function () {
-      return '<rect width="300" height="170" fill="#0c2d48"/>' +
-        '<rect x="0" y="120" width="300" height="50" fill="#1d6fa5"/>' +
-        '<path d="M0 128 Q40 120 80 130 T160 126 T240 132 T300 126" stroke="#bae6fd" stroke-width="2.5" fill="none"/>' +
-        '<rect x="60" y="95" width="14" height="35" fill="#0c4a6e"/>' +
-        '<rect x="130" y="95" width="14" height="35" fill="#0c4a6e"/>' +
-        '<rect x="200" y="95" width="14" height="35" fill="#0c4a6e"/>' +
-        '<rect x="40" y="88" width="220" height="10" fill="#475569"/>';
+    virginia: {
+      label: 'VIRGINIA',
+      scene: function () {
+        return ''
+          + '<defs><linearGradient id="vaSky" x1="0" y1="0" x2="0" y2="1">'
+          + '<stop offset="0%" stop-color="#1e1b4b"/><stop offset="55%" stop-color="#312e81"/><stop offset="100%" stop-color="#4c1d95"/></linearGradient></defs>'
+          + '<rect width="400" height="220" fill="url(#vaSky)"/>'
+          + '<circle cx="80" cy="50" r="22" fill="#fde68a" opacity="0.85"/>'
+          + '<path d="M0 150 L50 110 L100 140 L150 90 L200 130 L260 85 L320 125 L380 95 L400 120 L400 220 L0 220 Z" fill="#1e3a2f"/>'
+          + '<path d="M0 170 L70 140 L130 165 L190 125 L260 160 L330 130 L400 155 L400 220 L0 220 Z" fill="#14532d"/>'
+          + '<path d="M0 195 L100 175 L200 192 L300 170 L400 188 L400 220 L0 220 Z" fill="#166534"/>'
+          + '<rect x="300" y="100" width="14" height="50" fill="#a8a29e"/>'
+          + '<polygon points="307,100 280,120 334,120" fill="#78716c"/>';
+      }
     },
-    sunsetKayak: function () {
-      return '<rect width="300" height="170" fill="#3b1d0a"/>' +
-        '<circle cx="150" cy="90" r="42" fill="#f59e0b"/>' +
-        '<rect x="0" y="115" width="300" height="55" fill="#3b1d0a"/>' +
-        '<path d="M0 118 Q75 108 150 118 T300 118 V125 Q225 115 150 125 T0 125 Z" fill="#78350f"/>' +
-        '<path d="M100 140 q30 -12 60 0 q-5 8 -30 8 q-25 0 -30 -8 z" fill="#111827"/>' +
-        '<polygon points="245,170 260,145 275,170" fill="#7f1d1d"/>' +
-        '<polygon points="252,170 260,153 268,170" fill="#f59e0b"/>';
+    pennsylvania: {
+      label: 'PENNSYLVANIA',
+      scene: function () {
+        return ''
+          + '<defs><linearGradient id="paSky" x1="0" y1="0" x2="0" y2="1">'
+          + '<stop offset="0%" stop-color="#1c1917"/><stop offset="100%" stop-color="#292524"/></linearGradient></defs>'
+          + '<rect width="400" height="220" fill="url(#paSky)"/>'
+          + '<rect x="40" y="70" width="50" height="100" fill="#44403c"/>'
+          + '<rect x="100" y="50" width="40" height="120" fill="#57534e"/>'
+          + '<rect x="150" y="85" width="55" height="85" fill="#44403c"/>'
+          + '<rect x="220" y="40" width="45" height="130" fill="#3f3f46"/>'
+          + '<rect x="275" y="75" width="60" height="95" fill="#52525b"/>'
+          + '<rect x="0" y="150" width="400" height="70" fill="#1c1917"/>'
+          + '<path d="M0 155 H400" stroke="#f59e0b" stroke-width="2" opacity="0.6"/>'
+          + '<circle cx="60" cy="100" r="3" fill="#fbbf24"/><circle cx="120" cy="80" r="3" fill="#fbbf24"/>'
+          + '<circle cx="175" cy="110" r="3" fill="#fbbf24"/><circle cx="245" cy="70" r="3" fill="#fbbf24"/>'
+          + '<circle cx="300" cy="100" r="3" fill="#fbbf24"/>'
+          + '<path d="M310 40 L320 20 L330 40" fill="none" stroke="#a8a29e" stroke-width="3"/>'
+          + '<rect x="314" y="40" width="12" height="30" fill="#78716c"/>';
+      }
     },
-    river: function () {
-      return '<rect width="300" height="170" fill="#052e28"/>' +
-        '<path d="M0 130 Q75 100 150 130 T300 130 V170 H0 Z" fill="#0f6e56"/>' +
-        '<path d="M0 150 Q75 125 150 150 T300 150 V170 H0 Z" fill="#16a34a"/>' +
-        '<circle cx="230" cy="55" r="42" fill="#064e3b"/>' +
-        '<rect x="210" y="65" width="16" height="24" rx="2" fill="#34d399"/>' +
-        '<rect x="232" y="60" width="16" height="29" rx="2" fill="#34d399"/>';
+    delaware: {
+      label: 'DELAWARE',
+      scene: function () {
+        return ''
+          + '<defs><linearGradient id="deSky" x1="0" y1="0" x2="0" y2="1">'
+          + '<stop offset="0%" stop-color="#0c4a6e"/><stop offset="50%" stop-color="#0369a1"/><stop offset="100%" stop-color="#38bdf8"/></linearGradient>'
+          + '<linearGradient id="deSand" x1="0" y1="0" x2="0" y2="1">'
+          + '<stop offset="0%" stop-color="#fcd34d"/><stop offset="100%" stop-color="#d97706"/></linearGradient></defs>'
+          + '<rect width="400" height="220" fill="url(#deSky)"/>'
+          + '<circle cx="300" cy="55" r="32" fill="#fef3c7"/>'
+          + '<rect x="0" y="130" width="400" height="50" fill="#0ea5e9" opacity="0.7"/>'
+          + '<path d="M0 145 Q100 135 200 148 T400 142" stroke="#e0f2fe" stroke-width="2" fill="none"/>'
+          + '<rect x="0" y="175" width="400" height="45" fill="url(#deSand)"/>'
+          + '<ellipse cx="90" cy="185" rx="18" ry="10" fill="#fb923c"/>'
+          + '<path d="M90 175 q8 -12 16 -2" stroke="#4ade80" stroke-width="2" fill="none"/>'
+          + '<path d="M250 190 q20 -35 40 0" stroke="#78350f" stroke-width="3" fill="none"/>'
+          + '<path d="M270 165 q-15 10 -5 25 q15 -5 5 -25" fill="#16a34a"/>';
+      }
     },
-    stage: function () {
-      return '<rect width="300" height="170" fill="#3b0a1e"/>' +
-        '<polygon points="90,10 210,10 240,55 60,55" fill="#7c2d4a"/>' +
-        '<rect x="80" y="55" width="140" height="65" fill="#5b1f38"/>' +
-        '<circle cx="110" cy="30" r="6" fill="#f9c9dc"/>' +
-        '<circle cx="150" cy="22" r="6" fill="#f9c9dc"/>' +
-        '<circle cx="190" cy="30" r="6" fill="#f9c9dc"/>' +
-        '<circle cx="60" cy="140" r="10" fill="#1e1b4b"/>' +
-        '<circle cx="95" cy="145" r="10" fill="#1e1b4b"/>' +
-        '<circle cx="130" cy="138" r="10" fill="#1e1b4b"/>' +
-        '<circle cx="165" cy="146" r="10" fill="#1e1b4b"/>' +
-        '<circle cx="200" cy="139" r="10" fill="#1e1b4b"/>' +
-        '<circle cx="235" cy="145" r="10" fill="#1e1b4b"/>';
-    },
-    whitewater: function () {
-      return '<rect width="300" height="170" fill="#0a1f33"/>' +
-        '<polygon points="0,105 60,35 120,105" fill="#0c4a6e"/>' +
-        '<polygon points="90,105 160,20 230,105" fill="#0369a1"/>' +
-        '<polygon points="200,105 260,50 300,105" fill="#0c4a6e"/>' +
-        '<rect x="0" y="105" width="300" height="65" fill="#0ea5e9"/>' +
-        '<path d="M0 125 Q40 115 80 127 T160 123 T240 129 T300 123" stroke="#e0f2fe" stroke-width="3" fill="none"/>' +
-        '<path d="M0 145 Q40 137 80 147 T160 143 T240 149 T300 143" stroke="#bae6fd" stroke-width="3" fill="none"/>';
-    },
-    fallback: function () {
-      return '<rect width="300" height="170" fill="#1c1917"/>' +
-        '<polygon points="20,150 90,60 150,150" fill="#44403c"/>' +
-        '<polygon points="120,150 190,45 260,150" fill="#57534e"/>' +
-        '<circle cx="240" cy="40" r="20" fill="#fbbf24"/>' +
-        '<rect x="0" y="150" width="300" height="20" fill="#292524"/>';
+    'west-virginia': {
+      label: 'WEST VIRGINIA',
+      scene: function () {
+        return ''
+          + '<defs><linearGradient id="wvSky" x1="0" y1="0" x2="0" y2="1">'
+          + '<stop offset="0%" stop-color="#0f172a"/><stop offset="100%" stop-color="#1e3a5f"/></linearGradient></defs>'
+          + '<rect width="400" height="220" fill="url(#wvSky)"/>'
+          + '<circle cx="70" cy="45" r="18" fill="#f8fafc" opacity="0.9"/>'
+          + '<path d="M0 160 L60 100 L120 150 L180 70 L250 140 L320 60 L400 130 L400 220 L0 220 Z" fill="#14532d"/>'
+          + '<path d="M0 180 L80 130 L150 170 L220 110 L300 165 L380 120 L400 150 L400 220 L0 220 Z" fill="#166534"/>'
+          + '<path d="M0 200 L100 175 L200 195 L300 170 L400 190 L400 220 L0 220 Z" fill="#15803d"/>'
+          + '<path d="M200 110 L210 90 L220 110 Z" fill="#fef3c7" opacity="0.4"/>';
+      }
     }
   };
 
   var MOTIFS = {
-    peach: { x: 252, y: 10, svg:
-      '<circle cx="12" cy="14" r="9" fill="#fb923c"/>' +
-      '<circle cx="7" cy="12" r="6" fill="#fdba74"/>' +
-      '<path d="M12 5 q3 -4 7 -2" stroke="#4ade80" stroke-width="2" fill="none"/>' },
-    mug: { x: 252, y: 10, svg:
-      '<rect x="2" y="6" width="14" height="16" rx="2" fill="#f8fafc"/>' +
-      '<path d="M16 9 h5 a4 4 0 0 1 0 8 h-5" stroke="#f8fafc" stroke-width="2" fill="none"/>' +
-      '<rect x="2" y="6" width="14" height="4" fill="#fbbf24"/>' },
-    football: { x: 252, y: 12, svg:
-      '<ellipse cx="12" cy="14" rx="12" ry="8" fill="#78350f" transform="rotate(-20 12 14)"/>' +
-      '<line x1="6" y1="14" x2="18" y2="14" stroke="#f8fafc" stroke-width="1.5" transform="rotate(-20 12 14)"/>' },
-    firework: { x: 250, y: 16, svg:
-      '<g stroke="#fbbf24" stroke-width="2">' +
-      '<line x1="12" y1="4" x2="12" y2="-6"/>' +
-      '<line x1="4" y1="12" x2="-4" y2="4"/>' +
-      '<line x1="20" y1="12" x2="28" y2="4"/>' +
-      '<line x1="4" y1="20" x2="-4" y2="24"/>' +
-      '<line x1="20" y1="20" x2="28" y2="24"/>' +
-      '</g><circle cx="12" cy="12" r="3" fill="#fbbf24"/>' },
-    note: { x: 252, y: 8, svg:
-      '<circle cx="6" cy="20" r="4" fill="#f472b6"/>' +
-      '<circle cx="18" cy="16" r="4" fill="#f472b6"/>' +
-      '<path d="M10 20 V6 L22 3 V16" stroke="#f472b6" stroke-width="2" fill="none"/>' },
-    tent: { x: 254, y: 10, svg:
-      '<polygon points="12,4 22,22 2,22" fill="#facc15"/>' +
-      '<line x1="12" y1="4" x2="12" y2="22" stroke="#78350f" stroke-width="1.5"/>' },
-    flame: { x: 256, y: 10, svg:
-      '<path d="M12 2 C6 10 6 14 9 18 C7 15 9 13 10 12 C10 16 14 17 14 20 C18 17 18 10 12 2 Z" fill="#f97316"/>' }
+    peach: '<g><circle cx="14" cy="16" r="10" fill="#fb923c"/><circle cx="10" cy="14" r="6" fill="#fdba74"/><path d="M14 6 q4 -5 8 -2" stroke="#4ade80" stroke-width="2" fill="none"/></g>',
+    mug: '<g><rect x="2" y="6" width="14" height="16" rx="2" fill="#f8fafc"/><path d="M16 9 h5 a4 4 0 0 1 0 8 h-5" stroke="#f8fafc" stroke-width="2" fill="none"/><rect x="2" y="6" width="14" height="4" fill="#fbbf24"/></g>',
+    football: '<g transform="rotate(-20 12 14)"><ellipse cx="12" cy="14" rx="12" ry="8" fill="#78350f"/><line x1="6" y1="14" x2="18" y2="14" stroke="#f8fafc" stroke-width="1.5"/></g>',
+    tent: '<g><polygon points="12,4 22,22 2,22" fill="#facc15"/><line x1="12" y1="4" x2="12" y2="22" stroke="#78350f" stroke-width="1.5"/></g>',
+    flame: '<g><path d="M12 2 C6 10 6 14 9 18 C7 15 9 13 10 12 C10 16 14 17 14 20 C18 17 18 10 12 2 Z" fill="#f97316"/></g>',
+    note: '<g><circle cx="6" cy="20" r="4" fill="#f472b6"/><circle cx="18" cy="16" r="4" fill="#f472b6"/><path d="M10 20 V6 L22 3 V16" stroke="#f472b6" stroke-width="2" fill="none"/></g>',
+    fair: '<g><path d="M12 4 L14 10 L20 10 L15 14 L17 20 L12 16 L7 20 L9 14 L4 10 L10 10 Z" fill="#fbbf24"/></g>'
   };
-
-  var TEMPLATE_RULES = [
-    { test: /lantern|dusk|rooftop|nightlife|string light/i, id: 'nightlife' },
-    { test: /dock|marina|boardwalk|harbor|pirate/i, id: 'waterfront' },
-    { test: /sunset|bonfire/i, id: 'sunsetKayak' },
-    { test: /whitewater|rapids|mountain|highland|hik|trail|parkway|lake/i, id: 'whitewater' },
-    { test: /river|paddl|canoe|forest/i, id: 'river' },
-    { test: /music|fest|concert|steelers|stage|camp/i, id: 'stage' }
-  ];
 
   var MOTIF_RULES = [
     { test: /peach/i, id: 'peach' },
-    { test: /brewery|beer|ale/i, id: 'mug' },
-    { test: /firework|labor day|july 4th|fourth of july/i, id: 'firework' },
-    { test: /steelers|football/i, id: 'football' },
-    { test: /jazz|music|concert/i, id: 'note' },
-    { test: /camp(?!fire)/i, id: 'tent' },
-    { test: /bonfire/i, id: 'flame' }
+    { test: /brewery|beer|ale|bourbon/i, id: 'mug' },
+    { test: /football|steelers|ravens/i, id: 'football' },
+    { test: /camp(?!fire)|tent/i, id: 'tent' },
+    { test: /bonfire|campfire|fire/i, id: 'flame' },
+    { test: /music|concert|fest|jazz|folk/i, id: 'note' },
+    { test: /fair|carnival|parade/i, id: 'fair' }
   ];
-
-  function pickTemplate(text) {
-    for (var i = 0; i < TEMPLATE_RULES.length; i++) {
-      if (TEMPLATE_RULES[i].test.test(text)) return TEMPLATE_RULES[i].id;
-    }
-    return 'fallback';
-  }
 
   function pickMotifs(text, max) {
     max = max || 2;
@@ -147,18 +127,53 @@
     return found;
   }
 
-  function renderScene(text) {
+  function normalizeRegion(r) {
+    if (!r) return null;
+    r = String(r).toLowerCase().trim();
+    if (r === 'wv' || r === 'w virginia' || r === 'w. virginia') return 'west-virginia';
+    if (r === 'md') return 'maryland';
+    if (r === 'va') return 'virginia';
+    if (r === 'pa') return 'pennsylvania';
+    if (r === 'de') return 'delaware';
+    return REGIONS[r] ? r : null;
+  }
+
+  function renderScene(text, regionKey) {
     text = text || '';
-    var templateId = pickTemplate(text);
-    var templateFn = TEMPLATES[templateId] || TEMPLATES.fallback;
+    regionKey = normalizeRegion(regionKey);
+    var region = regionKey ? REGIONS[regionKey] : null;
+    var body;
+    if (region) {
+      body = region.scene();
+    } else {
+      body = '<rect width="400" height="220" fill="#0f172a"/>'
+        + '<polygon points="40,180 120,80 200,180" fill="#334155"/>'
+        + '<polygon points="160,180 260,60 360,180" fill="#475569"/>'
+        + '<circle cx="320" cy="50" r="24" fill="#fbbf24"/>';
+    }
+
     var motifs = pickMotifs(text);
-    var motifSvg = motifs.map(function (id) {
+    var motifSvg = motifs.map(function (id, idx) {
       var m = MOTIFS[id];
-      return m ? '<g transform="translate(' + m.x + ',' + m.y + ')">' + m.svg + '</g>' : '';
+      if (!m) return '';
+      var x = 340 - idx * 36;
+      return '<g transform="translate(' + x + ',16) scale(1.15)">' + m + '</g>';
     }).join('');
-    var label = text.replace(/"/g, '&quot;');
-    return '<svg viewBox="0 0 300 170" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="' + label + '" style="width:100%;height:100%;display:block;">' +
-      templateFn() + motifSvg + '</svg>';
+
+    var label = region ? region.label : '';
+    var labelSvg = label
+      ? '<defs><linearGradient id="lblFade" x1="0" y1="0" x2="0" y2="1">'
+        + '<stop offset="0%" stop-color="#020617" stop-opacity="0"/>'
+        + '<stop offset="100%" stop-color="#020617" stop-opacity="0.85"/></linearGradient></defs>'
+        + '<rect x="0" y="150" width="400" height="70" fill="url(#lblFade)"/>'
+        + '<text x="20" y="200" font-family="Outfit, system-ui, sans-serif" font-weight="800" font-size="28" fill="#f8fafc" letter-spacing="0.08em">' + label + '</text>'
+      : '';
+
+    var aria = (label ? label + ' — ' : '') + text;
+    aria = aria.replace(/"/g, '&quot;');
+
+    return '<svg viewBox="0 0 400 220" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="' + aria + '" style="width:100%;height:100%;display:block">'
+      + body + motifSvg + labelSvg + '</svg>';
   }
 
   function init() {
@@ -166,7 +181,8 @@
     for (var i = 0; i < nodes.length; i++) {
       var el = nodes[i];
       var text = el.getAttribute('data-scene') || el.textContent || '';
-      el.innerHTML = renderScene(text);
+      var region = el.getAttribute('data-region') || '';
+      el.innerHTML = renderScene(text, region);
     }
   }
 
@@ -178,7 +194,6 @@
 
   window.GetOutsideSceneGenerator = {
     renderScene: renderScene,
-    pickTemplate: pickTemplate,
-    pickMotifs: pickMotifs
+    regions: Object.keys(REGIONS)
   };
 })();
