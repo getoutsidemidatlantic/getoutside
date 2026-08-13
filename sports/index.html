@@ -35,13 +35,15 @@ a{color:#7dd3fc}
     return new TextDecoder().decode(await new Response(stream).arrayBuffer());
   }
   try {
-    const ids = [1,2,3,4,5,6,7,8];
-    const chunks = await Promise.all(ids.map(i =>
-      fetch('./parts/m'+i+'.txt',{cache:'no-store'}).then(r => {
-        if (!r.ok) throw new Error('Missing m'+i+' ('+r.status+')');
+    const n = 40;
+    const ids = Array.from({length:n}, (_,i)=>i+1);
+    const chunks = await Promise.all(ids.map(i => {
+      const id = String(i).padStart(2,'0');
+      return fetch('./parts/t'+id+'.txt',{cache:'no-store'}).then(r => {
+        if (!r.ok) throw new Error('Missing t'+id+' ('+r.status+')');
         return r.text();
-      })
-    ));
+      });
+    }));
     const html = await gunzipBase64(chunks.join('').trim());
     if (html.indexOf('<!DOCTYPE') === -1) throw new Error('Decoded payload is not HTML');
     paint(html);
