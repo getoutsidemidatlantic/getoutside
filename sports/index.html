@@ -35,9 +35,14 @@ a{color:#7dd3fc}
     return new TextDecoder().decode(await new Response(stream).arrayBuffer());
   }
   try {
-    const r = await fetch('./map.b64.txt', { cache: 'no-store' });
-    if (!r.ok) throw new Error('map.b64.txt HTTP ' + r.status);
-    const html = await gunzipBase64((await r.text()).trim());
+    const ids = [1,2,3,4,5,6,7,8];
+    const chunks = await Promise.all(ids.map(i =>
+      fetch('./parts/m'+i+'.txt',{cache:'no-store'}).then(r => {
+        if (!r.ok) throw new Error('Missing m'+i+' ('+r.status+')');
+        return r.text();
+      })
+    ));
+    const html = await gunzipBase64(chunks.join('').trim());
     if (html.indexOf('<!DOCTYPE') === -1) throw new Error('Decoded payload is not HTML');
     paint(html);
   } catch (e) {
