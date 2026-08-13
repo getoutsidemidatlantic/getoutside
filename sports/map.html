@@ -1,1 +1,105 @@
-PLACEHOLDER
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Ops Center · Get Outside Mid-Atlantic</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+<link rel="stylesheet" href="./map.css"/>
+<link rel="stylesheet" href="./ops-layers.css"/>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+</head>
+<body>
+
+<header>
+  <a class="brand" href="https://get-outside.info" target="_blank" rel="noopener" title="Get Outside Mid-Atlantic">
+    <div class="brand-mark" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M12 3c.4 2.2 1.2 3.8 2.4 4.8 1.2 1 2.8 1.5 4.6 1.7-1.8.3-3.4.9-4.6 1.9-1.2 1-2 2.7-2.4 5.1-.4-2.4-1.2-4.1-2.4-5.1-1.2-1-2.8-1.6-4.6-1.9 1.8-.2 3.4-.7 4.6-1.7C10.8 6.8 11.6 5.2 12 3z" fill="#f59e0b"/>
+        <path d="M7 20c1.5-2.2 3.2-3.3 5-3.3s3.5 1.1 5 3.3H7z" fill="#f8fafc" opacity=".9"/>
+        <circle cx="12" cy="14.5" r="1.2" fill="#020617"/>
+      </svg>
+    </div>
+    <div class="brand-text">
+      <div class="brand-name">GET <span class="amber">OUTSIDE</span></div>
+      <div class="brand-sub">Ops Center</div>
+    </div>
+  </a>
+  <div class="header-right">
+    <div class="live-clock" id="liveClock">—</div>
+    <div class="defcon-badge" id="defconBadge" title="Sports DEFCON — outdoor calendar intensity next 7 days. 5 = full scale madness, 1 = quiet.">
+      <span class="defcon-label">SPORTS DEFCON</span>
+      <span class="defcon-num">5</span>
+      <span class="defcon-pct" id="defconPct"></span>
+    </div>
+    <div class="time-filters">
+      <button data-range="weekend">Weekend</button>
+      <button data-range="7d" class="active">7d</button>
+      <button data-range="30d">30d</button>
+    </div>
+    <span class="badge">v20 · Mobile A</span>
+  </div>
+</header>
+
+<div class="mobile-scrim" id="mobileScrim" aria-hidden="true"></div>
+<div class="mobile-fab" id="fabLayers">
+  <button type="button" id="btnLayers" aria-label="Layers">Layers</button>
+</div>
+<div class="mobile-fab feed-fab" id="fabFeed">
+  <button type="button" id="btnFeed" aria-label="Intel feed">Intel</button>
+</div>
+
+<div id="main">
+  <div id="layers">
+    <div class="layers-title" style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+      <span>Layers</span>
+      <button type="button" id="btnClearLayers" style="font-size:0.65rem;padding:2px 8px;border-radius:4px;border:1px solid #334155;background:#0f172a;color:#94a3b8;cursor:pointer">Clear all</button>
+    </div>
+    <div class="layers-section-label">Sports</div>
+    <!-- sports layer checkboxes rendered by map-app from data -->
+    <div class="layers-divider"></div>
+    <div class="layers-section-label">Field</div>
+    <label class="layer-item"><input type="checkbox" id="lyCamping" data-type="camping"/><span class="layer-swatch camping">🏕️</span> Camping <span class="layer-count" id="cnt-camping"></span></label>
+    <label class="layer-item"><input type="checkbox" id="lyTrails" data-type="trails"/><span class="layer-swatch trails">🥾</span> Trails <span class="layer-count" id="cnt-trails"></span></label>
+    <label class="layer-item"><input type="checkbox" id="lyPublicLand" data-type="public_land"/><span class="layer-swatch public_land">🌲</span> Public land <span class="layer-count" id="cnt-public_land"></span></label>
+    <label class="layer-item"><input type="checkbox" id="lyFishing" data-type="fishing"/><span class="layer-swatch fishing">🎣</span> Fishing <span class="layer-count" id="cnt-fishing"></span></label>
+    <label class="layer-item"><input type="checkbox" id="lyPaddling" data-type="paddling"/><span class="layer-swatch paddling">🛶</span> Paddling <span class="layer-count" id="cnt-paddling"></span></label>
+    <label class="layer-item"><input type="checkbox" id="lyLakes" data-type="lakes"/><span class="layer-swatch lakes">💧</span> Lakes <span class="layer-count" id="cnt-lakes"></span></label>
+    <label class="layer-item"><input type="checkbox" id="lyHunting" data-type="hunting"/><span class="layer-swatch hunting">🦌</span> Hunting <span class="layer-count" id="cnt-hunting"></span></label>
+    <label class="layer-item"><input type="checkbox" id="lyMotorized" data-type="motorized"/><span class="layer-swatch motorized">🏍️</span> Motorized <span class="layer-count" id="cnt-motorized"></span></label>
+    <label class="layer-item"><input type="checkbox" id="lyWinter" data-type="winter"/><span class="layer-swatch winter">⛷️</span> Winter <span class="layer-count" id="cnt-winter"></span></label>
+    <label class="layer-item"><input type="checkbox" id="lyHistory" data-type="history"/><span class="layer-swatch history">🏛️</span> History <span class="layer-count" id="cnt-history"></span></label>
+    <div class="layers-divider"></div>
+    <label class="layer-item"><input type="checkbox" id="lyHeat"/><span class="layer-swatch heat"></span> Density heatmap</label>
+    <label class="layer-item"><input type="checkbox" id="lyWeather"/><span class="layer-swatch" style="background:#0ea5e9;border-radius:3px;border:1px solid #444;font-size:9px">☁</span> Weather overlay</label>
+    <label class="layer-item"><input type="checkbox" id="lyHype"/><span class="layer-swatch" style="background:#16a34a;border-radius:3px;border:1px solid #444;font-size:9px">⚡</span> Hype</label>
+    <div class="layers-divider"></div>
+    <div class="layers-hint">Toggles filter map pins and the event feed. Time filters (header) control the date window.</div>
+  </div>
+  <div id="map"></div>
+  <div id="feed">
+    <div class="feed-header">Event intel <span class="feed-count" id="feedCount">—</span></div>
+    <div class="feed-scroll" id="feedScroll"></div>
+  </div>
+</div>
+<div id="panel">
+  <div class="panel-header">
+    <button class="panel-close" id="panelClose">&times;</button>
+    <div class="panel-venue" id="panelVenue">—</div>
+    <div class="panel-city" id="panelCity">—</div>
+    <div class="panel-chips" id="panelChips"></div>
+  </div>
+  <div class="panel-body" id="panelBody"></div>
+  <div class="panel-footer" id="panelFooter"><span style="font-size:.7rem;color:#64748b">Ops Center</span></div>
+</div>
+<div id="socTicker" class="soc-ticker" aria-label="Sports intel ticker">
+  <div class="soc-ticker-label">TICKER</div>
+  <div class="soc-ticker-viewport">
+    <div class="soc-ticker-track" id="intelBody"><span class="soc-ticker-loading">Loading intel…</span></div>
+  </div>
+  <div class="soc-ticker-meta" id="intelUpdated"></div>
+</div>
+
+<script src="./map-app.js"></script>
+</body>
+</html>
