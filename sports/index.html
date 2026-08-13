@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Sports Operations Center (SOC) · Get Outside Mid-Atlantic</title>
+<title>Ops Center · Get Outside Mid-Atlantic</title>
 <style>
 body{margin:0;background:#0b1220;color:#e8eef7;font-family:system-ui,sans-serif}
 #boot{padding:2.5rem;text-align:center;line-height:1.6;max-width:36rem;margin:0 auto}
@@ -12,12 +12,12 @@ code{background:#1e293b;padding:.15rem .4rem;border-radius:4px;font-size:.9em}
 </style>
 </head>
 <body>
-<div id="boot">Loading Sports Operations Center…</div>
+<div id="boot">Loading Ops Center…</div>
 <script>
 (async function () {
   const boot = document.getElementById('boot');
   function fail(msg) {
-    boot.innerHTML = '<p style="font-size:1.15rem;font-weight:600">SOC map not fully deployed yet</p>' +
+    boot.innerHTML = '<p style="font-size:1.15rem;font-weight:600">Ops Center map not fully deployed yet</p>' +
       '<p style="opacity:.8;margin:1rem 0">' + (msg || '') + '</p>' +
       '<p style="opacity:.7;font-size:.9rem">Netlify is still serving the previous build. Switch Continuous Deployment to <code>getoutsidemidatlantic/getoutside</code> (branch <code>main</code>), then hard-refresh.</p>' +
       '<p style="margin-top:1.5rem"><a href="/">← Home</a></p>';
@@ -27,6 +27,12 @@ code{background:#1e293b;padding:.15rem .4rem;border-radius:4px;font-size:.9em}
     document.open();
     document.write(html);
     document.close();
+    try {
+      const link = document.createElement('link');
+      link.rel = 'stylesheet';
+      link.href = './ops-layers.css';
+      (document.head || document.documentElement).appendChild(link);
+    } catch (e) { console.warn('ops-layers.css inject failed', e); }
   }
   async function gunzipBase64(b64) {
     const bin = atob(b64);
