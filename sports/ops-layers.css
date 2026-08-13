@@ -1,10 +1,12 @@
-/* Ops Center layers panel — digital monospace only (matches live clock aesthetic) */
+/* Ops Center — Share Tech Mono for layers + live clock only; other UI fonts unchanged */
 @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
 
 #layers .layers-title,
 #layers .layer-item,
 #layers .layer-count,
-#layers .layers-hint {
+#layers .layers-hint,
+.live-clock,
+.defcon-num {
   font-family: 'Share Tech Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace !important;
   letter-spacing: 0.06em;
 }
@@ -17,4 +19,8 @@
 
 #layers .layer-item {
   font-size: 0.8rem;
+}
+
+.live-clock {
+  letter-spacing: 0.08em;
 }
