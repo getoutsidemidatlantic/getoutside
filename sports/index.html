@@ -1,29 +1,223 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Ops Center - Get Outside Mid-Atlantic</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GOMA Sports Operations Center (SOC)</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <style>
-body{margin:0;background:#0b1220;color:#e8eef7;font-family:system-ui,sans-serif}
-#boot{padding:2.5rem;text-align:center;line-height:1.6;max-width:36rem;margin:0 auto}
-a{color:#7dd3fc}
+  :root { --navy: #0f172a; --accent: #0ea5e9; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; background: var(--navy); color: #e2e8f0; }
+  header { padding: 12px 20px; background: linear-gradient(90deg, #0f172a, #1e293b); border-bottom: 2px solid var(--accent); display: flex; flex-wrap: wrap; align-items: center; gap: 12px; justify-content: space-between; }
+  h1 { font-size: 1.25rem; font-weight: 700; letter-spacing: 0.02em; }
+  .badge { background: var(--accent); color: #0f172a; font-size: 0.7rem; font-weight: 700; padding: 3px 8px; border-radius: 999px; }
+  .meta { font-size: 0.8rem; opacity: 0.85; }
+  #map { height: calc(100vh - 110px); width: 100%; }
+  .legend { position: absolute; bottom: 24px; right: 12px; z-index: 1000; background: rgba(15,23,42,0.92); padding: 10px 14px; border-radius: 8px; border: 1px solid #334155; font-size: 0.8rem; }
+  .legend div { margin: 4px 0; display: flex; align-items: center; gap: 8px; }
+  .dot { width: 12px; height: 12px; border-radius: 50%; }
+  footer { padding: 8px 20px; font-size: 0.75rem; opacity: 0.7; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+  a { color: var(--accent); }
+  .leaflet-popup-content { color: #0f172a; font-size: 0.9rem; }
+  .leaflet-popup-content strong { display: block; margin-bottom: 4px; }
 </style>
 </head>
 <body>
-<div id="boot">Loading Ops Center...</div>
+<header>
+  <div>
+    <h1>Sports Operations Center <span class="badge">SOC</span></h1>
+    <div class="meta">Get Outside Mid-Atlantic · MD · VA · DC · DE · WV · PA</div>
+  </div>
+  <div class="meta" style="text-align:right">
+    Window: 2026-08-16 → 2026-09-15<br>
+    Events: 34 · Contact: <a href="https://x.com/getoutsidematl" target="_blank">@getoutsidematl</a>
+  </div>
+</header>
+<div id="map"></div>
+<footer>
+  <span>Run snapshot 2026-08-16 · Production promote</span>
+  <span>Hide empty layers · No zero-event pins</span>
+</footer>
 <script>
-(async function () {
-  const boot = document.getElementById('boot');
-  function fail(msg) {
-    boot.innerHTML = '<p style="font-size:1.15rem;font-weight:600">Ops Center failed to load</p><p style="opacity:.8">'+(msg||'')+'</p><p><a href="/">Home</a></p>';
-  }
-  try {
-    window.location.replace('./map.html');
-  } catch (e) {
-    fail(e && e.message ? e.message : String(e));
-  }
-})();
+const map = L.map('map').setView([39.5, -77.5], 7);
+L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+  attribution: '&copy; OpenStreetMap &copy; CARTO',
+  subdomains: 'abcd',
+  maxZoom: 19
+}).addTo(map);
+
+const layers = {};
+
+layers["NFL"] = L.layerGroup();
+
+L.circleMarker([40.4468, -80.0158], {
+  radius: 9, fillColor: "#013369", color: "#fff", weight: 1.5, opacity: 1, fillOpacity: 0.85
+}).bindPopup(`<strong>Atlanta Falcons at Pittsburgh Steelers</strong>2026-09-13 13:00<br>Acrisure Stadium<br>Pittsburgh, PA<br>Level: Pro`).addTo(layers["NFL"]);
+
+L.circleMarker([39.9012, -75.1675], {
+  radius: 9, fillColor: "#013369", color: "#fff", weight: 1.5, opacity: 1, fillOpacity: 0.85
+}).bindPopup(`<strong>Washington Commanders at Philadelphia Eagles</strong>2026-09-13 16:25<br>Lincoln Financial Field<br>Philadelphia, PA<br>Level: Pro`).addTo(layers["NFL"]);
+
+L.circleMarker([39.2780, -76.6227], {
+  radius: 9, fillColor: "#013369", color: "#fff", weight: 1.5, opacity: 1, fillOpacity: 0.85
+}).bindPopup(`<strong>Washington Commanders at Baltimore Ravens (Preseason)</strong>2026-08-28 18:00<br>M&T Bank Stadium<br>Baltimore, MD<br>Level: Pro`).addTo(layers["NFL"]);
+
+layers["MLB"] = L.layerGroup();
+
+L.circleMarker([39.2839, -76.6217], {
+  radius: 9, fillColor: "#002D72", color: "#fff", weight: 1.5, opacity: 1, fillOpacity: 0.85
+}).bindPopup(`<strong>New York Yankees at Baltimore Orioles</strong>2026-08-18 18:35<br>Oriole Park at Camden Yards<br>Baltimore, MD<br>Level: Pro`).addTo(layers["MLB"]);
+
+L.circleMarker([39.2839, -76.6217], {
+  radius: 9, fillColor: "#002D72", color: "#fff", weight: 1.5, opacity: 1, fillOpacity: 0.85
+}).bindPopup(`<strong>New York Yankees at Baltimore Orioles</strong>2026-08-19 18:35<br>Oriole Park at Camden Yards<br>Baltimore, MD<br>Level: Pro`).addTo(layers["MLB"]);
+
+L.circleMarker([39.2839, -76.6217], {
+  radius: 9, fillColor: "#002D72", color: "#fff", weight: 1.5, opacity: 1, fillOpacity: 0.85
+}).bindPopup(`<strong>New York Yankees at Baltimore Orioles</strong>2026-08-20 18:35<br>Oriole Park at Camden Yards<br>Baltimore, MD<br>Level: Pro`).addTo(layers["MLB"]);
+
+L.circleMarker([39.2839, -76.6217], {
+  radius: 9, fillColor: "#002D72", color: "#fff", weight: 1.5, opacity: 1, fillOpacity: 0.85
+}).bindPopup(`<strong>Tampa Bay Rays at Baltimore Orioles</strong>2026-08-21 19:05<br>Oriole Park at Camden Yards<br>Baltimore, MD<br>Level: Pro`).addTo(layers["MLB"]);
+
+L.circleMarker([39.2839, -76.6217], {
+  radius: 9, fillColor: "#002D72", color: "#fff", weight: 1.5, opacity: 1, fillOpacity: 0.85
+}).bindPopup(`<strong>Tampa Bay Rays at Baltimore Orioles</strong>2026-08-22 19:05<br>Oriole Park at Camden Yards<br>Baltimore, MD<br>Level: Pro`).addTo(layers["MLB"]);
+
+L.circleMarker([39.2839, -76.6217], {
+  radius: 9, fillColor: "#002D72", color: "#fff", weight: 1.5, opacity: 1, fillOpacity: 0.85
+}).bindPopup(`<strong>Tampa Bay Rays at Baltimore Orioles</strong>2026-08-23 13:35<br>Oriole Park at Camden Yards<br>Baltimore, MD<br>Level: Pro`).addTo(layers["MLB"]);
+
+L.circleMarker([38.8730, -77.0074], {
+  radius: 9, fillColor: "#002D72", color: "#fff", weight: 1.5, opacity: 1, fillOpacity: 0.85
+}).bindPopup(`<strong>Nationals home series (TBD opponent)</strong>2026-08-25 18:45<br>Nationals Park<br>Washington, DC<br>Level: Pro`).addTo(layers["MLB"]);
+
+L.circleMarker([39.9061, -75.1665], {
+  radius: 9, fillColor: "#002D72", color: "#fff", weight: 1.5, opacity: 1, fillOpacity: 0.85
+}).bindPopup(`<strong>Miami Marlins at Philadelphia Phillies</strong>2026-08-17 18:40<br>Citizens Bank Park<br>Philadelphia, PA<br>Level: Pro`).addTo(layers["MLB"]);
+
+L.circleMarker([39.9061, -75.1665], {
+  radius: 9, fillColor: "#002D72", color: "#fff", weight: 1.5, opacity: 1, fillOpacity: 0.85
+}).bindPopup(`<strong>Miami Marlins at Philadelphia Phillies</strong>2026-08-18 18:40<br>Citizens Bank Park<br>Philadelphia, PA<br>Level: Pro`).addTo(layers["MLB"]);
+
+L.circleMarker([39.9061, -75.1665], {
+  radius: 9, fillColor: "#002D72", color: "#fff", weight: 1.5, opacity: 1, fillOpacity: 0.85
+}).bindPopup(`<strong>Miami Marlins at Philadelphia Phillies</strong>2026-08-19 18:40<br>Citizens Bank Park<br>Philadelphia, PA<br>Level: Pro`).addTo(layers["MLB"]);
+
+L.circleMarker([40.4469, -80.0057], {
+  radius: 9, fillColor: "#002D72", color: "#fff", weight: 1.5, opacity: 1, fillOpacity: 0.85
+}).bindPopup(`<strong>Detroit Tigers at Pittsburgh Pirates</strong>2026-08-17 19:05<br>PNC Park<br>Pittsburgh, PA<br>Level: Pro`).addTo(layers["MLB"]);
+
+L.circleMarker([40.4469, -80.0057], {
+  radius: 9, fillColor: "#002D72", color: "#fff", weight: 1.5, opacity: 1, fillOpacity: 0.85
+}).bindPopup(`<strong>Detroit Tigers at Pittsburgh Pirates</strong>2026-08-18 18:40<br>PNC Park<br>Pittsburgh, PA<br>Level: Pro`).addTo(layers["MLB"]);
+
+L.circleMarker([40.4469, -80.0057], {
+  radius: 9, fillColor: "#002D72", color: "#fff", weight: 1.5, opacity: 1, fillOpacity: 0.85
+}).bindPopup(`<strong>Detroit Tigers at Pittsburgh Pirates</strong>2026-08-19 12:35<br>PNC Park<br>Pittsburgh, PA<br>Level: Pro`).addTo(layers["MLB"]);
+
+layers["MLS"] = L.layerGroup();
+
+L.circleMarker([38.8681, -77.0128], {
+  radius: 9, fillColor: "#C8102E", color: "#fff", weight: 1.5, opacity: 1, fillOpacity: 0.85
+}).bindPopup(`<strong>New England Revolution at D.C. United</strong>2026-08-19 19:30<br>Audi Field<br>Washington, DC<br>Level: Pro`).addTo(layers["MLS"]);
+
+L.circleMarker([38.8681, -77.0128], {
+  radius: 9, fillColor: "#C8102E", color: "#fff", weight: 1.5, opacity: 1, fillOpacity: 0.85
+}).bindPopup(`<strong>LAFC at D.C. United</strong>2026-08-29 19:30<br>Audi Field<br>Washington, DC<br>Level: Pro`).addTo(layers["MLS"]);
+
+L.circleMarker([38.8681, -77.0128], {
+  radius: 9, fillColor: "#C8102E", color: "#fff", weight: 1.5, opacity: 1, fillOpacity: 0.85
+}).bindPopup(`<strong>Columbus Crew at D.C. United</strong>2026-09-09 19:30<br>Audi Field<br>Washington, DC<br>Level: Pro`).addTo(layers["MLS"]);
+
+L.circleMarker([38.8681, -77.0128], {
+  radius: 9, fillColor: "#C8102E", color: "#fff", weight: 1.5, opacity: 1, fillOpacity: 0.85
+}).bindPopup(`<strong>Atlanta United at D.C. United</strong>2026-09-12 19:30<br>Audi Field<br>Washington, DC<br>Level: Pro`).addTo(layers["MLS"]);
+
+L.circleMarker([39.8328, -75.3789], {
+  radius: 9, fillColor: "#C8102E", color: "#fff", weight: 1.5, opacity: 1, fillOpacity: 0.85
+}).bindPopup(`<strong>New York City FC at Philadelphia Union</strong>2026-08-16 18:00<br>Subaru Park<br>Chester, PA<br>Level: Pro`).addTo(layers["MLS"]);
+
+L.circleMarker([39.8328, -75.3789], {
+  radius: 9, fillColor: "#C8102E", color: "#fff", weight: 1.5, opacity: 1, fillOpacity: 0.85
+}).bindPopup(`<strong>Inter Miami CF at Philadelphia Union</strong>2026-08-19 19:30<br>Subaru Park<br>Chester, PA<br>Level: Pro`).addTo(layers["MLS"]);
+
+L.circleMarker([39.8328, -75.3789], {
+  radius: 9, fillColor: "#C8102E", color: "#fff", weight: 1.5, opacity: 1, fillOpacity: 0.85
+}).bindPopup(`<strong>CF Montréal at Philadelphia Union</strong>2026-09-05 19:30<br>Subaru Park<br>Chester, PA<br>Level: Pro`).addTo(layers["MLS"]);
+
+L.circleMarker([39.8328, -75.3789], {
+  radius: 9, fillColor: "#C8102E", color: "#fff", weight: 1.5, opacity: 1, fillOpacity: 0.85
+}).bindPopup(`<strong>FC Cincinnati at Philadelphia Union</strong>2026-09-09 19:30<br>Subaru Park<br>Chester, PA<br>Level: Pro`).addTo(layers["MLS"]);
+
+layers["NWSL"] = L.layerGroup();
+
+L.circleMarker([38.8681, -77.0128], {
+  radius: 9, fillColor: "#00A3E0", color: "#fff", weight: 1.5, opacity: 1, fillOpacity: 0.85
+}).bindPopup(`<strong>Washington Spirit vs Orlando Pride</strong>2026-08-23 16:00<br>Audi Field<br>Washington, DC<br>Level: Pro`).addTo(layers["NWSL"]);
+
+L.circleMarker([38.8681, -77.0128], {
+  radius: 9, fillColor: "#00A3E0", color: "#fff", weight: 1.5, opacity: 1, fillOpacity: 0.85
+}).bindPopup(`<strong>Washington Spirit vs Bay FC</strong>2026-08-30 12:30<br>Audi Field<br>Washington, DC<br>Level: Pro`).addTo(layers["NWSL"]);
+
+L.circleMarker([38.8681, -77.0128], {
+  radius: 9, fillColor: "#00A3E0", color: "#fff", weight: 1.5, opacity: 1, fillOpacity: 0.85
+}).bindPopup(`<strong>Washington Spirit vs Boston Legacy</strong>2026-09-13 13:00<br>Audi Field<br>Washington, DC<br>Level: Pro`).addTo(layers["NWSL"]);
+
+layers["College FB"] = L.layerGroup();
+
+L.circleMarker([38.0314, -78.5128], {
+  radius: 9, fillColor: "#7B2D8E", color: "#fff", weight: 1.5, opacity: 1, fillOpacity: 0.85
+}).bindPopup(`<strong>NC State at Virginia</strong>2026-08-29 15:30<br>Scott Stadium<br>Charlottesville, VA<br>Level: D1`).addTo(layers["College FB"]);
+
+L.circleMarker([40.0340, -75.3370], {
+  radius: 9, fillColor: "#7B2D8E", color: "#fff", weight: 1.5, opacity: 1, fillOpacity: 0.85
+}).bindPopup(`<strong>William & Mary at Villanova</strong>2026-08-29 12:00<br>Villanova Stadium<br>Villanova, PA<br>Level: D1`).addTo(layers["College FB"]);
+
+L.circleMarker([38.9900, -76.9470], {
+  radius: 9, fillColor: "#7B2D8E", color: "#fff", weight: 1.5, opacity: 1, fillOpacity: 0.85
+}).bindPopup(`<strong>Hampton at Maryland</strong>2026-09-05 20:00<br>SECU Stadium<br>College Park, MD<br>Level: D1`).addTo(layers["College FB"]);
+
+L.circleMarker([40.8122, -77.8561], {
+  radius: 9, fillColor: "#7B2D8E", color: "#fff", weight: 1.5, opacity: 1, fillOpacity: 0.85
+}).bindPopup(`<strong>Marshall at Penn State</strong>2026-09-05 15:30<br>Beaver Stadium<br>University Park, PA<br>Level: D1`).addTo(layers["College FB"]);
+
+L.circleMarker([40.4468, -80.0158], {
+  radius: 9, fillColor: "#7B2D8E", color: "#fff", weight: 1.5, opacity: 1, fillOpacity: 0.85
+}).bindPopup(`<strong>Miami (OH) at Pittsburgh</strong>2026-09-05 12:00<br>Acrisure Stadium<br>Pittsburgh, PA<br>Level: D1`).addTo(layers["College FB"]);
+
+L.circleMarker([37.2200, -80.4180], {
+  radius: 9, fillColor: "#7B2D8E", color: "#fff", weight: 1.5, opacity: 1, fillOpacity: 0.85
+}).bindPopup(`<strong>VMI at Virginia Tech</strong>2026-09-05 12:00<br>Lane Stadium<br>Blacksburg, VA<br>Level: D1`).addTo(layers["College FB"]);
+
+L.circleMarker([39.9012, -75.1675], {
+  radius: 9, fillColor: "#7B2D8E", color: "#fff", weight: 1.5, opacity: 1, fillOpacity: 0.85
+}).bindPopup(`<strong>Temple vs Penn State (Lincoln Financial Field)</strong>2026-09-12 12:00<br>Lincoln Financial Field<br>Philadelphia, PA<br>Level: D1`).addTo(layers["College FB"]);
+
+// Only add non-empty layers
+const overlays = {};
+if (layers["NFL"].getLayers().length) { layers["NFL"].addTo(map); overlays["NFL"] = layers["NFL"]; }
+if (layers["MLB"].getLayers().length) { layers["MLB"].addTo(map); overlays["MLB"] = layers["MLB"]; }
+if (layers["MLS"].getLayers().length) { layers["MLS"].addTo(map); overlays["MLS"] = layers["MLS"]; }
+if (layers["NWSL"].getLayers().length) { layers["NWSL"].addTo(map); overlays["NWSL"] = layers["NWSL"]; }
+if (layers["College FB"].getLayers().length) { layers["College FB"].addTo(map); overlays["College FB"] = layers["College FB"]; }
+L.control.layers(null, overlays, {collapsed: false}).addTo(map);
+
+// Legend
+const legend = L.control({position: 'bottomright'});
+legend.onAdd = function() {
+  const div = L.DomUtil.create('div', 'legend');
+  div.innerHTML = '<strong>Categories</strong>';
+  div.innerHTML += '<div><span class="dot" style="background:#013369"></span>NFL</div>';
+  div.innerHTML += '<div><span class="dot" style="background:#002D72"></span>MLB</div>';
+  div.innerHTML += '<div><span class="dot" style="background:#C8102E"></span>MLS</div>';
+  div.innerHTML += '<div><span class="dot" style="background:#00A3E0"></span>NWSL</div>';
+  div.innerHTML += '<div><span class="dot" style="background:#7B2D8E"></span>College FB</div>';
+  return div;
+};
+legend.addTo(map);
 </script>
 </body>
 </html>
