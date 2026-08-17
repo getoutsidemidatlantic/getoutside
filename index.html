@@ -27,6 +27,7 @@ tailwind.config = {
 </script>
 <style>
   .glass-card { background: rgba(15, 23, 42, 0.75); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1); }
+  .card-img { width: 100%; height: 7rem; object-fit: cover; display: block; }
 </style>
 </head>
 <body class="bg-slate-950 text-slate-100 font-sans antialiased">
@@ -94,21 +95,46 @@ tailwind.config = {
         See All Picks →
       </a>
     </div>
-    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-      <a href="weekends-hub.html" class="glass-card rounded-xl p-5 hover:border-amber-500/40 transition-colors">
-        <p class="text-amber-400 text-xs font-semibold mb-1">Maryland</p>
-        <p class="font-display font-bold text-white">Chesapeake & trails</p>
-        <p class="text-slate-400 text-xs mt-2">4 picks this weekend →</p>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+      <a href="weekends-hub.html" class="glass-card rounded-xl overflow-hidden hover:border-amber-500/40 transition-colors">
+        <img class="card-img" src="/assets/featured/maryland-ag-fair-sam.jpg" alt="Maryland Ag Fair - Sam">
+        <div class="p-4">
+          <p class="text-amber-400 text-xs font-semibold mb-1">Maryland</p>
+          <p class="font-display font-bold text-white text-sm">Ag Fair & Made in Maryland</p>
+          <p class="text-slate-400 text-xs mt-2">4 picks this weekend →</p>
+        </div>
       </a>
-      <a href="weekends-hub.html" class="glass-card rounded-xl p-5 hover:border-amber-500/40 transition-colors">
-        <p class="text-amber-400 text-xs font-semibold mb-1">Virginia</p>
-        <p class="font-display font-bold text-white">Blue Ridge & water</p>
-        <p class="text-slate-400 text-xs mt-2">4 picks this weekend →</p>
+      <a href="weekends-hub.html" class="glass-card rounded-xl overflow-hidden hover:border-amber-500/40 transition-colors">
+        <img class="card-img" src="/assets/featured/virginia-riverfest-jax.jpg" alt="Virginia - Jax">
+        <div class="p-4">
+          <p class="text-amber-400 text-xs font-semibold mb-1">Virginia</p>
+          <p class="font-display font-bold text-white text-sm">Arlington Fair & Wolf Trap</p>
+          <p class="text-slate-400 text-xs mt-2">4 picks this weekend →</p>
+        </div>
       </a>
-      <a href="weekends-hub.html" class="glass-card rounded-xl p-5 hover:border-amber-500/40 transition-colors">
-        <p class="text-amber-400 text-xs font-semibold mb-1">Pennsylvania</p>
-        <p class="font-display font-bold text-white">Laurel Highlands</p>
-        <p class="text-slate-400 text-xs mt-2">3 picks this weekend →</p>
+      <a href="weekends-hub.html" class="glass-card rounded-xl overflow-hidden hover:border-amber-500/40 transition-colors">
+        <img class="card-img" src="/assets/featured/pennsylvania-folk-dan.jpg" alt="Pennsylvania - Dan">
+        <div class="p-4">
+          <p class="text-amber-400 text-xs font-semibold mb-1">Pennsylvania</p>
+          <p class="font-display font-bold text-white text-sm">Folk Fest & Little Italy Days</p>
+          <p class="text-slate-400 text-xs mt-2">3 picks this weekend →</p>
+        </div>
+      </a>
+      <a href="weekends-hub.html" class="glass-card rounded-xl overflow-hidden hover:border-amber-500/40 transition-colors">
+        <img class="card-img" src="/assets/featured/delaware-peach-sam.jpg" alt="Delaware Peach - Sam">
+        <div class="p-4">
+          <p class="text-amber-400 text-xs font-semibold mb-1">Delaware</p>
+          <p class="font-display font-bold text-white text-sm">Peach Festival & Carnival</p>
+          <p class="text-slate-400 text-xs mt-2">3 picks this weekend →</p>
+        </div>
+      </a>
+      <a href="weekends-hub.html" class="glass-card rounded-xl overflow-hidden hover:border-amber-500/40 transition-colors">
+        <img class="card-img" src="/assets/featured/westvirginia-statefair-kevin.jpg" alt="West Virginia - Kevin">
+        <div class="p-4">
+          <p class="text-amber-400 text-xs font-semibold mb-1">West Virginia</p>
+          <p class="font-display font-bold text-white text-sm">State Fair · Trace · Sierra</p>
+          <p class="text-slate-400 text-xs mt-2">3 picks this weekend →</p>
+        </div>
       </a>
     </div>
   </div>
