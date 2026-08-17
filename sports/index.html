@@ -1,1 +1,83 @@
-PLACEHOLDER_TOO_LARGE
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=1.0"/>
+<title>Get Outside Mid-Atlantic · Ops Center</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="https://unpkg.com/leaflet.heat@0.2.0/dist/leaflet-heat.js"></script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Plus Jakarta Sans',system-ui,sans-serif;background:#0b1220;color:#e8eef7;overflow:hidden}
+header{background:linear-gradient(90deg,#020617 0%,#0a1628 55%,#0c1a2e 100%);padding:0 16px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #1e3a55;flex-wrap:wrap;gap:8px;z-index:1100;position:relative;min-height:56px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:inherit}
+.brand-name{font-family:Outfit,sans-serif;font-weight:800;font-size:1.05rem;letter-spacing:0.02em}
+.brand-name .amber{color:#f59e0b}
+.brand-sub{font-size:0.7rem;color:#94a3b8;font-weight:600}
+.header-right{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.kofi-btn{display:inline-flex;align-items:center;gap:4px;padding:4px 10px;border-radius:6px;background:rgba(255,255,255,0.06);border:1px solid #2a4a6a;color:#a8b8d0;font-size:0.75rem;font-weight:600;text-decoration:none;transition:all .15s}
+.kofi-btn:hover{border-color:#f59e0b;color:#fbbf24}
+.badge{background:#1a7f4e;color:#fff;font-size:.7rem;padding:3px 9px;border-radius:999px;font-weight:600}
+.time-filters{display:flex;gap:4px}
+.time-filters button{background:rgba(255,255,255,.06);border:1px solid #2a4a6a;color:#a8b8d0;font-size:.72rem;font-weight:600;padding:4px 10px;border-radius:6px;cursor:pointer}
+.time-filters button:hover{background:rgba(255,255,255,.1);color:#e8eef7}
+.time-filters button.active{background:#22c55e;border-color:#22c55e;color:#0b1220}
+#main{display:flex;height:calc(100vh - 56px)}
+#map{flex:1;min-width:0}
+.loading{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:#0b1220;z-index:500;font-size:0.9rem;color:#94a3b8}
+</style>
+</head>
+<body>
+<header>
+  <a class="brand" href="https://get-outside.info">
+    <div>
+      <div class="brand-name">GET <span class="amber">OUTSIDE</span></div>
+      <div class="brand-sub">Ops Center</div>
+    </div>
+  </a>
+  <div class="header-right">
+    <a class="kofi-btn" href="https://ko-fi.com/getoutsidemidatlantic" target="_blank" rel="noopener noreferrer" title="Buy me a coffee">☕ Support</a>
+    <div class="time-filters">
+      <button data-range="weekend">Weekend</button>
+      <button data-range="7d" class="active">7d</button>
+      <button data-range="30d">30d</button>
+    </div>
+    <span class="badge">Ops Center</span>
+  </div>
+</header>
+<div id="main">
+  <div id="map">
+    <div class="loading" id="loading">Loading Ops Center map…</div>
+  </div>
+</div>
+<script>
+// Data-separated loader. Map data + app logic load from external sources.
+// This keeps the page light and allows independent data updates.
+const map = L.map('map').setView([39.5, -77.5], 7);
+L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+  attribution: '&copy; OpenStreetMap &copy; CARTO',
+  subdomains: 'abcd',
+  maxZoom: 19
+}).addTo(map);
+
+// Attempt to load the full map app if present
+function tryLoadApp() {
+  const s = document.createElement('script');
+  s.src = './map-app.js';
+  s.onload = () => { document.getElementById('loading')?.remove(); };
+  s.onerror = () => {
+    // Fallback: basic map stays, loading message updates
+    const el = document.getElementById('loading');
+    if (el) el.textContent = 'Ops Center map ready · Data layers load when available';
+    setTimeout(() => el?.remove(), 1800);
+  };
+  document.body.appendChild(s);
+}
+tryLoadApp();
+</script>
+</body>
+</html>
