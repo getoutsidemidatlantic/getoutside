@@ -8,8 +8,7 @@ Get Outside Mid Atlantic covers outdoor recreation across Maryland, Virginia, Pe
 
 - **`index.html`** — main landing page
 - **`weekends-hub.html`** / **`weekends/`** — regional weekend guides
-- **`sports/index.html`** — Sports Operations Center (SOC) map
-- **`field/index.html`** — Field Operations Center (FOC)
+- **`sports/index.html`** — Ops Center map (data-separated loader)
 
 ## Regions
 
@@ -25,18 +24,25 @@ Get Outside Mid Atlantic covers outdoor recreation across Maryland, Virginia, Pe
 
 Plain HTML with Tailwind CSS via CDN, no build step. Fonts: Outfit + Plus Jakarta Sans (Google Fonts).
 
+**Architecture:** Data is kept separate from the presentation layer so most updates are data-only. This is the scaling path.
+
 ## Deployment
 
 Deploys automatically to Netlify on every push to **`main`**. No build command — static files as-is.
 
 **Netlify production branch must be `main`.**
 
-Never replace root `index.html` with the SOC/FOC maps.
+Never replace root `index.html` with the Ops Center map.
 
-## Sports & Field
+## Ops Center
 
-- **`/sports/`** — Sports Operations Center (SOC) — Grok production promotes
-- **`/field/`** — Field Operations Center (FOC)
+- **`/sports/`** — Ops Center — live map of pro, college, practice, and outdoor action
+- Data lives outside the main HTML so weekly refreshes stay light
+
+## Monetization
+
+Ko-fi tip jar: [ko-fi.com/getoutsidemidatlantic](https://ko-fi.com/getoutsidemidatlantic)  
+Subtle support button is present on the main site footer and inside the Ops Center header.
 
 ## Social
 
