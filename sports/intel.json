@@ -1,0 +1,50 @@
+{
+  "updated": "2026-08-16T14:00:00-04:00",
+  "headline": "Active & upcoming",
+  "big_money": [
+    {
+      "tag": "Fair",
+      "title": "State Fair of WV",
+      "note": "Through Aug 23 · Lewisburg · Trace Adkins / Sierra Ferrell energy",
+      "url": "https://statefairofwv.com",
+      "ends": "2026-08-23"
+    },
+    {
+      "tag": "Fair",
+      "title": "Montgomery County Ag Fair",
+      "note": "Through Aug 22 · Gaithersburg · peak weekend energy",
+      "url": "https://www.mcagfair.com/",
+      "ends": "2026-08-22"
+    },
+    {
+      "tag": "NFL",
+      "title": "Commanders Open Practice",
+      "note": "Wed Aug 19 · Ashburn · early outdoor session",
+      "url": "https://www.commanders.com/training-camp/",
+      "ends": "2026-08-19"
+    }
+  ],
+  "sleepers": [
+    {
+      "tag": "Nature",
+      "title": "Quiet nature windows this week",
+      "note": "Irvine / local trails · skip the fair crush",
+      "url": "/weekends/2026-08-13/maryland.html",
+      "ends": "2026-08-24"
+    },
+    {
+      "tag": "MiLB",
+      "title": "Harbor Park Tides stretch",
+      "note": "Norfolk · easier entry than stadium nights",
+      "url": "https://www.milb.com/norfolk",
+      "ends": "2026-08-24"
+    },
+    {
+      "tag": "College",
+      "title": "Camp / quiet campus windows",
+      "note": "Map layers · D2/D3 still open",
+      "url": "/sports/",
+      "ends": "2026-08-24"
+    }
+  ]
+}
