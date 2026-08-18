@@ -24,7 +24,7 @@ Shared visual rules:
 
 ---
 
-## Sam — Ops lead / map person
+## Dan — Ops lead / map person
 
 **Role:** Unofficial team lead. Carries the plan. Also the one who updates the plan three times.
 
@@ -59,7 +59,7 @@ Shared visual rules:
 **Look**
 - Sportier silhouette: vest, quick-dry, sun-faded colors
 - Paddle almost always in frame
-- Slightly more alert expression than Sam; still deadpan
+- Slightly more alert expression than Dan; still deadpan
 
 **Personality**
 - Optimistic about conditions
@@ -79,7 +79,7 @@ Shared visual rules:
 
 ---
 
-## Dan — hills / folk / inland person
+## Sam — hills / folk / inland person
 
 **Role:** Mountains, trails, small-town festivals, music under tents.
 
@@ -139,7 +139,7 @@ Shared visual rules:
 | Rule | Detail |
 |------|--------|
 | Cast size | Lead with one character per state card unless the prompt is explicitly “team shot” |
-| Team shot | Sam slightly forward or center; others flanking with their props |
+| Team shot | Dan slightly forward or center; others flanking with their props |
 | Text | Minimal. Prefer expression + prop over dialogue bubbles |
 | Branding | “Ops Center” only in UI/chrome — not printed on character clothing unless asked |
 | Continuity | Same face shapes and palette across weeks so the cast is recognizable at thumbnail size |
@@ -153,9 +153,9 @@ Use as a base and swap character + setting:
 > Construction-paper cutout illustration, flat colors, bold black outlines, South Park–adjacent deadpan style, original character only. [CHARACTER], [PROP], at [EVENT/PLACE], Mid-Atlantic outdoor weekend, simple shapes, limited palette, no photorealism, no text in image, square composition for a web card.
 
 Examples:
-- Sam + folded map + Maryland agricultural fair barns
+- Dan + folded map + Maryland agricultural fair barns
 - Jax + paddle + Virginia river festival
-- Dan + beanie + Pennsylvania folk festival tents
+- Sam + beanie + Pennsylvania folk festival tents
 - Kevin + broken paddle + West Virginia state fair midway
 
 ---
@@ -165,7 +165,7 @@ Examples:
 | Use | Do not use |
 |-----|------------|
 | Ops Center | SOC / Sports Operations Center (user-facing) |
-| Sam | Riley |
-| Jax, Dan, Kevin | Random new names without bible update |
+| Dan (Ops lead) | Riley |
+| Sam, Jax, Kevin | Random new names without bible update |
 
 When adding a fifth recurring face, append a section here first, then generate art.
