@@ -55,22 +55,18 @@ header{background:linear-gradient(90deg,#020617 0%,#0a1628 55%,#0c1a2e 100%);pad
   </div>
 </div>
 <script>
-// Data-separated loader. Map data + app logic load from external sources.
-// This keeps the page light and allows independent data updates.
-const map = L.map('map').setView([39.5, -77.5], 7);
+// Data-separated architecture: page shell + map-app.js + intel.json
+window.map = L.map('map').setView([39.5, -77.5], 7);
 L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
   attribution: '&copy; OpenStreetMap &copy; CARTO',
   subdomains: 'abcd',
   maxZoom: 19
-}).addTo(map);
+}).addTo(window.map);
 
-// Attempt to load the full map app if present
 function tryLoadApp() {
   const s = document.createElement('script');
   s.src = './map-app.js';
-  s.onload = () => { document.getElementById('loading')?.remove(); };
   s.onerror = () => {
-    // Fallback: basic map stays, loading message updates
     const el = document.getElementById('loading');
     if (el) el.textContent = 'Ops Center map ready · Data layers load when available';
     setTimeout(() => el?.remove(), 1800);
