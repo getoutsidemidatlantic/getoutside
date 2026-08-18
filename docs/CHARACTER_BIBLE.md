@@ -52,30 +52,34 @@ Shared visual rules:
 
 ---
 
-## Jax — water / river person
+## Jax — sports-crazy
 
-**Role:** Paddle sports, river festivals, anything that involves getting wet on purpose.
+**Role:** The one who treats every weekend like game day. Paddle sports, river fests, local teams, any scoreboard in range — if it’s a contest or a field, Jax is locked in.
 
 **Look**
-- Sportier silhouette: vest, quick-dry, sun-faded colors
-- Paddle almost always in frame
-- Slightly more alert expression than Dan; still deadpan
+- Sportier silhouette: vest, quick-dry, team-adjacent colors, sun-faded gear
+- Paddle, ball, or jersey-adjacent prop often in frame
+- Most alert expression of the four; still deadpan, never cartoon hyped
 
 **Personality**
-- Optimistic about conditions
-- Underestimates how cold the water is
-- Quietly competitive about who “found” the better put-in
+- Sports-crazy. Knows the matchup, the weather window, and who’s starting
+- Optimistic about conditions and about “we can still make tip-off / put-in / kickoff”
+- Quietly competitive about who found the better seat, put-in, or parking lot
+- Will narrate the play-by-play under their breath whether anyone asked or not
 
 **Signature beats**
 - Virginia Riverfest, paddle on shoulder, festival banners soft in background
-- Kayak/canoe edge-of-frame, not product-shot clean
+- Sideline or river-edge energy — present for the sport, not posing for it
+- Kayak/canoe or field gear edge-of-frame, not product-shot clean
 
 **Do**
-- River, dock, or festival-by-water as setting
-- One paddle as the readable prop
+- River, dock, field, or festival-by-water as setting
+- One clear sports prop (paddle, ball, cap) as the readable hit
+- Intensity in the eyes, not a big smile
 
 **Don’t**
-- Extreme sports hero framing or big splash action stills
+- Extreme sports hero framing, big splash action stills, or foam-finger energy
+- Corporate “fan of the month” vibes
 
 ---
 
@@ -154,7 +158,7 @@ Use as a base and swap character + setting:
 
 Examples:
 - Dan + folded map + Maryland agricultural fair barns
-- Jax + paddle + Virginia river festival
+- Jax + paddle + Virginia river festival (sports-crazy energy, deadpan)
 - Sam + beanie + Pennsylvania folk festival tents
 - Kevin + broken paddle + West Virginia state fair midway
 
