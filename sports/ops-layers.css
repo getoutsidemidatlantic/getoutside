@@ -24,3 +24,38 @@
 .live-clock {
   letter-spacing: 0.08em;
 }
+
+/* Field + Entertainment collapsible groups */
+.ops-group {
+  margin: 4px 0 8px;
+}
+.ops-group-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 8px 14px;
+  border: none;
+  background: rgba(14, 165, 233, 0.08);
+  color: #7dd3fc;
+  font-family: 'Share Tech Mono', ui-monospace, monospace !important;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: pointer;
+  text-align: left;
+}
+.ops-group-toggle:hover {
+  background: rgba(14, 165, 233, 0.14);
+}
+.ops-group-chevron {
+  color: #64748b;
+  font-size: 0.75rem;
+}
+.ops-group-body {
+  padding: 2px 0 4px;
+}
+.ops-group-body .layer-item {
+  padding-left: 18px;
+}
