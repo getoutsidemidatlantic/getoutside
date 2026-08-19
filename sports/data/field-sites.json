@@ -1,0 +1,23 @@
+{
+  "updated": "2026-08-19",
+  "window": "2026-08-21",
+  "sites": [
+    {"id":"mcagfair","name":"Montgomery County Agricultural Fair","sublayer":"Festivals","group":"Entertainment","lat":39.154,"lon":-77.201,"city":"Gaithersburg, MD","dates":"Through Aug 22","official":"https://www.mcagfair.com/","note":"Final full days Fri–Sat. Livestock, rides, music.","time_sensitive":true},
+    {"id":"statefairwv","name":"State Fair of West Virginia","sublayer":"Festivals","group":"Entertainment","lat":37.801,"lon":-80.445,"city":"Lewisburg, WV","dates":"Through Aug 22","official":"https://statefairofwv.com","note":"Final days. Stone Temple Pilots Sat. DockDogs daytime.","time_sensitive":true},
+    {"id":"southerngap","name":"Southern Gap Trails & Tunes","sublayer":"Festivals","group":"Entertainment","lat":37.277,"lon":-82.096,"city":"Grundy, VA","dates":"Aug 21–23","official":"","note":"Bluegrass + ATV/mountain trails.","time_sensitive":true},
+    {"id":"parenfaire","name":"PA Renaissance Faire — Legends of the Sea","sublayer":"Festivals","group":"Entertainment","lat":40.192,"lon":-76.478,"city":"Manheim, PA","dates":"Aug 22–23","official":"https://parenfaire.com/","note":"Gates 11 AM. Full shire experience.","time_sensitive":true},
+    {"id":"afrofoodie","name":"Delaware Afro-Foodie Festival","sublayer":"Festivals","group":"Entertainment","lat":39.746,"lon":-75.547,"city":"Wilmington, DE","dates":"Aug 22","official":"","note":"Rodney Square noon–7. Free.","time_sensitive":true},
+    {"id":"freeman","name":"Freeman Arts Pavilion weekend","sublayer":"Concerts","group":"Entertainment","lat":38.460,"lon":-75.154,"city":"Selbyville, DE","dates":"Aug 21–23","official":"https://freemanartspavilion.com","note":"Almost Queen / Tartan Terrors / Marshall Tucker Band.","time_sensitive":true},
+    {"id":"quietwaters","name":"Quiet Waters Park concert","sublayer":"Concerts","group":"Entertainment","lat":38.935,"lon":-76.508,"city":"Annapolis area, MD","dates":"Aug 22 evening","official":"","note":"Outdoor evening music. Bring chair/blanket.","time_sensitive":true},
+    {"id":"leesburgkites","name":"Leesburg Festival of Kites & Crafts","sublayer":"Festivals","group":"Entertainment","lat":39.126,"lon":-77.567,"city":"Leesburg, VA","dates":"Aug 22","official":"","note":"Ida Lee Park 11–5. Free.","time_sensitive":true},
+    {"id":"pittstontomato","name":"Pittston Tomato Festival","sublayer":"Festivals","group":"Entertainment","lat":41.325,"lon":-75.789,"city":"Pittston, PA","dates":"Aug 20–23","official":"","note":"Food + music, Wyoming Valley.","time_sensitive":true},
+    {"id":"ecsc","name":"East Coast Surfing Championships","sublayer":"Lakes","group":"Field","lat":36.852,"lon":-75.978,"city":"Virginia Beach, VA","dates":"Begins Aug 23","official":"","note":"Free to watch from the sand.","time_sensitive":true},
+    {"id":"codays","name":"C&O Canal Days","sublayer":"History","group":"Field","lat":39.599,"lon":-77.820,"city":"Williamsport, MD","dates":"Aug 21–23","official":"https://www.nps.gov/choh/","note":"Canal history, vendors, towpath.","time_sensitive":true},
+    {"id":"dragonboat","name":"Mountain Maryland Dragon Boat Festival","sublayer":"Paddling","group":"Field","lat":39.506,"lon":-79.322,"city":"Deep Creek Lake, MD","dates":"Aug 22","official":"","note":"Dragon boat racing + festival energy.","time_sensitive":true},
+    {"id":"assateague","name":"Assateague Island camping / beach","sublayer":"Camping","group":"Field","lat":38.200,"lon":-75.155,"city":"Assateague, MD","dates":"Standing","official":"https://www.nps.gov/asis/","note":"Ocean camping + wild horses. Book ahead.","time_sensitive":false},
+    {"id":"deepcreek","name":"Deep Creek Lake State Park","sublayer":"Camping","group":"Field","lat":39.506,"lon":-79.322,"city":"Swanton, MD","dates":"Standing","official":"https://dnr.maryland.gov/publiclands/","note":"Camping, paddling, lake access.","time_sensitive":false},
+    {"id":"newrivergorge","name":"New River Gorge (NPS)","sublayer":"Trails","group":"Field","lat":38.070,"lon":-81.081,"city":"Fayetteville, WV","dates":"Standing","official":"https://www.nps.gov/neri/","note":"Signature hikes, overlooks, bridge views.","time_sensitive":false},
+    {"id":"shenandoah","name":"Shenandoah — Skyline Drive","sublayer":"Scenic Lookouts","group":"Field","lat":38.533,"lon":-78.453,"city":"Shenandoah, VA","dates":"Standing","official":"https://www.nps.gov/shen/","note":"Overlooks + short trails.","time_sensitive":false},
+    {"id":"cotowpath","name":"C&O Canal towpath (Williamsport)","sublayer":"Trails","group":"Field","lat":39.599,"lon":-77.820,"city":"Williamsport, MD","dates":"Standing","official":"https://www.nps.gov/choh/","note":"Flat towpath walk/bike.","time_sensitive":false}
+  ]
+}
