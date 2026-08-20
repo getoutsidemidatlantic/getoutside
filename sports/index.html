@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- SOC FORCE DEPLOY 2026-08-20T00:30Z -->
+<!-- SOC dual-data 2026-08-20 -->
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=1.0"/>
 <title>Get Outside Mid-Atlantic · Sports Operations Center (SOC)</title>
@@ -95,16 +95,13 @@ body.mobile-layers-open .scrim,body.mobile-feed-open .scrim{display:block}
 .event-date{font-size:.7rem;color:#38bdf8;font-weight:600}
 .event-teams{font-size:.88rem;font-weight:600;color:#e8eef7;margin-top:2px;line-height:1.3}
 .event-sport{font-size:.7rem;color:#8ba0bc;margin-top:2px}
-.event-detail{display:none;padding:0 12px 12px;border-top:1px solid #1e3a55;font-size:.78rem;line-height:1.45;color:#c5d4e8}
-.event-card.open .event-detail{display:block}
+#statusBar{position:absolute;top:10px;left:50%;transform:translateX(-50%);z-index:650;background:rgba(15,23,42,.9);border:1px solid #1e3a55;padding:6px 14px;border-radius:999px;font-size:.72rem;color:#94a3b8;pointer-events:none}
+#statusBar.ok{color:#4ade80;border-color:#16a34a55}
+#statusBar.err{color:#f87171;border-color:#dc262655}
 .popup-mini-title{font-weight:700;color:#7dd3fc;font-size:.9rem}
 .popup-mini-meta{font-size:.75rem;color:#a8b8d0;margin-top:2px}
 .popup-wx{font-size:.72rem;color:#94a3b8;margin-top:4px}
 .popup-mini-btn{margin-top:8px;background:#1e40af;color:#fff;border:none;padding:6px 10px;border-radius:6px;font-size:.72rem;font-weight:600;cursor:pointer;width:100%}
-.popup-mini-btn:hover{background:#1d4ed8}
-#statusBar{position:absolute;top:10px;left:50%;transform:translateX(-50%);z-index:650;background:rgba(15,23,42,.9);border:1px solid #1e3a55;padding:6px 14px;border-radius:999px;font-size:.72rem;color:#94a3b8;pointer-events:none}
-#statusBar.ok{color:#4ade80;border-color:#16a34a55}
-#statusBar.err{color:#f87171;border-color:#dc262655}
 </style>
 </head>
 <body>
@@ -126,7 +123,6 @@ body.mobile-layers-open .scrim,body.mobile-feed-open .scrim{display:block}
     <span class="defcon d5" id="defconBadge" title="Sports DEFCON">D5</span>
   </div>
 </header>
-
 <div id="main">
   <aside id="layers">
     <div class="layers-title">Sports Layers</div>
@@ -140,24 +136,14 @@ body.mobile-layers-open .scrim,body.mobile-feed-open .scrim{display:block}
     <label class="layer-item"><input type="checkbox" id="lyWeather"> <span class="layer-swatch" style="background:#38bdf8"></span> <span class="layer-label">Weather vibes</span></label>
     <label class="layer-item"><input type="checkbox" id="lyHype"> <span class="layer-swatch" style="background:#ec4899"></span> <span class="layer-label">Hype mode</span></label>
   </aside>
-
-  <div id="map"><div id="statusBar">SOC loading v2…</div></div>
-
+  <div id="map"><div id="statusBar">SOC loading…</div></div>
   <aside id="feed">
-    <div class="feed-header">
-      <span>Live Feed</span>
-      <span id="feedCount" style="font-size:.7rem;color:#6b7f9a">0 events</span>
-    </div>
+    <div class="feed-header"><span>Live Feed</span><span id="feedCount" style="font-size:.7rem;color:#6b7f9a">0 events</span></div>
     <div id="feedScroll"></div>
   </aside>
 </div>
-
-<div class="mobile-bar">
-  <button id="btnLayers">Layers</button>
-  <button id="btnFeed">Feed</button>
-</div>
+<div class="mobile-bar"><button id="btnLayers">Layers</button><button id="btnFeed">Feed</button></div>
 <div class="scrim" id="scrim"></div>
-
 <div id="panel">
   <div class="panel-header">
     <button class="panel-close" onclick="closePanel()">×</button>
@@ -167,14 +153,8 @@ body.mobile-layers-open .scrim,body.mobile-feed-open .scrim{display:block}
   </div>
   <div class="panel-body" id="panelBody"></div>
 </div>
-
-<div id="ticker">
-  <div class="ticker-label">TICKER</div>
-  <div class="ticker-track"><div class="ticker-content" id="tickerContent">Loading outdoor sports intel…</div></div>
-</div>
-
+<div id="ticker"><div class="ticker-label">TICKER</div><div class="ticker-track"><div class="ticker-content" id="tickerContent">Loading outdoor sports intel…</div></div></div>
 <script>
-/* SOC Core — data-separated. Data: ./data/soc-data.json | Field layers: map-app.js */
 (function () {
   'use strict';
   const statusEl = document.getElementById('statusBar');
@@ -211,9 +191,8 @@ body.mobile-layers-open .scrim,body.mobile-feed-open .scrim{display:block}
       const wx = outdoorEv ? shortWx(outdoorEv) : '•';
       const marker = L.marker([v.lat, v.lon], { icon: makeIcon(v.type, wx) });
       markerById[v.id] = marker;
-      const prefix = (t === 'practice' || t === 'college') ? '🏈 ' : '';
       const wxLine = outdoorEv ? '<div class="popup-wx">☁ ' + (outdoorEv.weather || '') + '</div>' : '';
-      marker.bindPopup('<div class="popup-mini-title">' + prefix + v.name + '</div><div class="popup-mini-meta">' + (v.city || '') + ' · ' + (v.eventCount || (v.events||[]).length) + ' event(s)</div>' + wxLine + '<button class="popup-mini-btn" onclick="openPanel(\'' + v.id + '\')">Open venue intel →</button>');
+      marker.bindPopup('<div class="popup-mini-title">' + v.name + '</div><div class="popup-mini-meta">' + (v.city || '') + ' · ' + (v.eventCount || (v.events||[]).length) + ' event(s)</div>' + wxLine + '<button class="popup-mini-btn" onclick="openPanel(\'' + v.id + '\')">Open venue intel →</button>');
       layersByType[t].addLayer(marker);
     });
     Object.keys(counts).forEach(function(t){ const el = document.getElementById('cnt-' + t); if (el) el.textContent = counts[t] || 0; });
@@ -224,7 +203,7 @@ body.mobile-layers-open .scrim,body.mobile-feed-open .scrim{display:block}
     const items = [];
     venues.forEach(function(v) {
       (v.events || []).forEach(function(ev) {
-        items.push({ venue_id: v.id, venue: v.name, city: v.city, type: v.type, lat: v.lat, lon: v.lon, event_name: ev.name || ev.event_name || ev.teams || 'Event', teams: ev.teams || ev.name, date: ev.date, time: ev.time, outdoor: ev.outdoor, weather: ev.weather, official: ev.official || v.official });
+        items.push({ venue_id: v.id, venue: v.name, city: v.city, type: v.type, lat: v.lat, lon: v.lon, event_name: ev.name || ev.event_name || ev.teams || 'Event', teams: ev.teams || ev.name, date: ev.date, time: ev.time, outdoor: ev.outdoor, weather: ev.weather });
       });
     });
     const now = new Date();
@@ -236,7 +215,7 @@ body.mobile-layers-open .scrim,body.mobile-feed-open .scrim{display:block}
     if (mq.length) {
       html += '<div class="marquee-section"><div class="marquee-label">Marquee</div>';
       mq.forEach(function(e) {
-        html += '<div class="feed-card marquee" onclick="flyTo(\'' + (e.venue_id || (e.lat + ',' + e.lon)) + '\')"><div class="feed-card-date">' + (e.date || '') + ' · ' + (e.time || '') + '</div><div class="feed-card-title">' + (e.teams || e.event_name) + '</div><div class="feed-card-meta">' + (e.venue || '') + ' · ' + (e.city || '') + ' · ' + (e.sport || e.league || '') + '</div><div class="feed-card-wx">' + (e.weather || '') + '</div></div>';
+        html += '<div class="feed-card marquee" onclick="flyTo(\'' + (e.venue_id || '') + '\')"><div class="feed-card-date">' + (e.date || '') + ' · ' + (e.time || '') + '</div><div class="feed-card-title">' + (e.teams || e.event_name) + '</div><div class="feed-card-meta">' + (e.venue || '') + ' · ' + (e.city || '') + '</div><div class="feed-card-wx">' + (e.weather || '') + '</div></div>';
       });
       html += '</div>';
     }
@@ -257,27 +236,19 @@ body.mobile-layers-open .scrim,body.mobile-feed-open .scrim{display:block}
     document.getElementById('panelCity').textContent = (v.city || '') + (v.type ? ' · ' + v.type.toUpperCase() : '');
     const chips = document.getElementById('panelChips');
     chips.innerHTML = '<span class="chip count">' + (v.events || []).length + ' events</span>';
-    if (v.type) chips.innerHTML += '<span class="chip">' + v.type + '</span>';
     let body = '';
     if (v.history) body += '<div class="panel-section-label">History</div><p style="font-size:.8rem;color:#c5d4e8;margin-bottom:12px">' + v.history + '</p>';
-    if (v.people_love) body += '<div class="panel-section-label">Fans love</div><p style="font-size:.8rem;color:#c5d4e8;margin-bottom:12px">' + v.people_love + '</p>';
     body += '<div class="panel-section-label">Upcoming</div>';
     (v.events || []).slice(0, 8).forEach(function(ev) {
-      body += '<div class="event-card"><div class="event-card-head"><div><div class="event-date">' + (ev.date || '') + ' ' + (ev.time || '') + '</div><div class="event-teams">' + (ev.teams || ev.name || 'Event') + '</div><div class="event-sport">' + (ev.outdoor === 'Yes' ? 'Outdoor' : '') + ' ' + (ev.weather || '') + '</div></div></div></div>';
+      body += '<div class="event-card"><div class="event-card-head"><div><div class="event-date">' + (ev.date || '') + ' ' + (ev.time || '') + '</div><div class="event-teams">' + (ev.teams || ev.name || 'Event') + '</div><div class="event-sport">' + (ev.weather || '') + '</div></div></div></div>';
     });
-    if (!(v.events || []).length) body += '<p style="color:#6b7f9a;font-size:.8rem">No events loaded for this venue in the current data window.</p>';
     document.getElementById('panelBody').innerHTML = body;
     document.getElementById('panel').classList.add('open');
     if (v.lat && v.lon) map.flyTo([v.lat, v.lon], 11, { duration: 0.8 });
   };
   window.closePanel = function(){ document.getElementById('panel').classList.remove('open'); };
-  window.flyTo = function(idOrCoords) {
-    if (idOrCoords && idOrCoords.indexOf && idOrCoords.indexOf(',') > -1) {
-      const parts = idOrCoords.split(',').map(Number);
-      if (!isNaN(parts[0])) map.flyTo([parts[0], parts[1]], 11);
-      return;
-    }
-    const m = markerById[idOrCoords];
+  window.flyTo = function(id) {
+    const m = markerById[id];
     if (m) { map.flyTo(m.getLatLng(), 11); m.openPopup(); }
   };
   function syncLayerVisibility() {
@@ -302,25 +273,23 @@ body.mobile-layers-open .scrim,body.mobile-feed-open .scrim{display:block}
   });
   function tick(){ const el = document.getElementById('liveClock'); if (el) el.textContent = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }); }
   setInterval(tick, 1000); tick();
-  const DEFCON = 5;
   const defconEl = document.getElementById('defconBadge');
-  if (defconEl) { defconEl.classList.add('d' + DEFCON); defconEl.title = 'Sports DEFCON ' + DEFCON + ' — FULL SCALE MADNESS'; }
+  if (defconEl) { defconEl.classList.add('d5'); defconEl.title = 'Sports DEFCON 5'; }
   (function(){
     const btnL = document.getElementById('btnLayers'), btnF = document.getElementById('btnFeed'), scrim = document.getElementById('scrim');
     function closeMobileDrawers(){ document.body.classList.remove('mobile-layers-open','mobile-feed-open'); btnL && btnL.classList.remove('active'); btnF && btnF.classList.remove('active'); setTimeout(function(){ try{ map.invalidateSize(); }catch(e){} }, 300); }
-    function openLayers(){ document.body.classList.remove('mobile-feed-open'); btnF && btnF.classList.remove('active'); document.body.classList.add('mobile-layers-open'); btnL && btnL.classList.add('active'); }
-    function openFeed(){ document.body.classList.remove('mobile-layers-open'); btnL && btnL.classList.remove('active'); document.body.classList.add('mobile-feed-open'); btnF && btnF.classList.add('active'); }
-    btnL && btnL.addEventListener('click', function(){ if (document.body.classList.contains('mobile-layers-open')) closeMobileDrawers(); else openLayers(); });
-    btnF && btnF.addEventListener('click', function(){ if (document.body.classList.contains('mobile-feed-open')) closeMobileDrawers(); else openFeed(); });
+    btnL && btnL.addEventListener('click', function(){ if (document.body.classList.contains('mobile-layers-open')) closeMobileDrawers(); else { document.body.classList.remove('mobile-feed-open'); document.body.classList.add('mobile-layers-open'); btnL.classList.add('active'); } });
+    btnF && btnF.addEventListener('click', function(){ if (document.body.classList.contains('mobile-feed-open')) closeMobileDrawers(); else { document.body.classList.remove('mobile-layers-open'); document.body.classList.add('mobile-feed-open'); btnF.classList.add('active'); } });
     scrim && scrim.addEventListener('click', closeMobileDrawers);
-    window.addEventListener('resize', function(){ if (window.innerWidth > 900) closeMobileDrawers(); try{ map.invalidateSize(); }catch(e){} });
   })();
-  setStatus('SOC loading v2…');
-  fetch('./data/soc-data.json', { cache: 'no-store' })
-    .then(function(r){ if (!r.ok) throw new Error('soc-data ' + r.status); return r.json(); })
-    .then(function(data){
-      venues = data.venues || [];
-      marquee = data.marquee || [];
+  setStatus('SOC loading…');
+  Promise.all([
+    fetch('./data/soc-a.json', { cache: 'no-store' }).then(function(r){ if (!r.ok) throw new Error('soc-a ' + r.status); return r.json(); }),
+    fetch('./data/soc-b.json', { cache: 'no-store' }).then(function(r){ if (!r.ok) throw new Error('soc-b ' + r.status); return r.json(); })
+  ])
+    .then(function(parts){
+      venues = (parts[0].venues || []).concat(parts[1].venues || []);
+      marquee = parts[0].marquee || parts[1].marquee || [];
       buildMarkers();
       syncLayerVisibility();
       renderFeed();
@@ -330,7 +299,7 @@ body.mobile-layers-open .scrim,body.mobile-feed-open .scrim{display:block}
     .catch(function(err){
       console.error('[SOC] data load failed', err);
       setStatus('Data load failed — check console', 'err');
-      document.getElementById('feedScroll').innerHTML = '<div style="padding:16px;color:#f87171;font-size:.8rem">Could not load soc-data.json. ' + err.message + '</div>';
+      document.getElementById('feedScroll').innerHTML = '<div style="padding:16px;color:#f87171;font-size:.8rem">Could not load SOC data. ' + err.message + '</div>';
     });
 })();
 </script>
