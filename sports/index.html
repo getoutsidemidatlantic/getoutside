@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=1.0"/>
-<title>Get Outside Mid-Atlantic · Sports Operations Center (SOC)</title>
+<title>Get Outside Mid-Atlantic · Ops Center</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -108,7 +108,7 @@ body.show-weather .wx-chip{display:block}
 <header>
   <a class="brand" href="/">
     <div class="brand-mark">GO</div>
-    <div><div class="brand-text">Get Outside</div><div class="brand-sub">Sports Ops Center</div></div>
+    <div><div class="brand-text">Get Outside</div><div class="brand-sub">Ops Center</div></div>
   </a>
   <div class="header-right">
     <div class="time-filters">
@@ -117,7 +117,7 @@ body.show-weather .wx-chip{display:block}
       <button data-range="30">30d</button>
     </div>
     <span class="badge" id="liveClock">--:--</span>
-    <span class="defcon d5" id="defconBadge" title="Sports DEFCON">D5</span>
+    <span class="defcon d5" id="defconBadge" title="DEFCON">D5</span>
   </div>
 </header>
 <div id="main">
@@ -139,7 +139,7 @@ body.show-weather .wx-chip{display:block}
     <label class="layer-item"><input type="checkbox" id="lyWeather"> <span class="layer-swatch" style="background:#38bdf8">☁</span> <span class="layer-label">Weather vibes</span></label>
     <label class="layer-item"><input type="checkbox" id="lyHype"> <span class="layer-swatch" style="background:#ec4899">🔥</span> <span class="layer-label">Hype mode</span></label>
   </aside>
-  <div id="map"><div id="statusBar">SOC loading…</div></div>
+  <div id="map"><div id="statusBar">Loading…</div></div>
   <aside id="feed">
     <div class="feed-header"><span>Live Feed</span><span id="feedCount" style="font-size:.7rem;color:#6b7f9a">0 events</span></div>
     <div id="feedScroll"></div>
@@ -156,7 +156,7 @@ body.show-weather .wx-chip{display:block}
   </div>
   <div class="panel-body" id="panelBody"></div>
 </div>
-<div id="ticker"><div class="ticker-label">TICKER</div><div class="ticker-track"><div class="ticker-content" id="tickerContent">Loading outdoor sports intel…</div></div></div>
+<div id="ticker"><div class="ticker-label">TICKER</div><div class="ticker-track"><div class="ticker-content" id="tickerContent">Loading outdoor intel…</div></div></div>
 <script>
 (function () {
   'use strict';
@@ -237,7 +237,7 @@ body.show-weather .wx-chip{display:block}
     box.innerHTML = html;
     const tickerBits = mq.slice(0, 6).map(function(e){ return (e.teams || e.event_name) + ' · ' + (e.date || ''); });
     const tick = document.getElementById('tickerContent');
-    if (tick) tick.textContent = tickerBits.length ? tickerBits.join('   ✦   ') + '   ✦   ' : 'Sports Ops Center · Mid-Atlantic outdoor action';
+    if (tick) tick.textContent = tickerBits.length ? tickerBits.join('   ✦   ') + '   ✦   ' : 'Ops Center · Mid-Atlantic outdoor action';
   }
   window.openPanel = function(id) {
     const v = venues.find(function(x){ return x.id === id; });
@@ -272,7 +272,6 @@ body.show-weather .wx-chip{display:block}
     cb.addEventListener('change', function(){ syncLayerVisibility(); renderFeed(); });
   });
   document.getElementById('lyWeather') && document.getElementById('lyWeather').addEventListener('change', function(e){ document.body.classList.toggle('show-weather', e.target.checked); });
-  // Select all / Clear all
   document.getElementById('btnSelectAll') && document.getElementById('btnSelectAll').addEventListener('click', function(){
     document.querySelectorAll('#layers input[data-type]').forEach(function(cb){
       if (!cb.checked) { cb.checked = true; cb.dispatchEvent(new Event('change', { bubbles: true })); }
@@ -300,10 +299,10 @@ body.show-weather .wx-chip{display:block}
     btnF && btnF.addEventListener('click', function(){ if (document.body.classList.contains('mobile-feed-open')) closeMobileDrawers(); else { document.body.classList.remove('mobile-layers-open'); document.body.classList.add('mobile-feed-open'); btnF.classList.add('active'); } });
     scrim && scrim.addEventListener('click', closeMobileDrawers);
   })();
-  setStatus('SOC loading…');
+  setStatus('Loading…');
   Promise.all([
-    fetch('./data/soc-a.json', { cache: 'no-store' }).then(function(r){ if (!r.ok) throw new Error('soc-a ' + r.status); return r.json(); }),
-    fetch('./data/soc-b.json', { cache: 'no-store' }).then(function(r){ if (!r.ok) throw new Error('soc-b ' + r.status); return r.json(); })
+    fetch('./data/soc-a.json', { cache: 'no-store' }).then(function(r){ if (!r.ok) throw new Error('data-a ' + r.status); return r.json(); }),
+    fetch('./data/soc-b.json', { cache: 'no-store' }).then(function(r){ if (!r.ok) throw new Error('data-b ' + r.status); return r.json(); })
   ])
     .then(function(parts){
       venues = (parts[0].venues || []).concat(parts[1].venues || []);
@@ -311,12 +310,12 @@ body.show-weather .wx-chip{display:block}
       buildMarkers();
       syncLayerVisibility();
       renderFeed();
-      setStatus('SOC live · ' + venues.length + ' venues', 'ok');
+      setStatus('Live · ' + venues.length + ' venues', 'ok');
     })
     .catch(function(err){
-      console.error('[SOC] data load failed', err);
+      console.error('[Ops] data load failed', err);
       setStatus('Data load failed', 'err');
-      document.getElementById('feedScroll').innerHTML = '<div style="padding:16px;color:#f87171;font-size:.8rem">Could not load SOC data. ' + err.message + '</div>';
+      document.getElementById('feedScroll').innerHTML = '<div style="padding:16px;color:#f87171;font-size:.8rem">Could not load data. ' + err.message + '</div>';
     });
 })();
 </script>
