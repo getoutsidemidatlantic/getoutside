@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- SOC dual-data 2026-08-20 -->
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=1.0"/>
 <title>Get Outside Mid-Atlantic · Sports Operations Center (SOC)</title>
@@ -23,19 +22,22 @@ header{background:linear-gradient(90deg,#020617 0%,#0a1628 55%,#0c1a2e 100%);pad
 .time-filters button:hover{background:rgba(255,255,255,.1);color:#e8eef7}
 .time-filters button.active{background:#22c55e;border-color:#22c55e;color:#0b1220}
 #main{padding-bottom:36px;display:flex;height:calc(100vh - 48px)}
-#layers{width:220px;min-width:200px;background:#0a1220;border-right:1px solid #1e3a55;display:flex;flex-direction:column;flex-shrink:0;z-index:600;overflow-y:auto;max-height:100%}
-.layers-title{padding:12px 14px 8px;font-size:.68rem;text-transform:uppercase;letter-spacing:.08em;color:#6b7f9a;font-weight:700}
-.layer-item{display:flex;align-items:center;gap:10px;padding:8px 14px;cursor:pointer;border:none;background:transparent;width:100%;text-align:left;color:#c5d4e8;font-size:.82rem;font-family:inherit}
+#layers{width:230px;min-width:200px;background:#0a1220;border-right:1px solid #1e3a55;display:flex;flex-direction:column;flex-shrink:0;z-index:600;overflow-y:auto;max-height:100%}
+.layers-title{padding:12px 12px 8px;font-size:.68rem;text-transform:uppercase;letter-spacing:.08em;color:#6b7f9a;font-weight:700;display:flex;align-items:center;justify-content:space-between;gap:6px}
+.layers-actions{display:flex;gap:4px}
+.layers-actions button{font-size:.62rem;font-weight:700;letter-spacing:.03em;text-transform:uppercase;padding:3px 7px;border-radius:5px;border:1px solid #334155;background:#0f172a;color:#94a3b8;cursor:pointer}
+.layers-actions button:hover{background:#1e293b;color:#e2e8f0}
+.layer-item{display:flex;align-items:center;gap:8px;padding:7px 12px;cursor:pointer;border:none;background:transparent;width:100%;text-align:left;color:#c5d4e8;font-size:.82rem;font-family:inherit}
 .layer-item:hover{background:rgba(255,255,255,.04)}
 .layer-item input{accent-color:#38bdf8;width:15px;height:15px;flex-shrink:0}
-.layer-swatch{width:12px;height:12px;border-radius:50%;flex-shrink:0;border:1.5px solid rgba(255,255,255,.3)}
+.layer-swatch{width:22px;height:22px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:13px;border:1.5px solid rgba(255,255,255,.25)}
 .layer-label{flex:1}
 .layer-count{font-size:.68rem;color:#6b7f9a;font-variant-numeric:tabular-nums}
 #map{flex:1;height:100%;min-height:300px;background:#0b1220;z-index:1}
 #feed{width:320px;min-width:280px;background:#0a1220;border-left:1px solid #1e3a55;display:flex;flex-direction:column;flex-shrink:0;z-index:600}
 .feed-header{padding:12px 14px 8px;font-size:.68rem;text-transform:uppercase;letter-spacing:.08em;color:#6b7f9a;font-weight:700;border-bottom:1px solid #1e3a55;display:flex;justify-content:space-between;align-items:center}
 #feedScroll{flex:1;overflow-y:auto;padding:8px}
-.feed-card{background:rgba(255,255,255,.03);border:1px solid #1e3a55;border-radius:10px;padding:10px 12px;margin-bottom:8px;cursor:pointer;transition:background .15s}
+.feed-card{background:rgba(255,255,255,.03);border:1px solid #1e3a55;border-radius:10px;padding:10px 12px;margin-bottom:8px;cursor:pointer}
 .feed-card:hover{background:rgba(255,255,255,.06)}
 .feed-card.marquee{border-color:#f59e0b55;background:rgba(245,158,11,.06)}
 .feed-card-date{font-size:.68rem;color:#38bdf8;font-weight:600}
@@ -50,13 +52,11 @@ body.show-weather .feed-card-wx{display:block}
 .ticker-track{flex:1;overflow:hidden;position:relative;height:100%}
 .ticker-content{display:inline-block;white-space:nowrap;padding-left:100%;animation:ticker 55s linear infinite;line-height:36px;color:#a8b8d0}
 @keyframes ticker{0%{transform:translateX(0)}100%{transform:translateX(-100%)}}
-.defcon{font-size:.65rem;font-weight:800;padding:3px 8px;border-radius:4px;letter-spacing:.04em;cursor:help}
-.defcon.d1{background:#166534;color:#bbf7d0}.defcon.d2{background:#1e40af;color:#bfdbfe}
-.defcon.d3{background:#a16207;color:#fef3c7}.defcon.d4{background:#9a3412;color:#fed7aa}
+.defcon{font-size:.65rem;font-weight:800;padding:3px 8px;border-radius:4px;letter-spacing:.04em}
 .defcon.d5{background:#7f1d1d;color:#fecaca}
 .brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:inherit}
 .brand-mark{width:28px;height:28px;border-radius:6px;background:linear-gradient(135deg,#22c55e,#16a34a);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.85rem;color:#0b1220}
-.brand-text{font-family:Outfit,system-ui,sans-serif;font-weight:700;font-size:.95rem;letter-spacing:-.01em}
+.brand-text{font-family:Outfit,system-ui,sans-serif;font-weight:700;font-size:.95rem}
 .brand-sub{font-size:.65rem;color:#6b7f9a;font-weight:500;margin-top:-2px}
 .mobile-bar{display:none;position:fixed;bottom:36px;left:0;right:0;height:48px;background:#0a1220;border-top:1px solid #1e3a55;z-index:1250;padding:0 8px;gap:8px;align-items:center;justify-content:space-around}
 .mobile-bar button{flex:1;height:36px;border:1px solid #2a4a6a;background:rgba(255,255,255,.04);color:#c5d4e8;border-radius:8px;font-size:.75rem;font-weight:600;cursor:pointer}
@@ -72,16 +72,17 @@ body.mobile-layers-open .scrim,body.mobile-feed-open .scrim{display:block}
   .mobile-bar{display:flex}
   .header-right .time-filters{display:none}
 }
-.soc-icon{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;color:#fff;border:2.5px solid #fff;box-shadow:0 2px 8px rgba(0,0,0,.45)}
-.soc-icon.nfl{background:#1d4ed8}.soc-icon.mlb{background:#dc2626}.soc-icon.mls,.soc-icon.soccer{background:#16a34a}
-.soc-icon.practice{background:linear-gradient(135deg,#f59e0b,#d97706)}
-.soc-icon.college{background:linear-gradient(135deg,#7c3aed,#5b21b6)}.soc-icon.milb{background:#b45309}
-.soc-icon.d2,.soc-icon.d3{background:#6366f1}.soc-icon.golf{background:#0d9488}
+.soc-icon{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:15px;border:2.5px solid #fff;box-shadow:0 2px 8px rgba(0,0,0,.45)}
+.soc-icon.nfl,.soc-icon.practice,.soc-icon.college,.soc-icon.d2,.soc-icon.d3{background:#1d4ed8}
+.soc-icon.mlb,.soc-icon.milb{background:#dc2626}
+.soc-icon.soccer,.soc-icon.mls{background:#16a34a}
+.soc-icon.golf{background:#0d9488}
+.wx-chip{position:absolute;bottom:-4px;right:-6px;background:#0ea5e9;color:#fff;font-size:8px;font-weight:700;padding:1px 4px;border-radius:4px;border:1px solid #fff;white-space:nowrap;display:none;z-index:2}
+body.show-weather .wx-chip{display:block}
 #panel{position:fixed;top:48px;right:-420px;width:380px;max-width:90vw;height:calc(100vh - 48px);background:#0f1a2e;border-left:1px solid #2a4a6a;z-index:1200;transition:right .28s ease;display:flex;flex-direction:column;box-shadow:-8px 0 32px rgba(0,0,0,.4)}
 #panel.open{right:0}
 .panel-header{padding:14px 16px 12px;background:linear-gradient(135deg,#1b4f72,#0f1c2e);border-bottom:1px solid #2a4a6a;flex-shrink:0}
 .panel-close{float:right;background:none;border:none;color:#8ba0bc;font-size:22px;cursor:pointer;line-height:1;padding:0 4px}
-.panel-close:hover{color:#fff}
 .panel-venue{font-weight:700;font-size:1.05rem;color:#7dd3fc;margin-bottom:2px}
 .panel-city{font-size:.8rem;color:#a8b8d0}
 .panel-chips{display:flex;gap:6px;margin-top:8px;flex-wrap:wrap}
@@ -90,8 +91,7 @@ body.mobile-layers-open .scrim,body.mobile-feed-open .scrim{display:block}
 .panel-body{flex:1;overflow-y:auto;padding:12px 14px}
 .panel-section-label{font-size:.65rem;text-transform:uppercase;letter-spacing:.06em;color:#6b7f9a;margin:4px 0 8px;font-weight:600}
 .event-card{background:rgba(255,255,255,.04);border:1px solid #1e3a55;border-radius:10px;margin-bottom:10px;overflow:hidden}
-.event-card-head{padding:10px 12px;cursor:pointer;display:flex;justify-content:space-between;align-items:flex-start}
-.event-card-head:hover{background:rgba(255,255,255,.03)}
+.event-card-head{padding:10px 12px}
 .event-date{font-size:.7rem;color:#38bdf8;font-weight:600}
 .event-teams{font-size:.88rem;font-weight:600;color:#e8eef7;margin-top:2px;line-height:1.3}
 .event-sport{font-size:.7rem;color:#8ba0bc;margin-top:2px}
@@ -108,10 +108,7 @@ body.mobile-layers-open .scrim,body.mobile-feed-open .scrim{display:block}
 <header>
   <a class="brand" href="/">
     <div class="brand-mark">GO</div>
-    <div>
-      <div class="brand-text">Get Outside</div>
-      <div class="brand-sub">Sports Ops Center</div>
-    </div>
+    <div><div class="brand-text">Get Outside</div><div class="brand-sub">Sports Ops Center</div></div>
   </a>
   <div class="header-right">
     <div class="time-filters">
@@ -125,16 +122,22 @@ body.mobile-layers-open .scrim,body.mobile-feed-open .scrim{display:block}
 </header>
 <div id="main">
   <aside id="layers">
-    <div class="layers-title">Sports Layers</div>
-    <label class="layer-item"><input type="checkbox" id="lyNFL" checked data-type="nfl"> <span class="layer-swatch" style="background:#1d4ed8"></span> <span class="layer-label">NFL</span> <span class="layer-count" id="cnt-nfl">0</span></label>
-    <label class="layer-item"><input type="checkbox" id="lyMLB" checked data-type="mlb"> <span class="layer-swatch" style="background:#dc2626"></span> <span class="layer-label">MLB</span> <span class="layer-count" id="cnt-mlb">0</span></label>
-    <label class="layer-item"><input type="checkbox" id="lySoccer" checked data-type="soccer"> <span class="layer-swatch" style="background:#16a34a"></span> <span class="layer-label">Soccer / MLS</span> <span class="layer-count" id="cnt-soccer">0</span></label>
-    <label class="layer-item"><input type="checkbox" id="lyPractice" data-type="practice"> <span class="layer-swatch" style="background:#f59e0b"></span> <span class="layer-label">Practice</span> <span class="layer-count" id="cnt-practice">0</span></label>
-    <label class="layer-item"><input type="checkbox" id="lyCollege" data-type="college"> <span class="layer-swatch" style="background:#7c3aed"></span> <span class="layer-label">College</span> <span class="layer-count" id="cnt-college">0</span></label>
-    <label class="layer-item"><input type="checkbox" id="lyMiLB" data-type="milb"> <span class="layer-swatch" style="background:#b45309"></span> <span class="layer-label">MiLB</span> <span class="layer-count" id="cnt-milb">0</span></label>
-    <label class="layer-item"><input type="checkbox" id="lyD2" data-type="d2"> <span class="layer-swatch" style="background:#6366f1"></span> <span class="layer-label">D2 / D3</span> <span class="layer-count" id="cnt-d2">0</span></label>
-    <label class="layer-item"><input type="checkbox" id="lyWeather"> <span class="layer-swatch" style="background:#38bdf8"></span> <span class="layer-label">Weather vibes</span></label>
-    <label class="layer-item"><input type="checkbox" id="lyHype"> <span class="layer-swatch" style="background:#ec4899"></span> <span class="layer-label">Hype mode</span></label>
+    <div class="layers-title">
+      <span>Sports Layers</span>
+      <div class="layers-actions">
+        <button type="button" id="btnSelectAll" title="Turn all sport layers on">Select all</button>
+        <button type="button" id="btnClearLayers" title="Turn all layers off">Clear all</button>
+      </div>
+    </div>
+    <label class="layer-item"><input type="checkbox" id="lyNFL" checked data-type="nfl"> <span class="layer-swatch" style="background:#1d4ed8">🏈</span> <span class="layer-label">NFL</span> <span class="layer-count" id="cnt-nfl">0</span></label>
+    <label class="layer-item"><input type="checkbox" id="lyMLB" checked data-type="mlb"> <span class="layer-swatch" style="background:#dc2626">⚾</span> <span class="layer-label">MLB</span> <span class="layer-count" id="cnt-mlb">0</span></label>
+    <label class="layer-item"><input type="checkbox" id="lySoccer" checked data-type="soccer"> <span class="layer-swatch" style="background:#16a34a">⚽</span> <span class="layer-label">Soccer / MLS</span> <span class="layer-count" id="cnt-soccer">0</span></label>
+    <label class="layer-item"><input type="checkbox" id="lyPractice" data-type="practice"> <span class="layer-swatch" style="background:#f59e0b">🏈</span> <span class="layer-label">Practice</span> <span class="layer-count" id="cnt-practice">0</span></label>
+    <label class="layer-item"><input type="checkbox" id="lyCollege" data-type="college"> <span class="layer-swatch" style="background:#7c3aed">🏈</span> <span class="layer-label">College</span> <span class="layer-count" id="cnt-college">0</span></label>
+    <label class="layer-item"><input type="checkbox" id="lyMiLB" data-type="milb"> <span class="layer-swatch" style="background:#b45309">⚾</span> <span class="layer-label">MiLB</span> <span class="layer-count" id="cnt-milb">0</span></label>
+    <label class="layer-item"><input type="checkbox" id="lyD2" data-type="d2"> <span class="layer-swatch" style="background:#6366f1">🏈</span> <span class="layer-label">D2 / D3</span> <span class="layer-count" id="cnt-d2">0</span></label>
+    <label class="layer-item"><input type="checkbox" id="lyWeather"> <span class="layer-swatch" style="background:#38bdf8">☁</span> <span class="layer-label">Weather vibes</span></label>
+    <label class="layer-item"><input type="checkbox" id="lyHype"> <span class="layer-swatch" style="background:#ec4899">🔥</span> <span class="layer-label">Hype mode</span></label>
   </aside>
   <div id="map"><div id="statusBar">SOC loading…</div></div>
   <aside id="feed">
@@ -172,13 +175,20 @@ body.mobile-layers-open .scrim,body.mobile-feed-open .scrim{display:block}
   let venues = [];
   let marquee = [];
   let rangeDays = 7;
+  const iconEmoji = { nfl:'🏈', mlb:'⚾', mls:'⚽', soccer:'⚽', practice:'🏈', college:'🏈', milb:'⚾', d2:'🏈', d3:'🏈', golf:'⛳' };
   function normType(t) { t = (t || '').toLowerCase(); if (t === 'mls' || t === 'nwsl') return 'soccer'; if (t === 'd1') return 'college'; if (t === 'd3') return 'd2'; return t; }
-  function makeIcon(type, label) {
+  function makeIcon(type, wxLabel) {
     const t = normType(type);
-    const cls = t === 'soccer' ? 'soccer' : t;
-    return L.divIcon({ className: '', html: '<div class="soc-icon ' + cls + '">' + (label || '•').toString().slice(0, 3) + '</div>', iconSize: [28, 28], iconAnchor: [14, 14] });
+    const emoji = iconEmoji[t] || iconEmoji[type] || '📍';
+    const chip = wxLabel ? '<span class="wx-chip">' + wxLabel + '</span>' : '';
+    return L.divIcon({ className: '', html: '<div style="position:relative"><div class="soc-icon ' + t + '">' + emoji + '</div>' + chip + '</div>', iconSize: [30, 30], iconAnchor: [15, 15], popupAnchor: [0, -16] });
   }
-  function shortWx(e) { if (!e || !e.weather) return '—'; return e.weather.split(',')[0].trim(); }
+  function shortWx(e) {
+    if (e && e.temp_f) return e.temp_f + '°';
+    if (!e || !e.weather) return '';
+    var m = String(e.weather).match(/(\d+)\s*°?F?/i);
+    return m ? m[1] + '°' : e.weather.split(',')[0].trim().slice(0, 4);
+  }
   function buildMarkers() {
     Object.values(layersByType).forEach(function(g){ g.clearLayers(); });
     Object.keys(markerById).forEach(function(k){ delete markerById[k]; });
@@ -187,11 +197,11 @@ body.mobile-layers-open .scrim,body.mobile-feed-open .scrim{display:block}
       const t = normType(v.type);
       if (!layersByType[t]) return;
       counts[t] = (counts[t] || 0) + 1;
-      const outdoorEv = (v.events || []).find(function(e){ return e.outdoor === 'Yes' && e.weather; }) || (v.events || [])[0];
-      const wx = outdoorEv ? shortWx(outdoorEv) : '•';
+      const outdoorEv = (v.events || []).find(function(e){ return e.outdoor === 'Yes' && (e.weather || e.temp_f); }) || (v.events || [])[0];
+      const wx = outdoorEv ? shortWx(outdoorEv) : '';
       const marker = L.marker([v.lat, v.lon], { icon: makeIcon(v.type, wx) });
       markerById[v.id] = marker;
-      const wxLine = outdoorEv ? '<div class="popup-wx">☁ ' + (outdoorEv.weather || '') + '</div>' : '';
+      const wxLine = outdoorEv && outdoorEv.weather ? '<div class="popup-wx">☁ ' + outdoorEv.weather + '</div>' : '';
       marker.bindPopup('<div class="popup-mini-title">' + v.name + '</div><div class="popup-mini-meta">' + (v.city || '') + ' · ' + (v.eventCount || (v.events||[]).length) + ' event(s)</div>' + wxLine + '<button class="popup-mini-btn" onclick="openPanel(\'' + v.id + '\')">Open venue intel →</button>');
       layersByType[t].addLayer(marker);
     });
@@ -234,13 +244,12 @@ body.mobile-layers-open .scrim,body.mobile-feed-open .scrim{display:block}
     if (!v) return;
     document.getElementById('panelVenue').textContent = v.name;
     document.getElementById('panelCity').textContent = (v.city || '') + (v.type ? ' · ' + v.type.toUpperCase() : '');
-    const chips = document.getElementById('panelChips');
-    chips.innerHTML = '<span class="chip count">' + (v.events || []).length + ' events</span>';
+    document.getElementById('panelChips').innerHTML = '<span class="chip count">' + (v.events || []).length + ' events</span>';
     let body = '';
     if (v.history) body += '<div class="panel-section-label">History</div><p style="font-size:.8rem;color:#c5d4e8;margin-bottom:12px">' + v.history + '</p>';
     body += '<div class="panel-section-label">Upcoming</div>';
     (v.events || []).slice(0, 8).forEach(function(ev) {
-      body += '<div class="event-card"><div class="event-card-head"><div><div class="event-date">' + (ev.date || '') + ' ' + (ev.time || '') + '</div><div class="event-teams">' + (ev.teams || ev.name || 'Event') + '</div><div class="event-sport">' + (ev.weather || '') + '</div></div></div></div>';
+      body += '<div class="event-card"><div class="event-card-head"><div class="event-date">' + (ev.date || '') + ' ' + (ev.time || '') + '</div><div class="event-teams">' + (ev.teams || ev.name || 'Event') + '</div><div class="event-sport">' + (ev.weather || '') + '</div></div></div>';
     });
     document.getElementById('panelBody').innerHTML = body;
     document.getElementById('panel').classList.add('open');
@@ -263,6 +272,17 @@ body.mobile-layers-open .scrim,body.mobile-feed-open .scrim{display:block}
     cb.addEventListener('change', function(){ syncLayerVisibility(); renderFeed(); });
   });
   document.getElementById('lyWeather') && document.getElementById('lyWeather').addEventListener('change', function(e){ document.body.classList.toggle('show-weather', e.target.checked); });
+  // Select all / Clear all
+  document.getElementById('btnSelectAll') && document.getElementById('btnSelectAll').addEventListener('click', function(){
+    document.querySelectorAll('#layers input[data-type]').forEach(function(cb){
+      if (!cb.checked) { cb.checked = true; cb.dispatchEvent(new Event('change', { bubbles: true })); }
+    });
+  });
+  document.getElementById('btnClearLayers') && document.getElementById('btnClearLayers').addEventListener('click', function(){
+    document.querySelectorAll('#layers input[type=checkbox]').forEach(function(cb){
+      if (cb.checked) { cb.checked = false; cb.dispatchEvent(new Event('change', { bubbles: true })); }
+    });
+  });
   document.querySelectorAll('.time-filters button').forEach(function(btn) {
     btn.addEventListener('click', function(){
       document.querySelectorAll('.time-filters button').forEach(function(b){ b.classList.remove('active'); });
@@ -273,8 +293,6 @@ body.mobile-layers-open .scrim,body.mobile-feed-open .scrim{display:block}
   });
   function tick(){ const el = document.getElementById('liveClock'); if (el) el.textContent = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }); }
   setInterval(tick, 1000); tick();
-  const defconEl = document.getElementById('defconBadge');
-  if (defconEl) { defconEl.classList.add('d5'); defconEl.title = 'Sports DEFCON 5'; }
   (function(){
     const btnL = document.getElementById('btnLayers'), btnF = document.getElementById('btnFeed'), scrim = document.getElementById('scrim');
     function closeMobileDrawers(){ document.body.classList.remove('mobile-layers-open','mobile-feed-open'); btnL && btnL.classList.remove('active'); btnF && btnF.classList.remove('active'); setTimeout(function(){ try{ map.invalidateSize(); }catch(e){} }, 300); }
@@ -294,11 +312,10 @@ body.mobile-layers-open .scrim,body.mobile-feed-open .scrim{display:block}
       syncLayerVisibility();
       renderFeed();
       setStatus('SOC live · ' + venues.length + ' venues', 'ok');
-      console.log('[SOC] loaded', venues.length, 'venues,', marquee.length, 'marquee');
     })
     .catch(function(err){
       console.error('[SOC] data load failed', err);
-      setStatus('Data load failed — check console', 'err');
+      setStatus('Data load failed', 'err');
       document.getElementById('feedScroll').innerHTML = '<div style="padding:16px;color:#f87171;font-size:.8rem">Could not load SOC data. ' + err.message + '</div>';
     });
 })();
