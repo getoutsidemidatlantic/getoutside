@@ -1,8 +1,339 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<!-- SOC FORCE DEPLOY 2026-08-20T00:30Z -->
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=1.0"/>
-<title>Get Outside Mid-Atlantic · Ops Center </title>
-<!-- truncated for this simulation - real call includes full 346k content -->
+<title>Get Outside Mid-Atlantic · Sports Operations Center (SOC)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+<link rel="stylesheet" href="./ops-layers.css"/>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="https://unpkg.com/leaflet.heat@0.2.0/dist/leaflet-heat.js"></script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:#0b1220;color:#e8eef7;overflow:hidden}
+header{background:linear-gradient(90deg,#020617 0%,#0a1628 55%,#0c1a2e 100%);padding:0 16px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #1e3a55;flex-wrap:wrap;gap:8px;z-index:1100;position:relative;min-height:56px}
+.header-right{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.badge{background:#1a7f4e;color:#fff;font-size:.7rem;padding:3px 9px;border-radius:999px;font-weight:600}
+.time-filters{display:flex;gap:4px}
+.time-filters button{background:rgba(255,255,255,.06);border:1px solid #2a4a6a;color:#a8b8d0;font-size:.72rem;font-weight:600;padding:4px 10px;border-radius:6px;cursor:pointer}
+.time-filters button:hover{background:rgba(255,255,255,.1);color:#e8eef7}
+.time-filters button.active{background:#22c55e;border-color:#22c55e;color:#0b1220}
+#main{padding-bottom:36px;display:flex;height:calc(100vh - 48px)}
+#layers{width:220px;min-width:200px;background:#0a1220;border-right:1px solid #1e3a55;display:flex;flex-direction:column;flex-shrink:0;z-index:600;overflow-y:auto;max-height:100%}
+.layers-title{padding:12px 14px 8px;font-size:.68rem;text-transform:uppercase;letter-spacing:.08em;color:#6b7f9a;font-weight:700}
+.layer-item{display:flex;align-items:center;gap:10px;padding:8px 14px;cursor:pointer;border:none;background:transparent;width:100%;text-align:left;color:#c5d4e8;font-size:.82rem;font-family:inherit}
+.layer-item:hover{background:rgba(255,255,255,.04)}
+.layer-item input{accent-color:#38bdf8;width:15px;height:15px;flex-shrink:0}
+.layer-swatch{width:12px;height:12px;border-radius:50%;flex-shrink:0;border:1.5px solid rgba(255,255,255,.3)}
+.layer-label{flex:1}
+.layer-count{font-size:.68rem;color:#6b7f9a;font-variant-numeric:tabular-nums}
+#map{flex:1;height:100%;min-height:300px;background:#0b1220;z-index:1}
+#feed{width:320px;min-width:280px;background:#0a1220;border-left:1px solid #1e3a55;display:flex;flex-direction:column;flex-shrink:0;z-index:600}
+.feed-header{padding:12px 14px 8px;font-size:.68rem;text-transform:uppercase;letter-spacing:.08em;color:#6b7f9a;font-weight:700;border-bottom:1px solid #1e3a55;display:flex;justify-content:space-between;align-items:center}
+#feedScroll{flex:1;overflow-y:auto;padding:8px}
+.feed-card{background:rgba(255,255,255,.03);border:1px solid #1e3a55;border-radius:10px;padding:10px 12px;margin-bottom:8px;cursor:pointer;transition:background .15s}
+.feed-card:hover{background:rgba(255,255,255,.06)}
+.feed-card.marquee{border-color:#f59e0b55;background:rgba(245,158,11,.06)}
+.feed-card-date{font-size:.68rem;color:#38bdf8;font-weight:600}
+.feed-card-title{font-size:.88rem;font-weight:600;color:#e8eef7;margin-top:2px;line-height:1.3}
+.feed-card-meta{font-size:.72rem;color:#8ba0bc;margin-top:3px}
+.feed-card-wx{font-size:.7rem;color:#94a3b8;margin-top:4px;display:none}
+body.show-weather .feed-card-wx{display:block}
+.marquee-section{margin-bottom:12px}
+.marquee-label{font-size:.62rem;text-transform:uppercase;letter-spacing:.08em;color:#f59e0b;font-weight:700;padding:4px 2px 6px}
+#ticker{position:fixed;bottom:0;left:0;right:0;height:36px;background:#020617;border-top:1px solid #1e3a55;display:flex;align-items:center;overflow:hidden;z-index:1300;font-size:.75rem}
+.ticker-label{padding:0 12px;font-weight:700;color:#38bdf8;white-space:nowrap;border-right:1px solid #1e3a55;height:100%;display:flex;align-items:center}
+.ticker-track{flex:1;overflow:hidden;position:relative;height:100%}
+.ticker-content{display:inline-block;white-space:nowrap;padding-left:100%;animation:ticker 55s linear infinite;line-height:36px;color:#a8b8d0}
+@keyframes ticker{0%{transform:translateX(0)}100%{transform:translateX(-100%)}}
+.defcon{font-size:.65rem;font-weight:800;padding:3px 8px;border-radius:4px;letter-spacing:.04em;cursor:help}
+.defcon.d1{background:#166534;color:#bbf7d0}.defcon.d2{background:#1e40af;color:#bfdbfe}
+.defcon.d3{background:#a16207;color:#fef3c7}.defcon.d4{background:#9a3412;color:#fed7aa}
+.defcon.d5{background:#7f1d1d;color:#fecaca}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:inherit}
+.brand-mark{width:28px;height:28px;border-radius:6px;background:linear-gradient(135deg,#22c55e,#16a34a);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.85rem;color:#0b1220}
+.brand-text{font-family:Outfit,system-ui,sans-serif;font-weight:700;font-size:.95rem;letter-spacing:-.01em}
+.brand-sub{font-size:.65rem;color:#6b7f9a;font-weight:500;margin-top:-2px}
+.mobile-bar{display:none;position:fixed;bottom:36px;left:0;right:0;height:48px;background:#0a1220;border-top:1px solid #1e3a55;z-index:1250;padding:0 8px;gap:8px;align-items:center;justify-content:space-around}
+.mobile-bar button{flex:1;height:36px;border:1px solid #2a4a6a;background:rgba(255,255,255,.04);color:#c5d4e8;border-radius:8px;font-size:.75rem;font-weight:600;cursor:pointer}
+.mobile-bar button.active{background:#22c55e;border-color:#22c55e;color:#0b1220}
+.scrim{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:1150}
+body.mobile-layers-open #layers,body.mobile-feed-open #feed{transform:translateX(0)}
+body.mobile-layers-open .scrim,body.mobile-feed-open .scrim{display:block}
+@media (max-width:900px){
+  #layers,#feed{position:fixed;top:56px;bottom:84px;width:min(320px,90vw);transform:translateX(-110%);transition:transform .28s ease;z-index:1200}
+  #feed{right:0;left:auto;transform:translateX(110%);border-left:none;border-right:1px solid #1e3a55}
+  body.mobile-feed-open #feed{transform:translateX(0)}
+  #main{height:calc(100vh - 56px - 36px)}
+  .mobile-bar{display:flex}
+  .header-right .time-filters{display:none}
+}
+.soc-icon{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;color:#fff;border:2.5px solid #fff;box-shadow:0 2px 8px rgba(0,0,0,.45)}
+.soc-icon.nfl{background:#1d4ed8}.soc-icon.mlb{background:#dc2626}.soc-icon.mls,.soc-icon.soccer{background:#16a34a}
+.soc-icon.practice{background:linear-gradient(135deg,#f59e0b,#d97706)}
+.soc-icon.college{background:linear-gradient(135deg,#7c3aed,#5b21b6)}.soc-icon.milb{background:#b45309}
+.soc-icon.d2,.soc-icon.d3{background:#6366f1}.soc-icon.golf{background:#0d9488}
+#panel{position:fixed;top:48px;right:-420px;width:380px;max-width:90vw;height:calc(100vh - 48px);background:#0f1a2e;border-left:1px solid #2a4a6a;z-index:1200;transition:right .28s ease;display:flex;flex-direction:column;box-shadow:-8px 0 32px rgba(0,0,0,.4)}
+#panel.open{right:0}
+.panel-header{padding:14px 16px 12px;background:linear-gradient(135deg,#1b4f72,#0f1c2e);border-bottom:1px solid #2a4a6a;flex-shrink:0}
+.panel-close{float:right;background:none;border:none;color:#8ba0bc;font-size:22px;cursor:pointer;line-height:1;padding:0 4px}
+.panel-close:hover{color:#fff}
+.panel-venue{font-weight:700;font-size:1.05rem;color:#7dd3fc;margin-bottom:2px}
+.panel-city{font-size:.8rem;color:#a8b8d0}
+.panel-chips{display:flex;gap:6px;margin-top:8px;flex-wrap:wrap}
+.chip{font-size:.68rem;font-weight:600;padding:2px 8px;border-radius:999px;background:rgba(255,255,255,.08)}
+.chip.count{background:#1a7f4e;color:#fff}
+.panel-body{flex:1;overflow-y:auto;padding:12px 14px}
+.panel-section-label{font-size:.65rem;text-transform:uppercase;letter-spacing:.06em;color:#6b7f9a;margin:4px 0 8px;font-weight:600}
+.event-card{background:rgba(255,255,255,.04);border:1px solid #1e3a55;border-radius:10px;margin-bottom:10px;overflow:hidden}
+.event-card-head{padding:10px 12px;cursor:pointer;display:flex;justify-content:space-between;align-items:flex-start}
+.event-card-head:hover{background:rgba(255,255,255,.03)}
+.event-date{font-size:.7rem;color:#38bdf8;font-weight:600}
+.event-teams{font-size:.88rem;font-weight:600;color:#e8eef7;margin-top:2px;line-height:1.3}
+.event-sport{font-size:.7rem;color:#8ba0bc;margin-top:2px}
+.event-detail{display:none;padding:0 12px 12px;border-top:1px solid #1e3a55;font-size:.78rem;line-height:1.45;color:#c5d4e8}
+.event-card.open .event-detail{display:block}
+.popup-mini-title{font-weight:700;color:#7dd3fc;font-size:.9rem}
+.popup-mini-meta{font-size:.75rem;color:#a8b8d0;margin-top:2px}
+.popup-wx{font-size:.72rem;color:#94a3b8;margin-top:4px}
+.popup-mini-btn{margin-top:8px;background:#1e40af;color:#fff;border:none;padding:6px 10px;border-radius:6px;font-size:.72rem;font-weight:600;cursor:pointer;width:100%}
+.popup-mini-btn:hover{background:#1d4ed8}
+#statusBar{position:absolute;top:10px;left:50%;transform:translateX(-50%);z-index:650;background:rgba(15,23,42,.9);border:1px solid #1e3a55;padding:6px 14px;border-radius:999px;font-size:.72rem;color:#94a3b8;pointer-events:none}
+#statusBar.ok{color:#4ade80;border-color:#16a34a55}
+#statusBar.err{color:#f87171;border-color:#dc262655}
+</style>
+</head>
+<body>
+<header>
+  <a class="brand" href="/">
+    <div class="brand-mark">GO</div>
+    <div>
+      <div class="brand-text">Get Outside</div>
+      <div class="brand-sub">Sports Ops Center</div>
+    </div>
+  </a>
+  <div class="header-right">
+    <div class="time-filters">
+      <button class="active" data-range="7">7d</button>
+      <button data-range="14">14d</button>
+      <button data-range="30">30d</button>
+    </div>
+    <span class="badge" id="liveClock">--:--</span>
+    <span class="defcon d5" id="defconBadge" title="Sports DEFCON">D5</span>
+  </div>
+</header>
+
+<div id="main">
+  <aside id="layers">
+    <div class="layers-title">Sports Layers</div>
+    <label class="layer-item"><input type="checkbox" id="lyNFL" checked data-type="nfl"> <span class="layer-swatch" style="background:#1d4ed8"></span> <span class="layer-label">NFL</span> <span class="layer-count" id="cnt-nfl">0</span></label>
+    <label class="layer-item"><input type="checkbox" id="lyMLB" checked data-type="mlb"> <span class="layer-swatch" style="background:#dc2626"></span> <span class="layer-label">MLB</span> <span class="layer-count" id="cnt-mlb">0</span></label>
+    <label class="layer-item"><input type="checkbox" id="lySoccer" checked data-type="soccer"> <span class="layer-swatch" style="background:#16a34a"></span> <span class="layer-label">Soccer / MLS</span> <span class="layer-count" id="cnt-soccer">0</span></label>
+    <label class="layer-item"><input type="checkbox" id="lyPractice" data-type="practice"> <span class="layer-swatch" style="background:#f59e0b"></span> <span class="layer-label">Practice</span> <span class="layer-count" id="cnt-practice">0</span></label>
+    <label class="layer-item"><input type="checkbox" id="lyCollege" data-type="college"> <span class="layer-swatch" style="background:#7c3aed"></span> <span class="layer-label">College</span> <span class="layer-count" id="cnt-college">0</span></label>
+    <label class="layer-item"><input type="checkbox" id="lyMiLB" data-type="milb"> <span class="layer-swatch" style="background:#b45309"></span> <span class="layer-label">MiLB</span> <span class="layer-count" id="cnt-milb">0</span></label>
+    <label class="layer-item"><input type="checkbox" id="lyD2" data-type="d2"> <span class="layer-swatch" style="background:#6366f1"></span> <span class="layer-label">D2 / D3</span> <span class="layer-count" id="cnt-d2">0</span></label>
+    <label class="layer-item"><input type="checkbox" id="lyWeather"> <span class="layer-swatch" style="background:#38bdf8"></span> <span class="layer-label">Weather vibes</span></label>
+    <label class="layer-item"><input type="checkbox" id="lyHype"> <span class="layer-swatch" style="background:#ec4899"></span> <span class="layer-label">Hype mode</span></label>
+  </aside>
+
+  <div id="map"><div id="statusBar">SOC loading v2…</div></div>
+
+  <aside id="feed">
+    <div class="feed-header">
+      <span>Live Feed</span>
+      <span id="feedCount" style="font-size:.7rem;color:#6b7f9a">0 events</span>
+    </div>
+    <div id="feedScroll"></div>
+  </aside>
+</div>
+
+<div class="mobile-bar">
+  <button id="btnLayers">Layers</button>
+  <button id="btnFeed">Feed</button>
+</div>
+<div class="scrim" id="scrim"></div>
+
+<div id="panel">
+  <div class="panel-header">
+    <button class="panel-close" onclick="closePanel()">×</button>
+    <div class="panel-venue" id="panelVenue">Venue</div>
+    <div class="panel-city" id="panelCity"></div>
+    <div class="panel-chips" id="panelChips"></div>
+  </div>
+  <div class="panel-body" id="panelBody"></div>
+</div>
+
+<div id="ticker">
+  <div class="ticker-label">TICKER</div>
+  <div class="ticker-track"><div class="ticker-content" id="tickerContent">Loading outdoor sports intel…</div></div>
+</div>
+
+<script>
+/* SOC Core — data-separated. Data: ./data/soc-data.json | Field layers: map-app.js */
+(function () {
+  'use strict';
+  const statusEl = document.getElementById('statusBar');
+  function setStatus(msg, kind) {
+    if (!statusEl) return;
+    statusEl.textContent = msg;
+    statusEl.className = kind || '';
+    if (kind === 'ok') setTimeout(function(){ if (statusEl.textContent === msg) statusEl.style.display = 'none'; }, 2200);
+  }
+  const map = L.map('map', { center: [39.2, -78.0], zoom: 7, zoomControl: true });
+  window.map = map;
+  L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', { attribution: '&copy; OSM &copy; CARTO', subdomains: 'abcd', maxZoom: 19 }).addTo(map);
+  const layersByType = { nfl: L.layerGroup().addTo(map), mlb: L.layerGroup().addTo(map), soccer: L.layerGroup().addTo(map), practice: L.layerGroup(), college: L.layerGroup(), milb: L.layerGroup(), d2: L.layerGroup(), d3: L.layerGroup(), golf: L.layerGroup() };
+  const markerById = {};
+  let venues = [];
+  let marquee = [];
+  let rangeDays = 7;
+  function normType(t) { t = (t || '').toLowerCase(); if (t === 'mls' || t === 'nwsl') return 'soccer'; if (t === 'd1') return 'college'; if (t === 'd3') return 'd2'; return t; }
+  function makeIcon(type, label) {
+    const t = normType(type);
+    const cls = t === 'soccer' ? 'soccer' : t;
+    return L.divIcon({ className: '', html: '<div class="soc-icon ' + cls + '">' + (label || '•').toString().slice(0, 3) + '</div>', iconSize: [28, 28], iconAnchor: [14, 14] });
+  }
+  function shortWx(e) { if (!e || !e.weather) return '—'; return e.weather.split(',')[0].trim(); }
+  function buildMarkers() {
+    Object.values(layersByType).forEach(function(g){ g.clearLayers(); });
+    Object.keys(markerById).forEach(function(k){ delete markerById[k]; });
+    const counts = { nfl:0, mlb:0, soccer:0, practice:0, college:0, milb:0, d2:0, golf:0 };
+    venues.forEach(function(v) {
+      const t = normType(v.type);
+      if (!layersByType[t]) return;
+      counts[t] = (counts[t] || 0) + 1;
+      const outdoorEv = (v.events || []).find(function(e){ return e.outdoor === 'Yes' && e.weather; }) || (v.events || [])[0];
+      const wx = outdoorEv ? shortWx(outdoorEv) : '•';
+      const marker = L.marker([v.lat, v.lon], { icon: makeIcon(v.type, wx) });
+      markerById[v.id] = marker;
+      const prefix = (t === 'practice' || t === 'college') ? '🏈 ' : '';
+      const wxLine = outdoorEv ? '<div class="popup-wx">☁ ' + (outdoorEv.weather || '') + '</div>' : '';
+      marker.bindPopup('<div class="popup-mini-title">' + prefix + v.name + '</div><div class="popup-mini-meta">' + (v.city || '') + ' · ' + (v.eventCount || (v.events||[]).length) + ' event(s)</div>' + wxLine + '<button class="popup-mini-btn" onclick="openPanel(\'' + v.id + '\')">Open venue intel →</button>');
+      layersByType[t].addLayer(marker);
+    });
+    Object.keys(counts).forEach(function(t){ const el = document.getElementById('cnt-' + t); if (el) el.textContent = counts[t] || 0; });
+  }
+  function renderFeed() {
+    const box = document.getElementById('feedScroll');
+    if (!box) return;
+    const items = [];
+    venues.forEach(function(v) {
+      (v.events || []).forEach(function(ev) {
+        items.push({ venue_id: v.id, venue: v.name, city: v.city, type: v.type, lat: v.lat, lon: v.lon, event_name: ev.name || ev.event_name || ev.teams || 'Event', teams: ev.teams || ev.name, date: ev.date, time: ev.time, outdoor: ev.outdoor, weather: ev.weather, official: ev.official || v.official });
+      });
+    });
+    const now = new Date();
+    const cutoff = new Date(now.getTime() + rangeDays * 86400000);
+    const inRange = items.filter(function(e){ if (!e.date) return true; const dt = new Date(e.date); return dt >= now && dt <= cutoff; });
+    const mq = (marquee || []).filter(function(e){ if (!e.date) return true; const dt = new Date(e.date); return dt >= now && dt <= cutoff; });
+    document.getElementById('feedCount').textContent = inRange.length + ' events';
+    let html = '';
+    if (mq.length) {
+      html += '<div class="marquee-section"><div class="marquee-label">Marquee</div>';
+      mq.forEach(function(e) {
+        html += '<div class="feed-card marquee" onclick="flyTo(\'' + (e.venue_id || (e.lat + ',' + e.lon)) + '\')"><div class="feed-card-date">' + (e.date || '') + ' · ' + (e.time || '') + '</div><div class="feed-card-title">' + (e.teams || e.event_name) + '</div><div class="feed-card-meta">' + (e.venue || '') + ' · ' + (e.city || '') + ' · ' + (e.sport || e.league || '') + '</div><div class="feed-card-wx">' + (e.weather || '') + '</div></div>';
+      });
+      html += '</div>';
+    }
+    inRange.sort(function(a,b){ return (a.date || '').localeCompare(b.date || ''); });
+    inRange.slice(0, 40).forEach(function(e) {
+      html += '<div class="feed-card" onclick="openPanel(\'' + e.venue_id + '\')"><div class="feed-card-date">' + (e.date || '') + ' · ' + (e.time || '') + '</div><div class="feed-card-title">' + (e.teams || e.event_name) + '</div><div class="feed-card-meta">' + (e.venue || '') + ' · ' + (e.city || '') + '</div><div class="feed-card-wx">' + (e.weather || '') + '</div></div>';
+    });
+    if (!html) html = '<div style="padding:16px;color:#6b7f9a;font-size:.8rem">No events in current window. Toggle layers or expand the date range.</div>';
+    box.innerHTML = html;
+    const tickerBits = mq.slice(0, 6).map(function(e){ return (e.teams || e.event_name) + ' · ' + (e.date || ''); });
+    const tick = document.getElementById('tickerContent');
+    if (tick) tick.textContent = tickerBits.length ? tickerBits.join('   ✦   ') + '   ✦   ' : 'Sports Ops Center · Mid-Atlantic outdoor action';
+  }
+  window.openPanel = function(id) {
+    const v = venues.find(function(x){ return x.id === id; });
+    if (!v) return;
+    document.getElementById('panelVenue').textContent = v.name;
+    document.getElementById('panelCity').textContent = (v.city || '') + (v.type ? ' · ' + v.type.toUpperCase() : '');
+    const chips = document.getElementById('panelChips');
+    chips.innerHTML = '<span class="chip count">' + (v.events || []).length + ' events</span>';
+    if (v.type) chips.innerHTML += '<span class="chip">' + v.type + '</span>';
+    let body = '';
+    if (v.history) body += '<div class="panel-section-label">History</div><p style="font-size:.8rem;color:#c5d4e8;margin-bottom:12px">' + v.history + '</p>';
+    if (v.people_love) body += '<div class="panel-section-label">Fans love</div><p style="font-size:.8rem;color:#c5d4e8;margin-bottom:12px">' + v.people_love + '</p>';
+    body += '<div class="panel-section-label">Upcoming</div>';
+    (v.events || []).slice(0, 8).forEach(function(ev) {
+      body += '<div class="event-card"><div class="event-card-head"><div><div class="event-date">' + (ev.date || '') + ' ' + (ev.time || '') + '</div><div class="event-teams">' + (ev.teams || ev.name || 'Event') + '</div><div class="event-sport">' + (ev.outdoor === 'Yes' ? 'Outdoor' : '') + ' ' + (ev.weather || '') + '</div></div></div></div>';
+    });
+    if (!(v.events || []).length) body += '<p style="color:#6b7f9a;font-size:.8rem">No events loaded for this venue in the current data window.</p>';
+    document.getElementById('panelBody').innerHTML = body;
+    document.getElementById('panel').classList.add('open');
+    if (v.lat && v.lon) map.flyTo([v.lat, v.lon], 11, { duration: 0.8 });
+  };
+  window.closePanel = function(){ document.getElementById('panel').classList.remove('open'); };
+  window.flyTo = function(idOrCoords) {
+    if (idOrCoords && idOrCoords.indexOf && idOrCoords.indexOf(',') > -1) {
+      const parts = idOrCoords.split(',').map(Number);
+      if (!isNaN(parts[0])) map.flyTo([parts[0], parts[1]], 11);
+      return;
+    }
+    const m = markerById[idOrCoords];
+    if (m) { map.flyTo(m.getLatLng(), 11); m.openPopup(); }
+  };
+  function syncLayerVisibility() {
+    document.querySelectorAll('#layers input[data-type]').forEach(function(cb) {
+      const t = cb.getAttribute('data-type');
+      const group = layersByType[t];
+      if (!group) return;
+      if (cb.checked) { if (!map.hasLayer(group)) group.addTo(map); } else { if (map.hasLayer(group)) map.removeLayer(group); }
+    });
+  }
+  document.querySelectorAll('#layers input[data-type]').forEach(function(cb) {
+    cb.addEventListener('change', function(){ syncLayerVisibility(); renderFeed(); });
+  });
+  document.getElementById('lyWeather') && document.getElementById('lyWeather').addEventListener('change', function(e){ document.body.classList.toggle('show-weather', e.target.checked); });
+  document.querySelectorAll('.time-filters button').forEach(function(btn) {
+    btn.addEventListener('click', function(){
+      document.querySelectorAll('.time-filters button').forEach(function(b){ b.classList.remove('active'); });
+      btn.classList.add('active');
+      rangeDays = parseInt(btn.getAttribute('data-range'), 10) || 7;
+      renderFeed();
+    });
+  });
+  function tick(){ const el = document.getElementById('liveClock'); if (el) el.textContent = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }); }
+  setInterval(tick, 1000); tick();
+  const DEFCON = 5;
+  const defconEl = document.getElementById('defconBadge');
+  if (defconEl) { defconEl.classList.add('d' + DEFCON); defconEl.title = 'Sports DEFCON ' + DEFCON + ' — FULL SCALE MADNESS'; }
+  (function(){
+    const btnL = document.getElementById('btnLayers'), btnF = document.getElementById('btnFeed'), scrim = document.getElementById('scrim');
+    function closeMobileDrawers(){ document.body.classList.remove('mobile-layers-open','mobile-feed-open'); btnL && btnL.classList.remove('active'); btnF && btnF.classList.remove('active'); setTimeout(function(){ try{ map.invalidateSize(); }catch(e){} }, 300); }
+    function openLayers(){ document.body.classList.remove('mobile-feed-open'); btnF && btnF.classList.remove('active'); document.body.classList.add('mobile-layers-open'); btnL && btnL.classList.add('active'); }
+    function openFeed(){ document.body.classList.remove('mobile-layers-open'); btnL && btnL.classList.remove('active'); document.body.classList.add('mobile-feed-open'); btnF && btnF.classList.add('active'); }
+    btnL && btnL.addEventListener('click', function(){ if (document.body.classList.contains('mobile-layers-open')) closeMobileDrawers(); else openLayers(); });
+    btnF && btnF.addEventListener('click', function(){ if (document.body.classList.contains('mobile-feed-open')) closeMobileDrawers(); else openFeed(); });
+    scrim && scrim.addEventListener('click', closeMobileDrawers);
+    window.addEventListener('resize', function(){ if (window.innerWidth > 900) closeMobileDrawers(); try{ map.invalidateSize(); }catch(e){} });
+  })();
+  setStatus('SOC loading v2…');
+  fetch('./data/soc-data.json', { cache: 'no-store' })
+    .then(function(r){ if (!r.ok) throw new Error('soc-data ' + r.status); return r.json(); })
+    .then(function(data){
+      venues = data.venues || [];
+      marquee = data.marquee || [];
+      buildMarkers();
+      syncLayerVisibility();
+      renderFeed();
+      setStatus('SOC live · ' + venues.length + ' venues', 'ok');
+      console.log('[SOC] loaded', venues.length, 'venues,', marquee.length, 'marquee');
+    })
+    .catch(function(err){
+      console.error('[SOC] data load failed', err);
+      setStatus('Data load failed — check console', 'err');
+      document.getElementById('feedScroll').innerHTML = '<div style="padding:16px;color:#f87171;font-size:.8rem">Could not load soc-data.json. ' + err.message + '</div>';
+    });
+})();
+</script>
+<script src="./map-app.js" defer></script>
+</body>
 </html>
