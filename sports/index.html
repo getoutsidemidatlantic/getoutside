@@ -7,91 +7,55 @@
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
 <link rel="stylesheet" href="./ops-layers.css"/>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="https://unpkg.com/leaflet.heat@0.2.0/dist/leaflet-heat.js"></script>
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
-body{font-family:system-ui,sans-serif;background:#0b1220;color:#e8eef7;overflow:hidden}
+*{box-sizing:border-box;margin:0;padding:0}body{font-family:system-ui,sans-serif;background:#0b1220;color:#e8eef7;overflow:hidden}
 header{background:#020617;padding:0 16px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #1e3a55;min-height:56px;z-index:1100;position:relative}
 .brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:inherit}
 .brand-mark{width:28px;height:28px;border-radius:6px;background:linear-gradient(135deg,#22c55e,#16a34a);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.85rem;color:#0b1220}
-.brand-text{font-weight:700;font-size:.95rem}
-.brand-sub{font-size:.65rem;color:#6b7f9a}
+.brand-text{font-weight:700;font-size:.95rem}.brand-sub{font-size:.65rem;color:#6b7f9a}
 .header-right{display:flex;align-items:center;gap:10px}
 .badge{background:#1a7f4e;color:#fff;font-size:.7rem;padding:3px 9px;border-radius:999px;font-weight:600}
-.defcon{font-size:.65rem;font-weight:800;padding:3px 8px;border-radius:4px}
-.defcon.d5{background:#7f1d1d;color:#fecaca}
-.time-filters{display:flex;gap:4px}
-.time-filters button{background:rgba(255,255,255,.06);border:1px solid #2a4a6a;color:#a8b8d0;font-size:.72rem;font-weight:600;padding:4px 10px;border-radius:6px;cursor:pointer}
-.time-filters button.active{background:#22c55e;border-color:#22c55e;color:#0b1220}
+.defcon{font-size:.65rem;font-weight:800;padding:3px 8px;border-radius:4px}.defcon.d5{background:#7f1d1d;color:#fecaca}
+.time-filters{display:flex;gap:4px}.time-filters button{background:rgba(255,255,255,.06);border:1px solid #2a4a6a;color:#a8b8d0;font-size:.72rem;font-weight:600;padding:4px 10px;border-radius:6px;cursor:pointer}.time-filters button.active{background:#22c55e;border-color:#22c55e;color:#0b1220}
 #main{display:flex;height:calc(100vh - 48px);padding-bottom:36px}
 #layers{width:240px;min-width:200px;background:#0a1220;border-right:1px solid #1e3a55;overflow-y:auto;z-index:600;display:flex;flex-direction:column}
 .layers-top{padding:10px 12px 6px;display:flex;align-items:center;justify-content:space-between;gap:6px;border-bottom:1px solid #1e3a55}
 .layers-top-label{font-size:.68rem;text-transform:uppercase;letter-spacing:.1em;color:#7dd3fc;font-weight:700;font-family:'Share Tech Mono',ui-monospace,monospace}
-.layers-actions{display:flex;gap:4px}
-.layers-actions button{font-size:.6rem;font-weight:700;text-transform:uppercase;padding:3px 7px;border-radius:5px;border:1px solid #334155;background:#0f172a;color:#94a3b8;cursor:pointer}
-.layers-actions button:hover{background:#1e293b;color:#e2e8f0}
+.layers-actions{display:flex;gap:4px}.layers-actions button{font-size:.6rem;font-weight:700;text-transform:uppercase;padding:3px 7px;border-radius:5px;border:1px solid #334155;background:#0f172a;color:#94a3b8;cursor:pointer}
 .layer-item{display:flex;align-items:center;gap:8px;padding:7px 12px;cursor:pointer;color:#c5d4e8;font-size:.8rem;font-family:'Share Tech Mono',ui-monospace,monospace;letter-spacing:.04em}
-.layer-item:hover{background:rgba(255,255,255,.04)}
-.layer-item input{accent-color:#38bdf8;width:14px;height:14px;flex-shrink:0}
+.layer-item:hover{background:rgba(255,255,255,.04)}.layer-item input{accent-color:#38bdf8;width:14px;height:14px;flex-shrink:0}
 .layer-swatch{width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;border:1.5px solid rgba(255,255,255,.25);flex-shrink:0}
-.layer-count{font-size:.65rem;color:#6b7f9a;margin-left:auto;font-variant-numeric:tabular-nums}
+.layer-swatch.heat{background:linear-gradient(90deg,#3b82f6,#22c55e,#eab308,#ef4444);border-radius:3px}
+.layer-count{font-size:.65rem;color:#6b7f9a;margin-left:auto}
 #map{flex:1;min-height:300px;background:#0b1220}
 #feed{width:320px;min-width:260px;background:#0a1220;border-left:1px solid #1e3a55;display:flex;flex-direction:column;z-index:600}
 .feed-header{padding:12px 14px;font-size:.68rem;text-transform:uppercase;letter-spacing:.08em;color:#6b7f9a;font-weight:700;border-bottom:1px solid #1e3a55;display:flex;justify-content:space-between}
 #feedScroll{flex:1;overflow-y:auto;padding:8px}
 .feed-card{background:rgba(255,255,255,.03);border:1px solid #1e3a55;border-radius:10px;padding:10px 12px;margin-bottom:8px;cursor:pointer}
-.feed-card:hover{background:rgba(255,255,255,.06)}
-.feed-card.marquee{border-color:#f59e0b55;background:rgba(245,158,11,.06)}
-.feed-card-date{font-size:.68rem;color:#38bdf8;font-weight:600}
-.feed-card-title{font-size:.88rem;font-weight:600;margin-top:2px}
-.feed-card-meta{font-size:.72rem;color:#8ba0bc;margin-top:3px}
-.feed-card-wx{font-size:.7rem;color:#94a3b8;margin-top:4px;display:none}
-body.show-weather .feed-card-wx{display:block}
+.feed-card:hover{background:rgba(255,255,255,.06)}.feed-card.marquee{border-color:#f59e0b55;background:rgba(245,158,11,.06)}
+.feed-card-date{font-size:.68rem;color:#38bdf8;font-weight:600}.feed-card-title{font-size:.88rem;font-weight:600;margin-top:2px}.feed-card-meta{font-size:.72rem;color:#8ba0bc;margin-top:3px}
+.feed-card-wx{font-size:.7rem;color:#94a3b8;margin-top:4px;display:none}body.show-weather .feed-card-wx{display:block}
+.fc-hype{font-size:.68rem;color:#86efac;margin-top:3px;line-height:1.3;display:none;font-style:italic}body.show-hype .fc-hype{display:block}.fc-hype::before{content:"⚡ ";font-style:normal}
 .marquee-label{font-size:.62rem;text-transform:uppercase;color:#f59e0b;font-weight:700;padding:4px 2px 6px}
 #ticker{position:fixed;bottom:0;left:0;right:0;height:36px;background:#020617;border-top:1px solid #1e3a55;display:flex;align-items:center;z-index:1300;font-size:.75rem}
 .ticker-label{padding:0 12px;font-weight:700;color:#38bdf8;border-right:1px solid #1e3a55;height:100%;display:flex;align-items:center}
-.ticker-track{flex:1;overflow:hidden}
-.ticker-content{display:inline-block;white-space:nowrap;padding-left:100%;animation:ticker 55s linear infinite;line-height:36px;color:#a8b8d0}
-@keyframes ticker{to{transform:translateX(-100%)}}
+.ticker-track{flex:1;overflow:hidden}.ticker-content{display:inline-block;white-space:nowrap;padding-left:100%;animation:ticker 55s linear infinite;line-height:36px;color:#a8b8d0}@keyframes ticker{to{transform:translateX(-100%)}}
 .soc-icon{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:15px;border:2.5px solid #fff;box-shadow:0 2px 8px rgba(0,0,0,.45)}
-.soc-icon.nfl,.soc-icon.practice,.soc-icon.college,.soc-icon.d2,.soc-icon.d3{background:#1d4ed8}
-.soc-icon.mlb,.soc-icon.milb{background:#dc2626}
-.soc-icon.soccer,.soc-icon.mls{background:#16a34a}
-.soc-icon.golf{background:#0d9488}
-.wx-chip{position:absolute;bottom:-4px;right:-6px;background:#0ea5e9;color:#fff;font-size:8px;font-weight:700;padding:1px 4px;border-radius:4px;border:1px solid #fff;display:none}
-body.show-weather .wx-chip{display:block}
-#panel{position:fixed;top:48px;right:-420px;width:380px;max-width:90vw;height:calc(100vh - 48px);background:#0f1a2e;border-left:1px solid #2a4a6a;z-index:1200;transition:right .28s;display:flex;flex-direction:column}
-#panel.open{right:0}
-.panel-header{padding:14px 16px;background:linear-gradient(135deg,#1b4f72,#0f1c2e);border-bottom:1px solid #2a4a6a}
-.panel-close{float:right;background:none;border:none;color:#8ba0bc;font-size:22px;cursor:pointer}
-.panel-venue{font-weight:700;font-size:1.05rem;color:#7dd3fc}
-.panel-city{font-size:.8rem;color:#a8b8d0}
-.panel-chips{display:flex;gap:6px;margin-top:8px;flex-wrap:wrap}
-.chip{font-size:.68rem;font-weight:600;padding:2px 8px;border-radius:999px;background:rgba(255,255,255,.08)}
-.chip.count{background:#1a7f4e;color:#fff}
-.panel-body{flex:1;overflow-y:auto;padding:12px 14px}
-.panel-section-label{font-size:.65rem;text-transform:uppercase;letter-spacing:.06em;color:#6b7f9a;margin:4px 0 8px;font-weight:600}
+.soc-icon.nfl,.soc-icon.practice,.soc-icon.college,.soc-icon.d2,.soc-icon.d3{background:#1d4ed8}.soc-icon.mlb,.soc-icon.milb{background:#dc2626}.soc-icon.soccer,.soc-icon.mls{background:#16a34a}.soc-icon.golf{background:#0d9488}
+.wx-chip{position:absolute;bottom:-4px;right:-6px;background:#0ea5e9;color:#fff;font-size:8px;font-weight:700;padding:1px 4px;border-radius:4px;border:1px solid #fff;display:none}body.show-weather .wx-chip{display:block}
+#panel{position:fixed;top:48px;right:-420px;width:380px;max-width:90vw;height:calc(100vh - 48px);background:#0f1a2e;border-left:1px solid #2a4a6a;z-index:1200;transition:right .28s;display:flex;flex-direction:column}#panel.open{right:0}
+.panel-header{padding:14px 16px;background:linear-gradient(135deg,#1b4f72,#0f1c2e);border-bottom:1px solid #2a4a6a}.panel-close{float:right;background:none;border:none;color:#8ba0bc;font-size:22px;cursor:pointer}
+.panel-venue{font-weight:700;font-size:1.05rem;color:#7dd3fc}.panel-city{font-size:.8rem;color:#a8b8d0}.panel-chips{display:flex;gap:6px;margin-top:8px;flex-wrap:wrap}
+.chip{font-size:.68rem;font-weight:600;padding:2px 8px;border-radius:999px;background:rgba(255,255,255,.08)}.chip.count{background:#1a7f4e;color:#fff}
+.panel-body{flex:1;overflow-y:auto;padding:12px 14px}.panel-section-label{font-size:.65rem;text-transform:uppercase;letter-spacing:.06em;color:#6b7f9a;margin:4px 0 8px;font-weight:600}
 .event-card{background:rgba(255,255,255,.04);border:1px solid #1e3a55;border-radius:10px;margin-bottom:10px;padding:10px 12px}
-.event-date{font-size:.7rem;color:#38bdf8;font-weight:600}
-.event-teams{font-size:.88rem;font-weight:600;margin-top:2px}
-.event-sport{font-size:.7rem;color:#8ba0bc;margin-top:2px}
-#statusBar{position:absolute;top:10px;left:50%;transform:translateX(-50%);z-index:650;background:rgba(15,23,42,.9);border:1px solid #1e3a55;padding:6px 14px;border-radius:999px;font-size:.72rem;color:#94a3b8;pointer-events:none}
-#statusBar.ok{color:#4ade80;border-color:#16a34a55}
-#statusBar.err{color:#f87171}
-.popup-mini-title{font-weight:700;color:#7dd3fc}
-.popup-mini-meta{font-size:.75rem;color:#a8b8d0;margin-top:2px}
-.popup-wx{font-size:.72rem;color:#94a3b8;margin-top:4px}
-.popup-mini-btn{margin-top:8px;background:#1e40af;color:#fff;border:none;padding:6px 10px;border-radius:6px;font-size:.72rem;font-weight:600;cursor:pointer;width:100%}
-.mobile-bar{display:none;position:fixed;bottom:36px;left:0;right:0;height:48px;background:#0a1220;border-top:1px solid #1e3a55;z-index:1250;padding:0 8px;gap:8px;align-items:center}
-.mobile-bar button{flex:1;height:36px;border:1px solid #2a4a6a;background:rgba(255,255,255,.04);color:#c5d4e8;border-radius:8px;font-size:.75rem;font-weight:600;cursor:pointer}
+.event-date{font-size:.7rem;color:#38bdf8;font-weight:600}.event-teams{font-size:.88rem;font-weight:600;margin-top:2px}.event-sport{font-size:.7rem;color:#8ba0bc;margin-top:2px}
+#statusBar{position:absolute;top:10px;left:50%;transform:translateX(-50%);z-index:650;background:rgba(15,23,42,.9);border:1px solid #1e3a55;padding:6px 14px;border-radius:999px;font-size:.72rem;color:#94a3b8;pointer-events:none}#statusBar.ok{color:#4ade80;border-color:#16a34a55}#statusBar.err{color:#f87171}
+.popup-mini-title{font-weight:700;color:#7dd3fc}.popup-mini-meta{font-size:.75rem;color:#a8b8d0;margin-top:2px}.popup-wx{font-size:.72rem;color:#94a3b8;margin-top:4px}.popup-mini-btn{margin-top:8px;background:#1e40af;color:#fff;border:none;padding:6px 10px;border-radius:6px;font-size:.72rem;font-weight:600;cursor:pointer;width:100%}
+.mobile-bar{display:none;position:fixed;bottom:36px;left:0;right:0;height:48px;background:#0a1220;border-top:1px solid #1e3a55;z-index:1250;padding:0 8px;gap:8px;align-items:center}.mobile-bar button{flex:1;height:36px;border:1px solid #2a4a6a;background:rgba(255,255,255,.04);color:#c5d4e8;border-radius:8px;font-size:.75rem;font-weight:600;cursor:pointer}
 .scrim{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:1150}
-@media(max-width:900px){
-  #layers,#feed{position:fixed;top:56px;bottom:84px;width:min(320px,90vw);transform:translateX(-110%);transition:transform .28s;z-index:1200}
-  #feed{right:0;left:auto;transform:translateX(110%)}
-  body.mobile-layers-open #layers,body.mobile-feed-open #feed{transform:translateX(0)}
-  body.mobile-layers-open .scrim,body.mobile-feed-open .scrim{display:block}
-  .mobile-bar{display:flex}
-  #main{height:calc(100vh - 92px)}
-}
+@media(max-width:900px){#layers,#feed{position:fixed;top:56px;bottom:84px;width:min(320px,90vw);transform:translateX(-110%);transition:transform .28s;z-index:1200}#feed{right:0;left:auto;transform:translateX(110%)}body.mobile-layers-open #layers,body.mobile-feed-open #feed{transform:translateX(0)}body.mobile-layers-open .scrim,body.mobile-feed-open .scrim{display:block}.mobile-bar{display:flex}#main{height:calc(100vh - 92px)}}
 </style>
 </head>
 <body>
@@ -105,20 +69,9 @@ body.show-weather .wx-chip{display:block}
 </header>
 <div id="main">
   <aside id="layers">
-    <div class="layers-top">
-      <span class="layers-top-label">Layers</span>
-      <div class="layers-actions">
-        <button type="button" id="btnSelectAll">Select all</button>
-        <button type="button" id="btnClearLayers">Clear all</button>
-      </div>
-    </div>
-
-    <!-- Sports collapsible group (default open, all checked) -->
+    <div class="layers-top"><span class="layers-top-label">Layers</span><div class="layers-actions"><button type="button" id="btnSelectAll">Select all</button><button type="button" id="btnClearLayers">Clear all</button></div></div>
     <div class="ops-group" id="ops-sports">
-      <button type="button" class="ops-group-toggle" aria-expanded="true" data-target="ops-sports-body">
-        <span>Sports</span>
-        <span class="ops-group-chevron">▾</span>
-      </button>
+      <button type="button" class="ops-group-toggle" aria-expanded="true" data-target="ops-sports-body"><span>Sports</span><span class="ops-group-chevron">▾</span></button>
       <div class="ops-group-body" id="ops-sports-body" style="display:block">
         <label class="layer-item"><input type="checkbox" checked data-type="nfl"> <span class="layer-swatch" style="background:#1d4ed8">🏈</span> NFL <span class="layer-count" id="cnt-nfl">0</span></label>
         <label class="layer-item"><input type="checkbox" checked data-type="mlb"> <span class="layer-swatch" style="background:#dc2626">⚾</span> MLB <span class="layer-count" id="cnt-mlb">0</span></label>
@@ -129,27 +82,17 @@ body.show-weather .wx-chip{display:block}
         <label class="layer-item"><input type="checkbox" checked data-type="d2"> <span class="layer-swatch" style="background:#6366f1">🏈</span> D2 / D3 <span class="layer-count" id="cnt-d2">0</span></label>
         <label class="layer-item"><input type="checkbox" checked data-type="golf"> <span class="layer-swatch" style="background:#0d9488">⛳</span> Golf <span class="layer-count" id="cnt-golf">0</span></label>
         <label class="layer-item"><input type="checkbox" id="lyWeather"> <span class="layer-swatch" style="background:#38bdf8">☁</span> Weather vibes</label>
+        <label class="layer-item"><input type="checkbox" id="lyHype"> <span class="layer-swatch" style="background:#16a34a">⚡</span> Hype</label>
+        <label class="layer-item"><input type="checkbox" id="lyHeat"> <span class="layer-swatch heat"></span> Density heatmap</label>
       </div>
     </div>
-    <!-- Field + Entertainment injected by map-app.js below -->
   </aside>
   <div id="map"><div id="statusBar">Loading…</div></div>
-  <aside id="feed">
-    <div class="feed-header"><span>Live Feed</span><span id="feedCount">0 events</span></div>
-    <div id="feedScroll"></div>
-  </aside>
+  <aside id="feed"><div class="feed-header"><span>Live Feed</span><span id="feedCount">0 events</span></div><div id="feedScroll"></div></aside>
 </div>
 <div class="mobile-bar"><button id="btnLayers">Layers</button><button id="btnFeed">Feed</button></div>
 <div class="scrim" id="scrim"></div>
-<div id="panel">
-  <div class="panel-header">
-    <button class="panel-close" onclick="closePanel()">×</button>
-    <div class="panel-venue" id="panelVenue">Venue</div>
-    <div class="panel-city" id="panelCity"></div>
-    <div class="panel-chips" id="panelChips"></div>
-  </div>
-  <div class="panel-body" id="panelBody"></div>
-</div>
+<div id="panel"><div class="panel-header"><button class="panel-close" onclick="closePanel()">×</button><div class="panel-venue" id="panelVenue">Venue</div><div class="panel-city" id="panelCity"></div><div class="panel-chips" id="panelChips"></div></div><div class="panel-body" id="panelBody"></div></div>
 <div id="ticker"><div class="ticker-label">TICKER</div><div class="ticker-track"><div class="ticker-content" id="tickerContent">Loading…</div></div></div>
 <script>
 (function(){
@@ -158,147 +101,30 @@ body.show-weather .wx-chip{display:block}
   function setStatus(msg,kind){if(!statusEl)return;statusEl.textContent=msg;statusEl.className=kind||'';if(kind==='ok')setTimeout(function(){if(statusEl.textContent===msg)statusEl.style.display='none';},2200);}
   var map=L.map('map',{center:[39.2,-78.0],zoom:7});window.map=map;
   L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',{attribution:'© OSM © CARTO',subdomains:'abcd',maxZoom:19}).addTo(map);
-  // All sport layers ON by default
-  var layersByType={
-    nfl:L.layerGroup().addTo(map),
-    mlb:L.layerGroup().addTo(map),
-    soccer:L.layerGroup().addTo(map),
-    practice:L.layerGroup().addTo(map),
-    college:L.layerGroup().addTo(map),
-    milb:L.layerGroup().addTo(map),
-    d2:L.layerGroup().addTo(map),
-    d3:L.layerGroup().addTo(map),
-    golf:L.layerGroup().addTo(map)
-  };
-  var markerById={},venues=[],marquee=[],rangeDays=7;
+  var layersByType={nfl:L.layerGroup().addTo(map),mlb:L.layerGroup().addTo(map),soccer:L.layerGroup().addTo(map),practice:L.layerGroup().addTo(map),college:L.layerGroup().addTo(map),milb:L.layerGroup().addTo(map),d2:L.layerGroup().addTo(map),d3:L.layerGroup().addTo(map),golf:L.layerGroup().addTo(map)};
+  var markerById={},venues=[],marquee=[],rangeDays=7,heatLayer=null;
   var iconEmoji={nfl:'🏈',mlb:'⚾',mls:'⚽',soccer:'⚽',practice:'🏈',college:'🏈',milb:'⚾',d2:'🏈',d3:'🏈',golf:'⛳'};
   function normType(t){t=(t||'').toLowerCase();if(t==='mls'||t==='nwsl')return'soccer';if(t==='d1')return'college';if(t==='d3')return'd2';return t;}
   function makeIcon(type,wxLabel){var t=normType(type);var emoji=iconEmoji[t]||'📍';var chip=wxLabel?'<span class="wx-chip">'+wxLabel+'</span>':'';return L.divIcon({className:'',html:'<div style="position:relative"><div class="soc-icon '+t+'">'+emoji+'</div>'+chip+'</div>',iconSize:[30,30],iconAnchor:[15,15]});}
   function shortWx(e){if(e&&e.temp_f)return e.temp_f+'°';if(!e||!e.weather)return'';var m=String(e.weather).match(/(\d+)/);return m?m[1]+'°':'';}
-  function buildMarkers(){
-    Object.values(layersByType).forEach(function(g){g.clearLayers();});
-    Object.keys(markerById).forEach(function(k){delete markerById[k];});
-    var counts={nfl:0,mlb:0,soccer:0,practice:0,college:0,milb:0,d2:0,golf:0};
-    venues.forEach(function(v){
-      var t=normType(v.type);if(!layersByType[t])return;
-      counts[t]=(counts[t]||0)+1;
-      var outdoorEv=(v.events||[]).find(function(e){return e.outdoor==='Yes'&&(e.weather||e.temp_f);})||(v.events||[])[0];
-      var wx=outdoorEv?shortWx(outdoorEv):'';
-      var marker=L.marker([v.lat,v.lon],{icon:makeIcon(v.type,wx)});
-      markerById[v.id]=marker;
-      var wxLine=outdoorEv&&outdoorEv.weather?'<div class="popup-wx">☁ '+outdoorEv.weather+'</div>':'';
-      marker.bindPopup('<div class="popup-mini-title">'+v.name+'</div><div class="popup-mini-meta">'+(v.city||'')+' · '+(v.eventCount||(v.events||[]).length)+' event(s)</div>'+wxLine+'<button class="popup-mini-btn" onclick="openPanel(\''+v.id+'\')">Open venue intel →</button>');
-      layersByType[t].addLayer(marker);
-    });
-    Object.keys(counts).forEach(function(t){var el=document.getElementById('cnt-'+t);if(el)el.textContent=counts[t]||0;});
-  }
-  function renderFeed(){
-    var box=document.getElementById('feedScroll');if(!box)return;
-    var items=[];
-    venues.forEach(function(v){(v.events||[]).forEach(function(ev){items.push({venue_id:v.id,venue:v.name,city:v.city,type:v.type,event_name:ev.event_name||ev.teams||'Event',teams:ev.teams,date:ev.date,time:ev.time,weather:ev.weather});});});
-    var now=new Date(),cutoff=new Date(now.getTime()+rangeDays*86400000);
-    var inRange=items.filter(function(e){if(!e.date)return true;var dt=new Date(e.date);return dt>=now&&dt<=cutoff;});
-    var mq=(marquee||[]).filter(function(e){if(!e.date)return true;var dt=new Date(e.date);return dt>=now&&dt<=cutoff;});
-    document.getElementById('feedCount').textContent=inRange.length+' events';
-    var html='';
-    if(mq.length){html+='<div class="marquee-label">Marquee</div>';mq.forEach(function(e){html+='<div class="feed-card marquee" onclick="flyTo(\''+(e.venue_id||'')+'\')"><div class="feed-card-date">'+(e.date||'')+' · '+(e.time||'')+'</div><div class="feed-card-title">'+(e.teams||e.event_name)+'</div><div class="feed-card-meta">'+(e.venue||'')+' · '+(e.city||'')+'</div><div class="feed-card-wx">'+(e.weather||'')+'</div></div>';});}
-    inRange.sort(function(a,b){return(a.date||'').localeCompare(b.date||'');});
-    inRange.slice(0,40).forEach(function(e){html+='<div class="feed-card" onclick="openPanel(\''+e.venue_id+'\')"><div class="feed-card-date">'+(e.date||'')+' · '+(e.time||'')+'</div><div class="feed-card-title">'+(e.teams||e.event_name)+'</div><div class="feed-card-meta">'+(e.venue||'')+' · '+(e.city||'')+'</div><div class="feed-card-wx">'+(e.weather||'')+'</div></div>';});
-    if(!html)html='<div style="padding:16px;color:#6b7f9a;font-size:.8rem">No events in window.</div>';
-    box.innerHTML=html;
-    var tick=document.getElementById('tickerContent');
-    if(tick)tick.textContent=mq.length?mq.slice(0,6).map(function(e){return(e.teams||e.event_name)+' · '+(e.date||'');}).join('   ✦   ')+'   ✦   ':'Ops Center · Mid-Atlantic outdoor action';
-  }
-  window.openPanel=function(id){
-    var v=venues.find(function(x){return x.id===id;});if(!v)return;
-    document.getElementById('panelVenue').textContent=v.name;
-    document.getElementById('panelCity').textContent=(v.city||'')+(v.type?' · '+v.type.toUpperCase():'');
-    var chips='<span class="chip count">'+(v.events||[]).length+' events</span>';
-    if(v.type)chips+='<span class="chip">'+v.type+'</span>';
-    if(v.fan_sentiment_score!=null)chips+='<span class="chip" style="background:#1e3a5f">sentiment '+Math.round(v.fan_sentiment_score*100)/100+'</span>';
-    if(v.fan_themes)chips+='<span class="chip">'+v.fan_themes+'</span>';
-    document.getElementById('panelChips').innerHTML=chips;
-    var body='';
-    if(v.history)body+='<div class="panel-section-label">History</div><p style="font-size:.8rem;color:#c5d4e8;margin-bottom:12px;line-height:1.45">'+v.history+'</p>';
-    if(v.people_love)body+='<div class="panel-section-label">Why people love it</div><p style="font-size:.8rem;color:#c5d4e8;margin-bottom:12px;line-height:1.45">'+v.people_love+'</p>';
-    body+='<div class="panel-section-label">Upcoming</div>';
-    (v.events||[]).slice(0,10).forEach(function(ev){
-      body+='<div class="event-card"><div class="event-date">'+(ev.date||'')+' '+(ev.time||'')+'</div><div class="event-teams">'+(ev.teams||ev.event_name||'Event')+'</div>';
-      var meta=[];if(ev.outdoor==='Yes')meta.push('Outdoor');if(ev.weather)meta.push(ev.weather);if(ev.temp_f)meta.push(ev.temp_f+'°F');
-      body+='<div class="event-sport">'+meta.join(' · ')+'</div>';
-      if(ev.enthusiasm)body+='<p style="font-size:.78rem;color:#a8b8d0;margin-top:8px;line-height:1.4">'+ev.enthusiasm+'</p>';
-      body+='</div>';
-    });
-    if(!(v.events||[]).length)body+='<p style="color:#6b7f9a;font-size:.8rem">No events in window.</p>';
-    document.getElementById('panelBody').innerHTML=body;
-    document.getElementById('panel').classList.add('open');
-    if(v.lat&&v.lon)map.flyTo([v.lat,v.lon],11,{duration:0.8});
-  };
+  function buildMarkers(){Object.values(layersByType).forEach(function(g){g.clearLayers();});Object.keys(markerById).forEach(function(k){delete markerById[k];});var counts={nfl:0,mlb:0,soccer:0,practice:0,college:0,milb:0,d2:0,golf:0};venues.forEach(function(v){var t=normType(v.type);if(!layersByType[t])return;counts[t]=(counts[t]||0)+1;var outdoorEv=(v.events||[]).find(function(e){return e.outdoor==='Yes'&&(e.weather||e.temp_f);})||(v.events||[])[0];var wx=outdoorEv?shortWx(outdoorEv):'';var marker=L.marker([v.lat,v.lon],{icon:makeIcon(v.type,wx)});markerById[v.id]=marker;var wxLine=outdoorEv&&outdoorEv.weather?'<div class="popup-wx">☁ '+outdoorEv.weather+'</div>':'';marker.bindPopup('<div class="popup-mini-title">'+v.name+'</div><div class="popup-mini-meta">'+(v.city||'')+' · '+(v.eventCount||(v.events||[]).length)+' event(s)</div>'+wxLine+'<button class="popup-mini-btn" onclick="openPanel(\''+v.id+'\')">Open venue intel →</button>');layersByType[t].addLayer(marker);});Object.keys(counts).forEach(function(t){var el=document.getElementById('cnt-'+t);if(el)el.textContent=counts[t]||0;});}
+  function renderFeed(){var box=document.getElementById('feedScroll');if(!box)return;var items=[];venues.forEach(function(v){(v.events||[]).forEach(function(ev){items.push({venue_id:v.id,venue:v.name,city:v.city,type:v.type,event_name:ev.event_name||ev.teams||'Event',teams:ev.teams,date:ev.date,time:ev.time,weather:ev.weather,enthusiasm:ev.enthusiasm});});});var now=new Date(),cutoff=new Date(now.getTime()+rangeDays*86400000);var inRange=items.filter(function(e){if(!e.date)return true;var dt=new Date(e.date);return dt>=now&&dt<=cutoff;});var mq=(marquee||[]).filter(function(e){if(!e.date)return true;var dt=new Date(e.date);return dt>=now&&dt<=cutoff;});document.getElementById('feedCount').textContent=inRange.length+' events';var html='';if(mq.length){html+='<div class="marquee-label">Marquee</div>';mq.forEach(function(e){html+='<div class="feed-card marquee" onclick="openPanel(\''+(e.venue_id||'')+'\')"><div class="feed-card-date">'+(e.date||'')+' · '+(e.time||'')+'</div><div class="feed-card-title">'+(e.teams||e.event_name)+'</div><div class="feed-card-meta">'+(e.venue||'')+' · '+(e.city||'')+'</div><div class="feed-card-wx">'+(e.weather||'')+'</div><div class="fc-hype">'+(e.caption||'')+'</div></div>';});}inRange.sort(function(a,b){return(a.date||'').localeCompare(b.date||'');});inRange.slice(0,40).forEach(function(e){html+='<div class="feed-card" onclick="openPanel(\''+e.venue_id+'\')"><div class="feed-card-date">'+(e.date||'')+' · '+(e.time||'')+'</div><div class="feed-card-title">'+(e.teams||e.event_name)+'</div><div class="feed-card-meta">'+(e.venue||'')+' · '+(e.city||'')+'</div><div class="feed-card-wx">'+(e.weather||'')+'</div><div class="fc-hype">'+(e.enthusiasm||'')+'</div></div>';});if(!html)html='<div style="padding:16px;color:#6b7f9a;font-size:.8rem">No events in window.</div>';box.innerHTML=html;var tick=document.getElementById('tickerContent');if(tick)tick.textContent=mq.length?mq.slice(0,6).map(function(e){return(e.teams||e.event_name)+' · '+(e.date||'');}).join('   ✦   ')+'   ✦   ':'Ops Center · Mid-Atlantic outdoor action';}
+  window.openPanel=function(id){if(!id)return;var v=venues.find(function(x){return x.id===id;});if(!v){var m=markerById[id];if(m){map.flyTo(m.getLatLng(),11);m.openPopup();}return;}document.getElementById('panelVenue').textContent=v.name;document.getElementById('panelCity').textContent=(v.city||'')+(v.type?' · '+v.type.toUpperCase():'');var chips='<span class="chip count">'+(v.events||[]).length+' events</span>';if(v.type)chips+='<span class="chip">'+v.type+'</span>';if(v.fan_sentiment_score!=null)chips+='<span class="chip" style="background:#1e3a5f">sentiment '+Math.round(v.fan_sentiment_score*100)/100+'</span>';if(v.fan_themes)chips+='<span class="chip">'+v.fan_themes+'</span>';document.getElementById('panelChips').innerHTML=chips;var body='';if(v.history)body+='<div class="panel-section-label">History</div><p style="font-size:.8rem;color:#c5d4e8;margin-bottom:12px;line-height:1.45">'+v.history+'</p>';if(v.people_love)body+='<div class="panel-section-label">Why people love it</div><p style="font-size:.8rem;color:#c5d4e8;margin-bottom:12px;line-height:1.45">'+v.people_love+'</p>';body+='<div class="panel-section-label">Upcoming</div>';(v.events||[]).slice(0,10).forEach(function(ev){body+='<div class="event-card"><div class="event-date">'+(ev.date||'')+' '+(ev.time||'')+'</div><div class="event-teams">'+(ev.teams||ev.event_name||'Event')+'</div>';var meta=[];if(ev.outdoor==='Yes')meta.push('Outdoor');if(ev.weather)meta.push(ev.weather);if(ev.temp_f)meta.push(ev.temp_f+'°F');body+='<div class="event-sport">'+meta.join(' · ')+'</div>';if(ev.enthusiasm)body+='<p style="font-size:.78rem;color:#a8b8d0;margin-top:8px;line-height:1.4">'+ev.enthusiasm+'</p>';body+='</div>';});if(!(v.events||[]).length)body+='<p style="color:#6b7f9a;font-size:.8rem">No events in window.</p>';document.getElementById('panelBody').innerHTML=body;document.getElementById('panel').classList.add('open');if(v.lat&&v.lon)map.flyTo([v.lat,v.lon],11,{duration:0.8});};
   window.closePanel=function(){document.getElementById('panel').classList.remove('open');};
   window.flyTo=function(id){var m=markerById[id];if(m){map.flyTo(m.getLatLng(),11);m.openPopup();}};
-  function syncLayerVisibility(){
-    document.querySelectorAll('#layers input[data-type]').forEach(function(cb){
-      var t=cb.getAttribute('data-type'),group=layersByType[t];if(!group)return;
-      if(cb.checked){if(!map.hasLayer(group))group.addTo(map);}else{if(map.hasLayer(group))map.removeLayer(group);}
-    });
-  }
-  document.querySelectorAll('#layers input[data-type]').forEach(function(cb){
-    cb.addEventListener('change',function(){syncLayerVisibility();renderFeed();});
-  });
-  document.getElementById('lyWeather')&&document.getElementById('lyWeather').addEventListener('change',function(e){
-    document.body.classList.toggle('show-weather',e.target.checked);
-  });
-  // Collapsible Sports group (same pattern as Field/Entertainment)
-  document.querySelectorAll('.ops-group-toggle').forEach(function(btn){
-    btn.addEventListener('click',function(){
-      var body=document.getElementById(btn.getAttribute('data-target'));
-      var chev=btn.querySelector('.ops-group-chevron');
-      var open=btn.getAttribute('aria-expanded')==='true';
-      btn.setAttribute('aria-expanded', open?'false':'true');
-      if(body)body.style.display=open?'none':'block';
-      if(chev)chev.textContent=open?'▸':'▾';
-    });
-  });
-  document.getElementById('btnSelectAll')&&document.getElementById('btnSelectAll').addEventListener('click',function(){
-    document.querySelectorAll('#layers input[data-type]').forEach(function(cb){
-      if(!cb.checked){cb.checked=true;cb.dispatchEvent(new Event('change',{bubbles:true}));}
-    });
-  });
-  document.getElementById('btnClearLayers')&&document.getElementById('btnClearLayers').addEventListener('click',function(){
-    document.querySelectorAll('#layers input[type=checkbox]').forEach(function(cb){
-      if(cb.checked){cb.checked=false;cb.dispatchEvent(new Event('change',{bubbles:true}));}
-    });
-  });
-  document.querySelectorAll('.time-filters button').forEach(function(btn){
-    btn.addEventListener('click',function(){
-      document.querySelectorAll('.time-filters button').forEach(function(b){b.classList.remove('active');});
-      btn.classList.add('active');
-      rangeDays=parseInt(btn.getAttribute('data-range'),10)||7;
-      renderFeed();
-    });
-  });
-  function tick(){var el=document.getElementById('liveClock');if(el)el.textContent=new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});}
-  setInterval(tick,1000);tick();
-  (function(){
-    var btnL=document.getElementById('btnLayers'),btnF=document.getElementById('btnFeed'),scrim=document.getElementById('scrim');
-    function closeM(){document.body.classList.remove('mobile-layers-open','mobile-feed-open');}
-    btnL&&btnL.addEventListener('click',function(){if(document.body.classList.contains('mobile-layers-open'))closeM();else{document.body.classList.remove('mobile-feed-open');document.body.classList.add('mobile-layers-open');}});
-    btnF&&btnF.addEventListener('click',function(){if(document.body.classList.contains('mobile-feed-open'))closeM();else{document.body.classList.remove('mobile-layers-open');document.body.classList.add('mobile-feed-open');}});
-    scrim&&scrim.addEventListener('click',closeM);
-  })();
+  function syncLayerVisibility(){document.querySelectorAll('#layers input[data-type]').forEach(function(cb){var t=cb.getAttribute('data-type'),group=layersByType[t];if(!group)return;if(cb.checked){if(!map.hasLayer(group))group.addTo(map);}else{if(map.hasLayer(group))map.removeLayer(group);}});var heatCb=document.getElementById('lyHeat');if(heatLayer&&heatCb){if(heatCb.checked){if(!map.hasLayer(heatLayer))map.addLayer(heatLayer);}else{if(map.hasLayer(heatLayer))map.removeLayer(heatLayer);}}}
+  document.querySelectorAll('#layers input[data-type]').forEach(function(cb){cb.addEventListener('change',function(){syncLayerVisibility();renderFeed();});});
+  document.getElementById('lyWeather')&&document.getElementById('lyWeather').addEventListener('change',function(e){document.body.classList.toggle('show-weather',e.target.checked);});
+  document.getElementById('lyHype')&&document.getElementById('lyHype').addEventListener('change',function(e){document.body.classList.toggle('show-hype',e.target.checked);});
+  document.getElementById('lyHeat')&&document.getElementById('lyHeat').addEventListener('change',function(){syncLayerVisibility();});
+  document.querySelectorAll('.ops-group-toggle').forEach(function(btn){btn.addEventListener('click',function(){var body=document.getElementById(btn.getAttribute('data-target'));var chev=btn.querySelector('.ops-group-chevron');var open=btn.getAttribute('aria-expanded')==='true';btn.setAttribute('aria-expanded',open?'false':'true');if(body)body.style.display=open?'none':'block';if(chev)chev.textContent=open?'▸':'▾';});});
+  document.getElementById('btnSelectAll')&&document.getElementById('btnSelectAll').addEventListener('click',function(){document.querySelectorAll('#layers input[data-type]').forEach(function(cb){if(!cb.checked){cb.checked=true;cb.dispatchEvent(new Event('change',{bubbles:true}));}});});
+  document.getElementById('btnClearLayers')&&document.getElementById('btnClearLayers').addEventListener('click',function(){document.querySelectorAll('#layers input[type=checkbox]').forEach(function(cb){if(cb.checked){cb.checked=false;cb.dispatchEvent(new Event('change',{bubbles:true}));}});});
+  document.querySelectorAll('.time-filters button').forEach(function(btn){btn.addEventListener('click',function(){document.querySelectorAll('.time-filters button').forEach(function(b){b.classList.remove('active');});btn.classList.add('active');rangeDays=parseInt(btn.getAttribute('data-range'),10)||7;renderFeed();});});
+  function tick(){var el=document.getElementById('liveClock');if(el)el.textContent=new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});}setInterval(tick,1000);tick();
+  (function(){var btnL=document.getElementById('btnLayers'),btnF=document.getElementById('btnFeed'),scrim=document.getElementById('scrim');function closeM(){document.body.classList.remove('mobile-layers-open','mobile-feed-open');}btnL&&btnL.addEventListener('click',function(){if(document.body.classList.contains('mobile-layers-open'))closeM();else{document.body.classList.remove('mobile-feed-open');document.body.classList.add('mobile-layers-open');}});btnF&&btnF.addEventListener('click',function(){if(document.body.classList.contains('mobile-feed-open'))closeM();else{document.body.classList.remove('mobile-layers-open');document.body.classList.add('mobile-feed-open');}});scrim&&scrim.addEventListener('click',closeM);})();
   setStatus('Loading…');
-  Promise.all([
-    fetch('./data/soc-a.json',{cache:'no-store'}).then(function(r){if(!r.ok)throw new Error('data-a '+r.status);return r.json();}),
-    fetch('./data/soc-b.json',{cache:'no-store'}).then(function(r){if(!r.ok)throw new Error('data-b '+r.status);return r.json();})
-  ]).then(function(parts){
-    venues=(parts[0].venues||[]).concat(parts[1].venues||[]);
-    marquee=parts[0].marquee||parts[1].marquee||[];
-    buildMarkers();syncLayerVisibility();renderFeed();
-    setStatus('Live · '+venues.length+' venues','ok');
-  }).catch(function(err){
-    console.error(err);setStatus('Data load failed','err');
-    document.getElementById('feedScroll').innerHTML='<div style="padding:16px;color:#f87171">Could not load data. '+err.message+'</div>';
-  });
+  Promise.all([fetch('./data/soc-a.json',{cache:'no-store'}).then(function(r){if(!r.ok)throw new Error('data-a '+r.status);return r.json();}),fetch('./data/soc-b.json',{cache:'no-store'}).then(function(r){if(!r.ok)throw new Error('data-b '+r.status);return r.json();})]).then(function(parts){venues=(parts[0].venues||[]).concat(parts[1].venues||[]);marquee=parts[0].marquee||parts[1].marquee||[];var heatPoints=[];venues.forEach(function(v){var intensity=Math.max(.2,Math.min(1,(v.eventCount||(v.events||[]).length||1)/13));var n=Math.max(2,Math.round((v.eventCount||(v.events||[]).length||1)*1.2));for(var i=0;i<n;i++)heatPoints.push([v.lat+(Math.random()-.5)*.015,v.lon+(Math.random()-.5)*.015,intensity]);});if(typeof L.heatLayer==='function'){heatLayer=L.heatLayer(heatPoints,{radius:36,blur:26,maxZoom:11,max:1,gradient:{.2:'#0000ff',.4:'#00ff00',.6:'#ffff00',.8:'#ff8800',1:'#ff0000'}});}buildMarkers();syncLayerVisibility();renderFeed();setStatus('Live · '+venues.length+' venues','ok');}).catch(function(err){console.error(err);setStatus('Data load failed','err');document.getElementById('feedScroll').innerHTML='<div style="padding:16px;color:#f87171">Could not load data. '+err.message+'</div>';});
 })();
 </script>
 <script src="./map-app.js" defer></script>
