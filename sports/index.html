@@ -70,6 +70,11 @@ header{background:#020617;padding:0 16px;display:flex;align-items:center;justify
 <div id="main">
   <aside id="layers">
     <div class="layers-top"><span class="layers-top-label">Layers</span><div class="layers-actions"><button type="button" id="btnSelectAll">Select all</button><button type="button" id="btnClearLayers">Clear all</button></div></div>
+    <div class="ops-global-toggles" style="padding:6px 0 4px;border-bottom:1px solid #1e3a55">
+      <label class="layer-item"><input type="checkbox" id="lyWeather"> <span class="layer-swatch" style="background:#38bdf8">☁</span> Weather vibes</label>
+      <label class="layer-item"><input type="checkbox" id="lyHype"> <span class="layer-swatch" style="background:#16a34a">⚡</span> Hype</label>
+      <label class="layer-item"><input type="checkbox" id="lyHeat"> <span class="layer-swatch heat"></span> Density heatmap</label>
+    </div>
     <div class="ops-group" id="ops-sports">
       <button type="button" class="ops-group-toggle" aria-expanded="true" data-target="ops-sports-body"><span>Sports</span><span class="ops-group-chevron">▾</span></button>
       <div class="ops-group-body" id="ops-sports-body" style="display:block">
@@ -81,9 +86,6 @@ header{background:#020617;padding:0 16px;display:flex;align-items:center;justify
         <label class="layer-item"><input type="checkbox" checked data-type="milb"> <span class="layer-swatch" style="background:#b45309">⚾</span> MiLB <span class="layer-count" id="cnt-milb">0</span></label>
         <label class="layer-item"><input type="checkbox" checked data-type="d2"> <span class="layer-swatch" style="background:#6366f1">🏈</span> D2 / D3 <span class="layer-count" id="cnt-d2">0</span></label>
         <label class="layer-item"><input type="checkbox" checked data-type="golf"> <span class="layer-swatch" style="background:#0d9488">⛳</span> Golf <span class="layer-count" id="cnt-golf">0</span></label>
-        <label class="layer-item"><input type="checkbox" id="lyWeather"> <span class="layer-swatch" style="background:#38bdf8">☁</span> Weather vibes</label>
-        <label class="layer-item"><input type="checkbox" id="lyHype"> <span class="layer-swatch" style="background:#16a34a">⚡</span> Hype</label>
-        <label class="layer-item"><input type="checkbox" id="lyHeat"> <span class="layer-swatch heat"></span> Density heatmap</label>
       </div>
     </div>
   </aside>
