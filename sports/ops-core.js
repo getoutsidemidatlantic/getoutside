@@ -67,9 +67,9 @@
       var m=L.marker([v.lat,v.lon],{icon:makeIcon(t,wx)});
       m.bindPopup(
         '<div style="min-width:160px;font-family:system-ui,sans-serif">'+
-        '<div style="font-weight:700;font-size:0.95rem">'+ (v.name||'') +'</div>'+
-        '<div style="font-size:0.75rem;color:#94a3b8">'+ (v.city||'') +'</div>'+
-        '<div style="font-size:0.72rem;color:#64748b;margin-top:4px">'+ ((v.events||[]).length) +' events in window</div>'+
+        '<div style="font-weight:700;font-size:0.95rem">'+(v.name||'')+'</div>'+
+        '<div style="font-size:0.75rem;color:#94a3b8">'+(v.city||'')+'</div>'+
+        '<div style="font-size:0.72rem;color:#64748b;margin-top:4px">'+((v.events||[]).length)+' events in window</div>'+
         '<br><button onclick="openPanel(\''+v.id+'\')" style="margin-top:6px;padding:4px 10px;border-radius:6px;border:0;background:#22c55e;color:#0b1220;font-weight:700;cursor:pointer">Intel</button>'+
         '</div>'
       );
@@ -120,7 +120,7 @@
           '<div class="feed-card-title">'+(e.title||e.teams||v.name||'')+'</div>'+
           '<div class="feed-card-meta">'+(v.name||'')+(v.city?' · '+v.city:'')+'</div>'+
           (e.weather?'<div class="feed-card-wx">'+e.weather+'</div>':'')+
-          (e.hype?'<div class="fc-hype">'+e.hype+'</div>':'')+
+          (e.enthusiasm||e.hype?'<div class="fc-hype">'+(e.enthusiasm||e.hype)+'</div>':'')+
           '</div>';
         if(isMarquee) marqueeCards.push(cardHtml);
         else cards.push({html:cardHtml,date:e.date});
@@ -136,39 +136,39 @@
     if(countEl)countEl.textContent=(cards.length+marqueeCards.length)+' events';
   }
 
-  function openFieldPanel(s){
-    var panel=document.getElementById('panel');
+  function setHero(imgUrl){
     var hero=document.getElementById('panelHeroWrap');
-    var venue=document.getElementById('panelVenue');
-    var city=document.getElementById('panelCity');
-    var chips=document.getElementById('panelChips');
-    var body=document.getElementById('panelBody');
-    if(!panel)return;
-    if(hero){
-      if(s.image){
-        hero.innerHTML='<img class="panel-hero" src="'+s.image+'" alt="" onerror="this.style.display=\'none\'">';
-      }else{
-        hero.innerHTML='<div class="panel-hero-fallback">No image</div>';
-      }
+    if(!hero)return;
+    if(imgUrl){
+      hero.innerHTML='<img class="panel-hero" src="'+imgUrl+'" alt="" loading="lazy" onerror="this.parentNode.innerHTML=\'<div class=panel-hero-fallback>No venue photo</div>\'">';
+    }else{
+      hero.innerHTML='<div class="panel-hero-fallback">No venue photo yet</div>';
     }
-    if(venue)venue.textContent=s.name||s.title||'Site';
-    if(city)city.textContent=(s.city||'')+(s.group?' · '+s.group:'');
-    if(chips){
-      var c=[];
-      if(s.group)c.push('<span class="chip">'+s.group+'</span>');
-      if(s.sublayer)c.push('<span class="chip">'+s.sublayer+'</span>');
-      if(s.time_sensitive)c.push('<span class="chip count">Time-sensitive</span>');
-      if(s.dates)c.push('<span class="chip occasion">'+s.dates+'</span>');
-      chips.innerHTML=c.join('');
+  }
+
+  function openFieldPanel(s){
+    setHero(s.image||'');
+    document.getElementById('panelVenue').textContent=s.name||s.title||'Site';
+    var sub=[s.group,s.sublayer].filter(Boolean).join(' · ');
+    document.getElementById('panelCity').textContent=(s.city||'')+(sub?' · '+sub:'');
+    var chips='';
+    if(s.group)chips+='<span class="chip">'+s.group+'</span>';
+    if(s.sublayer)chips+='<span class="chip">'+s.sublayer+'</span>';
+    if(s.time_sensitive)chips+='<span class="chip count">Time-sensitive</span>';
+    if(s.dates)chips+='<span class="chip">'+s.dates+'</span>';
+    document.getElementById('panelChips').innerHTML=chips||'<span class="chip">Field</span>';
+    var body='';
+    if(s.note)body+='<div class="panel-section-label">Intel</div><p style="font-size:.8rem;color:#c5d4e8;margin-bottom:12px;line-height:1.45">'+s.note+'</p>';
+    if(s.dates)body+='<div class="panel-section-label">When</div><p style="font-size:.8rem;color:#c5d4e8;margin-bottom:12px">'+s.dates+'</p>';
+    var url=s.official||s.url||'';
+    if(url)body+='<div class="panel-section-label">Source</div><p style="margin-bottom:12px"><a href="'+url+'" target="_blank" rel="noopener" style="color:#38bdf8;font-weight:600;font-size:.85rem">Open official site →</a></p>';
+    if(!body)body='<p style="color:#6b7f9a;font-size:.8rem">No extra intel for this site.</p>';
+    document.getElementById('panelBody').innerHTML=body;
+    document.getElementById('panel').classList.add('open');
+    document.body.classList.remove('mobile-layers-open','mobile-feed-open');
+    if(s.lat!=null&&(s.lon!=null||s.lng!=null)){
+      map.flyTo([s.lat,s.lon!=null?s.lon:s.lng],11,{duration:0.8});
     }
-    if(body){
-      var html='';
-      if(s.note)html+='<div class="panel-section-label">Note</div><div style="font-size:.85rem;line-height:1.45;color:#c5d4e8">'+s.note+'</div>';
-      if(s.dates)html+='<div class="panel-section-label">Dates</div><div style="font-size:.85rem">'+s.dates+'</div>';
-      if(s.official)html+='<div class="panel-section-label">Official</div><a href="'+s.official+'" target="_blank" rel="noopener" style="color:#38bdf8;font-size:.85rem">'+s.official+'</a>';
-      body.innerHTML=html||'<div style="color:#6b7f9a">No additional details.</div>';
-    }
-    panel.classList.add('open');
   }
 
   window.openPanel=function(id){
@@ -177,50 +177,48 @@
     if(!v){
       var fs=(window.fieldSites||[]).find(function(x){return x.id===id;});
       if(fs){openFieldPanel(fs);return;}
+      var m=markerById[id];
+      if(m){map.flyTo(m.getLatLng(),11);m.openPopup();}
       return;
     }
-    var panel=document.getElementById('panel');
-    var hero=document.getElementById('panelHeroWrap');
-    var venue=document.getElementById('panelVenue');
-    var city=document.getElementById('panelCity');
-    var chips=document.getElementById('panelChips');
-    var body=document.getElementById('panelBody');
-    if(!panel)return;
-    if(hero){
-      if(v.image){
-        hero.innerHTML='<img class="panel-hero" src="'+v.image+'" alt="" onerror="this.style.display=\'none\'">';
-      }else{
-        hero.innerHTML='<div class="panel-hero-fallback">No image</div>';
-      }
+    setHero(v.image||'');
+    document.getElementById('panelVenue').textContent=v.name;
+    document.getElementById('panelCity').textContent=(v.city||'')+(v.type?' · '+String(v.type).toUpperCase():'');
+    var chips='<span class="chip count">'+(v.events||[]).length+' events</span>';
+    if(v.type)chips+='<span class="chip">'+v.type+'</span>';
+    if(v.fan_sentiment_score!=null)chips+='<span class="chip" style="background:#1e3a5f">sentiment '+Math.round(v.fan_sentiment_score*100)/100+'</span>';
+    if(v.fan_themes)chips+='<span class="chip">'+v.fan_themes+'</span>';
+    var occ=v.occasions||[];
+    if(occ.length){
+      chips+='<div class="occasion-row">';
+      occ.forEach(function(t){chips+='<span class="chip occasion">'+t+'</span>';});
+      chips+='</div>';
     }
-    if(venue)venue.textContent=v.name||'Venue';
-    if(city)city.textContent=v.city||'';
-    if(chips){
-      var c=[];
-      c.push('<span class="chip count">'+(v.eventCount||(v.events||[]).length||0)+' events</span>');
-      (v.occasions||[]).forEach(function(o){c.push('<span class="chip occasion">'+o+'</span>');});
-      chips.innerHTML=c.join('');
-    }
-    if(body){
-      var html='';
-      (v.events||[]).filter(eventInRange).forEach(function(e){
-        html+='<div class="event-card">'+
-          '<div class="event-date">'+(e.date||'')+'</div>'+
-          '<div class="event-teams">'+(e.title||e.teams||'')+'</div>'+
-          '<div class="event-sport">'+(e.sport||v.type||'')+(e.outdoor?' · Outdoor':'')+'</div>'+
-          (e.weather?'<div style="font-size:.72rem;color:#94a3b8;margin-top:4px">'+e.weather+'</div>':'')+
-          (e.hype?'<div style="font-size:.75rem;color:#a8b8d0;margin-top:4px">'+e.hype+'</div>':'')+
-          '</div>';
-      });
-      body.innerHTML=html||'<div style="color:#6b7f9a">No events in current window.</div>';
-    }
-    panel.classList.add('open');
+    document.getElementById('panelChips').innerHTML=chips;
+    var body='';
+    if(v.history)body+='<div class="panel-section-label">History</div><p style="font-size:.8rem;color:#c5d4e8;margin-bottom:12px;line-height:1.45">'+v.history+'</p>';
+    if(v.people_love)body+='<div class="panel-section-label">Why people love it</div><p style="font-size:.8rem;color:#c5d4e8;margin-bottom:12px;line-height:1.45">'+v.people_love+'</p>';
+    body+='<div class="panel-section-label">Upcoming</div>';
+    (v.events||[]).filter(eventInRange).slice(0,10).forEach(function(ev){
+      body+='<div class="event-card"><div class="event-date">'+(ev.date||'')+' '+(ev.time||'')+'</div>';
+      body+='<div class="event-teams">'+(ev.teams||ev.event_name||ev.title||'Event')+'</div>';
+      var meta=[];
+      if(ev.outdoor==='Yes'||ev.outdoor===true)meta.push('Outdoor');
+      if(ev.weather)meta.push(ev.weather);
+      if(ev.temp_f)meta.push(ev.temp_f+'°F');
+      body+='<div class="event-sport">'+meta.join(' · ')+'</div>';
+      if(ev.enthusiasm)body+='<p style="font-size:.78rem;color:#a8b8d0;margin-top:8px;line-height:1.4">'+ev.enthusiasm+'</p>';
+      else if(ev.hype)body+='<p style="font-size:.78rem;color:#a8b8d0;margin-top:8px;line-height:1.4">'+ev.hype+'</p>';
+      body+='</div>';
+    });
+    if(!(v.events||[]).length)body+='<p style="color:#6b7f9a;font-size:.8rem">No events in window.</p>';
+    document.getElementById('panelBody').innerHTML=body;
+    document.getElementById('panel').classList.add('open');
+    document.body.classList.remove('mobile-layers-open','mobile-feed-open');
+    if(v.lat&&v.lon)map.flyTo([v.lat,v.lon],11,{duration:0.8});
   };
-
-  window.closePanel=function(){
-    var panel=document.getElementById('panel');
-    if(panel)panel.classList.remove('open');
-  };
+  window.closePanel=function(){document.getElementById('panel').classList.remove('open');};
+  window.flyTo=function(id){var m=markerById[id];if(m){map.flyTo(m.getLatLng(),11);m.openPopup();}};
 
   // Layer toggles
   document.querySelectorAll('#ops-sports input[data-type]').forEach(function(cb){
