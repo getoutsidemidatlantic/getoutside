@@ -1,1 +1,96 @@
-{"updated": "2026-08-25", "note": "placeholder", "venues": {}}
+{
+  "updated": "2026-08-25",
+  "note": "Surviving Image Library index for Ops Center panel heroes. Prefer this map over re-scraping. Unsplash interim public CDN (Wikimedia thumbs hit 429/400). Keys = venue_id. Rule: reuse forever; do not re-fetch weekly.",
+  "venues": {
+    "mtbank": {
+      "image": "https://images.unsplash.com/photo-1508098682722-e99c43a406b2?w=800&q=80",
+      "source": "unsplash",
+      "desc": "Night stadium lights / football atmosphere"
+    },
+    "linc": {
+      "image": "https://images.unsplash.com/photo-1577223625816-7546f13df25d?w=800&q=80",
+      "source": "unsplash",
+      "desc": "Football stadium stands"
+    },
+    "acrisure": {
+      "image": "https://images.unsplash.com/photo-1431324155629-1a6deb1dec8d?w=800&q=80",
+      "source": "unsplash",
+      "desc": "Soccer/football pitch under lights"
+    },
+    "nats": {
+      "image": "https://images.unsplash.com/photo-1566577739112-5180d4bf9390?w=800&q=80",
+      "source": "unsplash",
+      "desc": "Baseball diamond / park"
+    },
+    "camden": {
+      "image": "https://images.unsplash.com/photo-1516731415730-5acf2a82d8c0?w=800&q=80",
+      "source": "unsplash",
+      "desc": "Classic ballpark feel"
+    },
+    "audi": {
+      "image": "https://images.unsplash.com/photo-1522778119026-d647f0596c20?w=800&q=80",
+      "source": "unsplash",
+      "desc": "Modern soccer stadium"
+    },
+    "scott": {
+      "image": "https://images.unsplash.com/photo-1461896836934-ffe607ba6851?w=800&q=80",
+      "source": "unsplash",
+      "desc": "College football atmosphere"
+    },
+    "secu": {
+      "image": "https://images.unsplash.com/photo-1459865264687-595d652de67e?w=800&q=80",
+      "source": "unsplash",
+      "desc": "Stadium seats / crowd ready"
+    },
+    "diamond": {
+      "image": "https://images.unsplash.com/photo-1474546984501-d396e6d7b0b0?w=800&q=80",
+      "source": "unsplash",
+      "desc": "Minor league / baseball park"
+    },
+    "cooper": {
+      "image": "https://images.unsplash.com/photo-1540747913346-19e32dc3e97e?w=800&q=80",
+      "source": "unsplash",
+      "desc": "Football field / practice vibe"
+    },
+    "puskar": {
+      "image": "https://images.unsplash.com/photo-1504450758481-7338eba7524a?w=800&q=80",
+      "source": "unsplash",
+      "desc": "College stadium mountain / open air"
+    },
+    "beaver": {
+      "image": "https://images.unsplash.com/photo-1560272564-c83b66b1ad12?w=800&q=80",
+      "source": "unsplash",
+      "desc": "Football action / stadium"
+    },
+    "navy": {
+      "image": "https://images.unsplash.com/photo-1574629810360-7efbbe195018?w=800&q=80",
+      "source": "unsplash",
+      "desc": "Naval Academy / classic stadium"
+    },
+    "harbor": {
+      "image": "https://images.unsplash.com/photo-1566577134770-3d85bb3a9cc4?w=800&q=80",
+      "source": "unsplash",
+      "desc": "Waterfront / ballpark night"
+    },
+    "subaru": {
+      "image": "https://images.unsplash.com/photo-1431324155629-1a6deb1dec8d?w=800&q=80",
+      "source": "unsplash",
+      "desc": "Soccer park / pitch"
+    },
+    "citizens": {
+      "image": "https://images.unsplash.com/photo-1566577739112-5180d4bf9390?w=800&q=80",
+      "source": "unsplash",
+      "desc": "Phillies / big league ballpark"
+    },
+    "pnc": {
+      "image": "https://images.unsplash.com/photo-1516731415730-5acf2a82d8c0?w=800&q=80",
+      "source": "unsplash",
+      "desc": "Pirates / riverside park"
+    },
+    "northwest": {
+      "image": "https://images.unsplash.com/photo-1461896836934-ffe607ba6851?w=800&q=80",
+      "source": "unsplash",
+      "desc": "College / regional stadium"
+    }
+  }
+}
