@@ -1,50 +1,16 @@
 {
-  "updated": "2026-08-16T14:00:00-04:00",
-  "headline": "Active & upcoming",
+  "updated": "2026-08-25T00:15:00-04:00",
+  "headline": "Weekend lock — full Ops refresh",
   "big_money": [
-    {
-      "tag": "Fair",
-      "title": "State Fair of WV",
-      "note": "Through Aug 23 · Lewisburg · Trace Adkins / Sierra Ferrell energy",
-      "url": "https://statefairofwv.com",
-      "ends": "2026-08-23"
-    },
-    {
-      "tag": "Fair",
-      "title": "Montgomery County Ag Fair",
-      "note": "Through Aug 22 · Gaithersburg · peak weekend energy",
-      "url": "https://www.mcagfair.com/",
-      "ends": "2026-08-22"
-    },
-    {
-      "tag": "NFL",
-      "title": "Commanders Open Practice",
-      "note": "Wed Aug 19 · Ashburn · early outdoor session",
-      "url": "https://www.commanders.com/training-camp/",
-      "ends": "2026-08-19"
-    }
+    {"tag": "NFL", "title": "Commanders at Ravens", "note": "Fri Aug 28 · 6pm · M&T Bank Stadium · Preseason finale", "url": "https://www.baltimoreravens.com/", "ends": "2026-08-28"},
+    {"tag": "College", "title": "NC State at Virginia", "note": "Sat Aug 29 · 3:30pm · Scott Stadium · ACC opener on ESPN", "url": "https://virginiasports.com/", "ends": "2026-08-29"},
+    {"tag": "Concert", "title": "James Taylor · Wolf Trap", "note": "Sun Aug 30 · Filene Center · outdoor classic", "url": "https://www.wolftrap.org/", "ends": "2026-08-30"},
+    {"tag": "Fest", "title": "Maryland Renaissance Festival opens", "note": "Sat–Sun Aug 29–30 · Crownsville · season kickoff", "url": "https://www.marylandrenaissancefestival.com/", "ends": "2026-08-30"}
   ],
   "sleepers": [
-    {
-      "tag": "Nature",
-      "title": "Quiet nature windows this week",
-      "note": "Irvine / local trails · skip the fair crush",
-      "url": "/weekends/2026-08-13/maryland.html",
-      "ends": "2026-08-24"
-    },
-    {
-      "tag": "MiLB",
-      "title": "Harbor Park Tides stretch",
-      "note": "Norfolk · easier entry than stadium nights",
-      "url": "https://www.milb.com/norfolk",
-      "ends": "2026-08-24"
-    },
-    {
-      "tag": "College",
-      "title": "Camp / quiet campus windows",
-      "note": "Map layers · D2/D3 still open",
-      "url": "/sports/",
-      "ends": "2026-08-24"
-    }
+    {"tag": "DIY", "title": "Subscape Festival", "note": "Baltimore · free all-ages · Fri–Sun · underground music", "url": "", "ends": "2026-08-30"},
+    {"tag": "Field", "title": "Chester River Catfish Tournament", "note": "Sat Aug 29 · lines in 5:30am · Eastern Shore", "url": "", "ends": "2026-08-29"},
+    {"tag": "MiLB", "title": "Flying Squirrels series", "note": "Richmond · The Diamond · Sea Dogs in town Tue–Thu", "url": "https://www.milb.com/richmond", "ends": "2026-08-28"},
+    {"tag": "Family", "title": "Playpalooza DMV", "note": "Springfield VA · Sat noon–4 · free bounce + touch-a-truck", "url": "", "ends": "2026-08-29"}
   ]
 }
