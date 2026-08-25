@@ -1,6 +1,6 @@
 # GOMA Master Curation / Research Document
 **Get Outside Mid-Atlantic · get-outside.info**  
-**Status:** v1.1 — locked 2026-08-25  
+**Status:** v1.2 — locked 2026-08-25 (architecture gold)  
 **Owner:** Grok (production) · Review: Dan
 
 This is the single source of truth for weekly research standards.  
@@ -101,84 +101,60 @@ Hidden Gem = real, current, under-the-radar option that still fits the weekend c
 
 ---
 
-## 6. Ops Center Data Requirements (critical)
+## 6. Audience Badges
 
-On load the map must show:
-- All Sport layers ON
-- All Field + Entertainment sublayers ON and visible
-- Weather / Hype / Heat as user toggles (default off is acceptable for overlays)
-- **Heat map** = congestion / density of events layer (toggleable)
-
-Rich venue / hit fields required so Hype and intel actually work:
-- `people_love` / “why people love it” statement (revealed via Hype layer toggle)
-- `history`, `fan_sentiment_score`, `fan_themes`
-- Event-level: `enthusiasm`, `weather`, `temp_f`, `outdoor`
-- Marquee: `venue_id`, caption, teams/event_name, date/time, weather
-- **Thumbnail**: small location image (public / no-copyright web source) attached to each curation hit
-
-**Sunday Ops Refresh = FULL refresh** (not light).  
-Field and Entertainment receive the same depth and volume as Sports.  
-Do not overwrite rich data with thinner content.
-
-**File naming:** Flexible. “SOC” / “soc-data” style names are acceptable as long as the content rules above govern what goes in the files. SOC = the combined Field + Entertainment + Sports data surface.
+Every card carries one primary audience badge from:  
+Family · Couples · Adventure · Squad · Girls Wknd
 
 ---
 
-## 7. Voice & Tone (for any written curation output)
+## 7. “Why People Love It”
 
-- Deadpan + lightly absurd, clean (South Park timing without the edge)
-- Warm, outdoorsy, weekend-focused
-- Never corporate
-- Light FOMO used sparingly and only on genuinely strong picks
-- Second-person where natural
+Every curation hit requires a short “why people love it” / `people_love` statement.  
+Surfaced in the Ops Center via the Hype layer.
 
 ---
 
-## 8. What “Done” Looks Like for a Research Lock
+## 8. Thumbnail / Hero Image
 
-- Five regions each have real, current top picks + mandatory reasoned Featured Shot + mandatory reasoned Hidden Gem
-- Sports ≥100 (stretch ≤200), Field ≥100, Entertainment ≥100 — all real and current
-- “Why people love it” statement present for each hit (Hype-revealable)
-- Thumbnail image attached to each curation hit
-- Heat map data ready as a layer
-- Rich intel fields populated
-- Weather one-liners ready
-- Major popular events of the period are present (no legitimacy gaps)
-- No invented content
-- Ready to hand off to Build Package without further research
+- Every sports venue and field site object carries an `image` path (panel hero).
+- Canonical source: **local custom set** under `sports/images/venues/*.jpg` (64 locked) + `sports/data/image-library-index.json`.
+- Paths are relative (`/sports/images/venues/<filename>.jpg`). Special overrides: m&tbank.jpg, camdenyards.jpg, nationalspark.jpg, milan.jpg.
+- After any new JPG upload: run the venue-image sync (library + soc-a/soc-b + field-sites + Drive master sheet).
+- Fallback: “No venue photo yet” placeholder in panel. Never invent URLs.
+- Grok Imagine is **not** used for Ops Center map/panel heroes once the library is populated.
 
 ---
 
-## 9. Occasion Tags (LOCKED)
+## 9. Occasion Taxonomy (LOCKED)
 
 Use **1–4 tags** per venue or event from this vocabulary only. Same set on homepage cards, social carousels, and Ops Center intel panel.
 
-1. Family  
-2. Squad  
-3. Solo Reset  
-4. Date Night  
-5. Girls Night Out  
-6. Budget  
-7. Splurge  
-8. Kid-Friendly  
-9. Dog-Friendly  
-10. Photogenic  
-11. Under the Lights  
-12. Tailgate  
-
-Optional when clearly true: Day Trip · All Ages · 21+
+1. Family
+2. Couples
+3. Adventure
+4. Squad
+5. Girls Wknd
+6. Foodie
+7. Music
+8. Nature
+9. History
+10. Water
+11. Sports
+12. Seasonal
 
 Venue-level and event-level `occasions` arrays are required on sports data objects so the Ops panel can render chips.
 
 ---
 
-## 10. Venue / Stadium Image Rule (Ops)
+## 10. Image Library & Panel Heroes
 
-- Every sports venue object carries an `image` URL (panel hero).
-- Prefer the **surviving Image Library** (`sports/data/image-library-index.json` or Drive mirror).
-- Unsplash / stable public CDNs preferred after Wikimedia 429/400 failures.
+- Every sports venue and field site object carries an `image` path (panel hero).
+- Canonical source: **local custom set** under `sports/images/venues/*.jpg` (64 locked) + `sports/data/image-library-index.json`.
+- Paths are relative (`/sports/images/venues/<filename>.jpg`). Special overrides: m&tbank.jpg, camdenyards.jpg, nationalspark.jpg, milan.jpg.
+- After any new JPG upload: run the venue-image sync (library + soc-a/soc-b + field-sites + Drive master sheet).
 - Fallback: “No venue photo yet” placeholder in panel. Never invent URLs.
-- Grok Imagine is **not** used for Ops Center thumbnails.
+- Grok Imagine is **not** used for Ops Center map/panel heroes once the library is populated.
 
 ---
 
@@ -196,14 +172,15 @@ Venue-level and event-level `occasions` arrays are required on sports data objec
 1. Heat map on event congestion is an official toggleable layer.
 2. Hard volume floors: 100+ per domain every run; Sports stretch to 200 when possible.
 3. “Why people love it” statement required on every hit; surfaced via Hype layer.
-4. Small thumbnail (no-copyright / public web source) required on every curation hit.
+4. Small thumbnail / hero (local custom or approved) required on every curation hit.
 5. Source list stays creative and rotating; missing major popular events (NASCAR, White Marlin Open, etc.) is a failure condition.
 6. Featured Shot + Hidden Gem are mandatory and must be reasoned (popularity or timeliness/peak condition).
 7. File naming is flexible; “SOC” is fine when it clearly means the combined multi-domain data.
 8. Occasion tags locked to the 12-term list; 1–4 per venue/event.
-9. Surviving Image Library is canonical for stadium/venue panel photos; reuse only.
+9. Local custom venue image set (`sports/images/venues/` + image-library-index.json) is canonical for all panel heroes; reuse only.
 10. Ops Center default time filter = 30 days.
+11. Every map pin (Sports + Field + Entertainment) must open the intel panel with hero on click.
 
 ---
 
-*v1.1 locked 2026-08-25: occasion taxonomy, image library, panel hero, 30d default.*
+*v1.2 locked 2026-08-25: custom venue image system + Field pin → panel architecture gold.*

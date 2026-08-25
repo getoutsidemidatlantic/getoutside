@@ -1,6 +1,6 @@
 # GOMA Workflow & Automations
 **Weekly Cycle · Triggers · Human Gates**  
-**Status:** v1.0 — locked 2026-08-24  
+**Status:** v1.1 — locked 2026-08-25 (empty-file + Field-panel smoke rules)  
 **Owner:** Grok · Review: Dan
 
 One research lock feeds the entire week.  
@@ -39,6 +39,7 @@ Calendar reminders: getoutsidemidatlantic@gmail.com
 - Pushes to git `main`
 - Stores packages in Drive
 - Generates carousel package (01–07 + CAPTION.txt + STATUS) under the correct socials/ structure
+- **Hard rule:** After any push of `ops-core.js`, `map-app.js`, or data JSON, verify raw/API size > 0. Empty critical files break the Ops Center.
 
 ### Ops Refresh (Sun 3 AM) — FULL
 - Updates Ops Center data, intel ticker, field-sites window, and weather
@@ -63,7 +64,7 @@ Everything else is automation-first.
 1. Confirm Review Gate is complete and `main` contains the correct week’s files
 2. Dan triggers a production deploy on Netlify (manual, to control credit use)
 3. Wait for the deploy to finish and the live site to update
-4. Smoke check: homepage cards, weekends-hub + region pages, Ops Center (layers, Hype, thumbnails)
+4. Smoke check: homepage cards, weekends-hub + region pages, Ops Center (layers, Hype, Sports pin → panel with hero, **Field pin → panel with hero**, non-zero ops-core.js / map-app.js)
 5. Only after the live site is confirmed correct is the **READY flag** set for social posting
 
 ---
@@ -77,25 +78,3 @@ Everything else is automation-first.
 - Create `READY-<foldername>.txt` **only once**, on the single final folder, after iteration is finished
 - After a post is confirmed live → immediately move that folder + its READY flag into the platform’s `_archive` subfolder
 - Platform roots stay pending/in-progress only
-
----
-
-## 6. Hard Process Rules
-
-- Carousels never post before that week’s site is live
-- Never leave multiple or stale READY flags active
-- Version attempts (`-v2`, `-FINAL`, etc.) exist only as temporary TEST-/DRAFT- folders and are cleaned or renamed once a final is chosen
-- Git is source of truth; Drive is mirror + social staging
-- Volume floors and rich fields from Curation v1.0 are non-negotiable for Research Lock and Ops Refresh
-
----
-
-## 7. Related Documents
-
-- 01-GOMA-Master-Curation-Research.md (v1.0)
-- 02-GOMA-Style-Document.md (v1.0)
-- 03-GOMA-Engineering.md (v1.0)
-
----
-
-*v1.0 locked 2026-08-24. Aligns with curation volume floors, heat map, Hype/people_love, and thumbnail requirements.*
