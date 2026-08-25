@@ -1,1 +1,102 @@
-<!-- placeholder -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=1.0"/>
+<title>Get Outside Mid-Atlantic · Ops Center</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+<link rel="stylesheet" href="./ops-layers.css"/>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="https://unpkg.com/leaflet.heat@0.2.0/dist/leaflet-heat.js"></script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}body{font-family:system-ui,sans-serif;background:#0b1220;color:#e8eef7;overflow:hidden}
+header{background:#020617;padding:0 16px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #1e3a55;min-height:56px;z-index:1100;position:relative}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:inherit}
+.brand-mark{width:28px;height:28px;border-radius:6px;background:linear-gradient(135deg,#22c55e,#16a34a);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.85rem;color:#0b1220}
+.brand-text{font-weight:700;font-size:.95rem}.brand-sub{font-size:.65rem;color:#6b7f9a}
+.header-right{display:flex;align-items:center;gap:10px}
+.badge{background:#1a7f4e;color:#fff;font-size:.7rem;padding:3px 9px;border-radius:999px;font-weight:600}
+.defcon{font-size:.65rem;font-weight:800;padding:3px 8px;border-radius:4px}.defcon.d5{background:#7f1d1d;color:#fecaca}
+.time-filters{display:flex;gap:4px}.time-filters button{background:rgba(255,255,255,.06);border:1px solid #2a4a6a;color:#a8b8d0;font-size:.72rem;font-weight:600;padding:4px 10px;border-radius:6px;cursor:pointer}.time-filters button.active{background:#22c55e;border-color:#22c55e;color:#0b1220}
+.kofi-btn{display:inline-flex;align-items:center;gap:5px;background:#ff5e5b;color:#fff;font-size:.72rem;font-weight:700;padding:5px 10px;border-radius:999px;text-decoration:none;border:none;cursor:pointer;white-space:nowrap}
+.kofi-btn:hover{background:#ff7573;color:#fff}
+.kofi-btn svg{width:14px;height:14px;flex-shrink:0}
+#main{display:flex;height:calc(100vh - 48px);padding-bottom:36px}
+#layers{width:240px;min-width:200px;background:#0a1220;border-right:1px solid #1e3a55;overflow-y:auto;z-index:600;display:flex;flex-direction:column}
+.layers-top{padding:10px 12px 6px;display:flex;align-items:center;justify-content:space-between;gap:6px;border-bottom:1px solid #1e3a55}
+.layers-top-label{font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:#7dd3fc}
+#map{flex:1;height:100%}
+#feed{width:300px;min-width:260px;background:#0a1220;border-left:1px solid #1e3a55;display:flex;flex-direction:column;z-index:600}
+#feed.collapsed{width:0;min-width:0;overflow:hidden;border:none}
+.feed-header{padding:10px 12px;border-bottom:1px solid #1e3a55;display:flex;align-items:center;justify-content:space-between}
+.feed-title{font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:#7dd3fc}
+#feedCount{font-size:.7rem;color:#6b7f9a}
+#feedScroll{flex:1;overflow-y:auto;padding:8px}
+.feed-card{background:#111827;border:1px solid #1e3a55;border-radius:8px;padding:10px;margin-bottom:8px;cursor:pointer}
+.feed-card:hover{border-color:#22c55e}
+.feed-card.marquee{border-color:#f59e0b}
+.feed-card-date{font-size:.65rem;color:#7dd3fc;margin-bottom:2px}
+.feed-card-title{font-size:.85rem;font-weight:600;margin-bottom:2px}
+.feed-card-meta{font-size:.7rem;color:#6b7f9a}
+.feed-card-wx{font-size:.7rem;color:#a8b8d0;margin-top:4px}
+.fc-hype{font-size:.72rem;color:#c5d4e8;margin-top:6px;line-height:1.35}
+.marquee-label{font-size:.65rem;font-weight:700;text-transform:uppercase;color:#f59e0b;margin:8px 0 4px}
+#panel{position:fixed;top:56px;right:0;width:360px;max-width:100%;height:calc(100vh - 56px - 36px);background:#0b1220;border-left:1px solid #1e3a55;z-index:1200;transform:translateX(100%);transition:transform .25s ease;display:flex;flex-direction:column;overflow:hidden}
+#panel.open{transform:translateX(0)}
+.panel-hero{width:100%;height:140px;object-fit:cover;display:block;background:#0b1220;border-bottom:1px solid #1e3a55}
+.panel-hero-fallback{width:100%;padding:16px;text-align:center;color:#7dd3fc;font-size:.75rem;border-bottom:1px solid #1e3a55}
+.occasion-row{display:flex;flex-wrap:wrap;gap:5px;margin-top:8px;width:100%}
+.panel-header{padding:12px 14px;border-bottom:1px solid #1e3a55;position:relative}
+.panel-close{position:absolute;top:10px;right:12px;background:none;border:none;color:#a8b8d0;font-size:1.4rem;cursor:pointer}
+.panel-venue{font-size:1.05rem;font-weight:700;padding-right:24px}
+.panel-city{font-size:.75rem;color:#6b7f9a;margin-top:2px}
+.panel-chips{display:flex;flex-wrap:wrap;gap:5px;margin-top:8px}
+.chip{font-size:.65rem;padding:2px 8px;border-radius:999px;background:#1e3a55;color:#c5d4e8}
+.chip.count{background:#1a7f4e;color:#fff}
+.chip.occasion{background:#0f766e;color:#ccfbf1}
+.panel-body{flex:1;overflow-y:auto;padding:12px 14px}
+.panel-section-label{font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:#7dd3fc;margin:10px 0 4px}
+.event-card{background:#111827;border:1px solid #1e3a55;border-radius:8px;padding:10px;margin-bottom:8px}
+.event-date{font-size:.7rem;color:#7dd3fc}
+.event-teams{font-size:.85rem;font-weight:600;margin:2px 0}
+.event-sport{font-size:.7rem;color:#6b7f9a}
+#statusBar{position:fixed;bottom:40px;left:50%;transform:translateX(-50%);background:#1a7f4e;color:#fff;font-size:.75rem;padding:6px 14px;border-radius:999px;z-index:1300;display:none}
+#statusBar.err{background:#7f1d1d}
+#ticker{position:fixed;bottom:0;left:0;right:0;height:36px;background:#020617;border-top:1px solid #1e3a55;display:flex;align-items:center;overflow:hidden;z-index:1100}
+#tickerContent{white-space:nowrap;font-size:.72rem;color:#a8b8d0;padding-left:100%;animation:ticker 40s linear infinite}
+@keyframes ticker{0%{transform:translateX(0)}100%{transform:translateX(-100%)}}
+.soc-icon{width:28px;height:28px;border-radius:50%;background:#1e3a55;display:flex;align-items:center;justify-content:center;font-size:14px;border:2px solid #22c55e}
+.wx-chip{position:absolute;bottom:-6px;right:-6px;background:#0ea5e9;color:#fff;font-size:9px;padding:1px 4px;border-radius:4px;font-weight:700}
+@media (max-width:900px){#layers{display:none}#feed{width:280px}}
+</style>
+</head>
+<body>
+<header>
+  <a class="brand" href="/">
+    <div class="brand-mark">GO</div>
+    <div><div class="brand-text">Ops Center</div><div class="brand-sub">Get Outside Mid-Atlantic</div></div>
+  </a>
+  <div class="header-right">
+    <div class="time-filters"><button data-range="7">7d</button><button data-range="14">14d</button><button class="active" data-range="30">30d</button></div>
+    <span class="badge">LIVE</span>
+    <a class="kofi-btn" href="https://ko-fi.com/getoutsidematl" target="_blank" rel="noopener">☕ Support</a>
+  </div>
+</header>
+<div id="main">
+  <div id="layers">
+    <div class="layers-top"><span class="layers-top-label">Layers</span></div>
+    <div style="padding:10px 12px;font-size:.75rem;color:#6b7f9a">Sports + Field + Entertainment default ON. Toggle weather / hype / heat as needed.</div>
+  </div>
+  <div id="map"></div>
+  <div id="feed">
+    <div class="feed-header"><span class="feed-title">Live Feed</span><span id="feedCount">0 events</span></div>
+    <div id="feedScroll"></div>
+  </div>
+</div>
+<div id="panel"><div id="panelHeroWrap"></div><div class="panel-header"><button class="panel-close" onclick="closePanel()">×</button><div class="panel-venue" id="panelVenue">Venue</div><div class="panel-city" id="panelCity"></div><div class="panel-chips" id="panelChips"></div></div><div class="panel-body" id="panelBody"></div></div>
+<div id="statusBar"></div>
+<div id="ticker"><div id="tickerContent">Ops Center · Mid-Atlantic outdoor action</div></div>
+<script src="./ops-core.js"></script>
+<script src="./map-app.js"></script>
+</body>
+</html>
