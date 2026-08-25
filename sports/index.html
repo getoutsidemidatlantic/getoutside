@@ -1,1 +1,19 @@
-PLACEHOLDER
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Get Outside Mid-Atlantic · Ops Center</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+<link rel="stylesheet" href="./ops-layers.css"/>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="https://unpkg.com/leaflet.heat@0.2.0/dist/leaflet-heat.js"></script>
+<style>body{margin:0;font-family:system-ui;background:#0b1220;color:#e8eef7}#map{height:100vh}</style>
+</head>
+<body>
+<p style="padding:20px">Ops Center index temporarily simplified — full UI restore in progress. Data files are intact.</p>
+<div id="map"></div>
+<script src="./map-app.js" defer></script>
+<script>var map=L.map('map').setView([39.2,-78],7);L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',{maxZoom:19}).addTo(map);window.map=map;</script>
+</body>
+</html>
