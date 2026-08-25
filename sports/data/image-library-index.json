@@ -3,7 +3,7 @@
   "note": "Surviving Image Library for Ops panel heroes. Keys = venue_id. Prefer site-hosted venue pics under /sports/images/venues/. Fallback Unsplash only where no custom still exists. Do not re-fetch weekly.",
   "venues": {
     "mtbank": {
-      "image": "/sports/images/venues/mtbank.jpg",
+      "image": "/sports/images/venues/m&tbank.jpg",
       "source": "goma-custom",
       "desc": "Night stadium lights / football atmosphere"
     },
@@ -18,12 +18,12 @@
       "desc": "Soccer/football pitch under lights"
     },
     "nats": {
-      "image": "/sports/images/venues/nats.jpg",
+      "image": "/sports/images/venues/nationalspark.jpg",
       "source": "goma-custom",
       "desc": "Baseball diamond / park"
     },
     "camden": {
-      "image": "/sports/images/venues/camden.jpg",
+      "image": "/sports/images/venues/camdenyards.jpg",
       "source": "goma-custom",
       "desc": "Classic ballpark feel"
     },
@@ -53,7 +53,7 @@
       "desc": "Football field / practice vibe"
     },
     "puskar": {
-      "image": "/sports/images/venues/puskar.jpg",
+      "image": "/sports/images/venues/milan.jpg",
       "source": "goma-custom",
       "desc": "College stadium mountain / open air"
     },
