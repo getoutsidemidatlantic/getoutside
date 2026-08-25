@@ -1,35 +1,35 @@
 {
   "updated": "2026-08-25",
-  "note": "Surviving Image Library index for Ops Center panel heroes. Prefer this map over re-scraping. Unsplash interim public CDN (Wikimedia thumbs hit 429/400). Keys = venue_id. Rule: reuse forever; do not re-fetch weekly.",
+  "note": "Surviving Image Library for Ops panel heroes. Keys = venue_id. Prefer site-hosted venue pics under /sports/images/venues/. Fallback Unsplash only where no custom still exists. Do not re-fetch weekly.",
   "venues": {
     "mtbank": {
-      "image": "https://images.unsplash.com/photo-1508098682722-e99c43a406b2?w=800&q=80",
-      "source": "unsplash",
+      "image": "/sports/images/venues/mtbank.jpg",
+      "source": "goma-custom",
       "desc": "Night stadium lights / football atmosphere"
     },
     "linc": {
-      "image": "https://images.unsplash.com/photo-1577223625816-7546f13df25d?w=800&q=80",
-      "source": "unsplash",
+      "image": "/sports/images/venues/linc.jpg",
+      "source": "goma-custom",
       "desc": "Football stadium stands"
     },
     "acrisure": {
-      "image": "https://images.unsplash.com/photo-1431324155629-1a6deb1dec8d?w=800&q=80",
-      "source": "unsplash",
+      "image": "/sports/images/venues/acrisure.jpg",
+      "source": "goma-custom",
       "desc": "Soccer/football pitch under lights"
     },
     "nats": {
-      "image": "https://images.unsplash.com/photo-1566577739112-5180d4bf9390?w=800&q=80",
-      "source": "unsplash",
+      "image": "/sports/images/venues/nats.jpg",
+      "source": "goma-custom",
       "desc": "Baseball diamond / park"
     },
     "camden": {
-      "image": "https://images.unsplash.com/photo-1516731415730-5acf2a82d8c0?w=800&q=80",
-      "source": "unsplash",
+      "image": "/sports/images/venues/camden.jpg",
+      "source": "goma-custom",
       "desc": "Classic ballpark feel"
     },
     "audi": {
-      "image": "https://images.unsplash.com/photo-1522778119026-d647f0596c20?w=800&q=80",
-      "source": "unsplash",
+      "image": "/sports/images/venues/audi.jpg",
+      "source": "goma-custom",
       "desc": "Modern soccer stadium"
     },
     "scott": {
@@ -53,18 +53,18 @@
       "desc": "Football field / practice vibe"
     },
     "puskar": {
-      "image": "https://images.unsplash.com/photo-1504450758481-7338eba7524a?w=800&q=80",
-      "source": "unsplash",
+      "image": "/sports/images/venues/puskar.jpg",
+      "source": "goma-custom",
       "desc": "College stadium mountain / open air"
     },
     "beaver": {
-      "image": "https://images.unsplash.com/photo-1560272564-c83b66b1ad12?w=800&q=80",
-      "source": "unsplash",
+      "image": "/sports/images/venues/beaver.jpg",
+      "source": "goma-custom",
       "desc": "Football action / stadium"
     },
     "navy": {
-      "image": "https://images.unsplash.com/photo-1574629810360-7efbbe195018?w=800&q=80",
-      "source": "unsplash",
+      "image": "/sports/images/venues/navy.jpg",
+      "source": "goma-custom",
       "desc": "Naval Academy / classic stadium"
     },
     "harbor": {
@@ -78,18 +78,18 @@
       "desc": "Soccer park / pitch"
     },
     "citizens": {
-      "image": "https://images.unsplash.com/photo-1566577739112-5180d4bf9390?w=800&q=80",
-      "source": "unsplash",
+      "image": "/sports/images/venues/citizens.jpg",
+      "source": "goma-custom",
       "desc": "Phillies / big league ballpark"
     },
     "pnc": {
-      "image": "https://images.unsplash.com/photo-1516731415730-5acf2a82d8c0?w=800&q=80",
-      "source": "unsplash",
+      "image": "/sports/images/venues/pnc.jpg",
+      "source": "goma-custom",
       "desc": "Pirates / riverside park"
     },
     "northwest": {
-      "image": "https://images.unsplash.com/photo-1461896836934-ffe607ba6851?w=800&q=80",
-      "source": "unsplash",
+      "image": "/sports/images/venues/northwest.jpg",
+      "source": "goma-custom",
       "desc": "College / regional stadium"
     }
   }
