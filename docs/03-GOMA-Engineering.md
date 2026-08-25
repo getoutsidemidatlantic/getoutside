@@ -1,6 +1,6 @@
 # GOMA Engineering Document
 **System Architecture, Configuration & Disaster Recovery**  
-**Status:** v1.1 — locked 2026-08-25  
+**Status:** v1.2 — locked 2026-08-25 (architecture gold)  
 **Owner:** Grok · Review: Dan
 
 This document is the canonical technical reference for how the system works.
@@ -38,12 +38,15 @@ Get Outside Mid Atlantic (GOMA) is an outdoor-adventure content brand covering M
 This is the scaling path.  
 We do **not** ship one giant self-contained HTML and we do not rely on fragile HTML chunking.
 
-- Live map loader: `sports/index.html`
-- Field / Entertainment injection: `sports/map-app.js`
+- Live map shell: `sports/index.html`
+- Core runtime: `sports/ops-core.js` (map init, Sports markers, Live Feed, intel panel, mobile drawers, time filters)
+- Field / Entertainment injection: `sports/map-app.js` (loads `field-sites.json`, emoji icons, layer UI, marker click → panel)
 - Data files:
-  - `sports/data/soc-a.json` / `soc-b.json` (venues + marquee + rich fields)
-  - `sports/data/field-sites.json` (Field + Entertainment pins)
+  - `sports/data/soc-a.json` / `soc-b.json` (venues + marquee + rich fields + image + occasions)
+  - `sports/data/field-sites.json` (Field + Entertainment pins + image)
+  - `sports/data/image-library-index.json` (canonical image map)
   - `sports/intel.json` (ticker)
+- Venue images (local): `sports/images/venues/*.jpg`
 - Never replace site-root `index.html` with the map
 
 File naming is flexible as long as content rules govern the payload. SOC-style names are fine.
@@ -58,16 +61,16 @@ File naming is flexible as long as content rules govern the payload. SOC-style n
 | `weekends-hub.html` | Hub grid |
 | `weekends/YYYY-MM-DD/{region}.html` | Regional pages |
 | `sports/index.html` | Ops Center shell + loader |
-| `sports/map-app.js` | Field/Entertainment markers + layer UI inject |
+| `sports/ops-core.js` | Map, Sports layers, feed, openPanel, openFieldPanel, mobile, rangeDays |
+| `sports/map-app.js` | Field/Entertainment markers + layer UI inject + click → openPanel |
 | `sports/data/soc-a.json` / `soc-b.json` | Primary venue + rich intel data |
 | `sports/data/field-sites.json` | Field + Entertainment sites |
+| `sports/data/image-library-index.json` | Venue image index (goma-custom paths) |
+| `sports/images/venues/` | 64 locked custom JPGs (hero images) |
 | `sports/intel.json` | Ops intel ticker |
 | `sports/ops-layers.css` | Layer UI styles |
 | `docs/CHARACTER_BIBLE.md` | Character source of truth |
 | `gear.html` | Weekend kit / Amazon affiliates page |
-| `scene-generator.js` | Region-aware card scenes / heroes support |
-| **Image reference library** (see §5) | Surviving store of reusable venue / event images |
-| `sports/data/image-library-index.json` | Surviving venue image map (panel heroes) |
 
 **Repo:** https://github.com/getoutsidemidatlantic/getoutside  
 **Default branch:** `main` (production)  
@@ -75,8 +78,9 @@ File naming is flexible as long as content rules govern the payload. SOC-style n
 
 ---
 
-## 4. Ops Center Technical Rules
+## 4. Ops Center Technical Rules (LOCKED)
 
+### 4.1 Layers & defaults
 - Public label: Ops Center only
 - Layers panel order locked:
   1. Select all / Clear all
@@ -88,79 +92,155 @@ File naming is flexible as long as content rules govern the payload. SOC-style n
 - Select All / Clear All must affect every checkbox
 - All Sport + Field + Entertainment layers ON and added to map on initial load
 - Weather / Hype / Heat are user toggles (default off for overlays is acceptable)
-- Critical rich fields must not be stripped:
-  - `people_love` / “why people love it” (revealed by Hype layer)
-  - `history`, `fan_sentiment_score`, `fan_themes`
-  - Event-level: `enthusiasm`, `weather`, `temp_f`, `outdoor`
-  - Marquee fields + `venue_id`
-  - **Thumbnail** (small public / no-copyright location image or approved generic icon) on every hit
-- After any data push: verify GitHub raw byte size > 0 and live files contain expected content
 
-**Volume floors:**  
-Every research / Ops data package must target high volume across Sports + Field + Entertainment. These are credibility floors.
+### 4.2 Runtime split (architecture gold)
+- `ops-core.js` owns: Leaflet map, Sports markers, Live Feed + marquee, time filters (default 30d), intel panel, mobile Layers/Feed drawers, status bar, heat layer.
+- `map-app.js` owns: Field + Entertainment only. Loads `./data/field-sites.json`, builds emoji divIcons, injects layer groups into the Layers panel, binds `marker.on('click')` → `window.openPanel(id)`, and exposes `window.fieldSites`.
+- Both scripts are required. An empty `ops-core.js` or `map-app.js` breaks the entire Ops Center.
 
-**Operational rule:** Never push empty content to GitHub. Always verify file size on GitHub raw after push.
+### 4.3 Intel panel behavior (HARD)
+- Every map pin (Sports, Field, Entertainment) opens the right intel panel on click.
+- Sports path: `openPanel(id)` looks up venue in `venues` array → hero image + occasions chips + events in window.
+- Field/Entertainment path: if not found in venues, look up `window.fieldSites` → `openFieldPanel(s)` → hero image + group/sublayer/dates chips + note + official link.
+- Popup also contains an “Intel” button that calls the same `openPanel(id)`.
+- `#panelHeroWrap` sits above the panel header. Image uses class `panel-hero` with onerror fallback.
+- Data contract:
+  - Every sports venue in soc-a/soc-b carries `image` (path) and `occasions` (1–4 from locked taxonomy).
+  - Every field site carries `image` (path) when available.
 
----
-
-## 5. Image Reference Library & Thumbnail Rules (HARD)
-
-**Goal:** Stop re-scraping the same venues every week. Build a surviving reference library once and reuse it. Saves time, tokens, and money.
-
-### 5.1 Surviving reference file
-
-Maintain a durable image reference store (recommended location under the repo or a stable Drive / artifacts path, e.g. `sports/data/image-library/` or a documented JSON/CSV index that maps venue/event keys → image URL or local path).
-
-- **Stadiums, arenas, major venues, concert posters, well-known parks, fairgrounds, marinas, etc.**  
-  Find a good public / no-copyright (or clearly usable) image **once**. Record it in the reference library with a stable key (venue name + city or venue_id).  
-  On subsequent curation runs, **reuse the existing entry**. Do not re-scrape Camden Yards, FedExField, Merriweather, etc. every week.
-
-- **Obscure or hard-to-image locations** (small trail systems, unnamed put-ins, minor trailheads, temporary pop-ups, etc.)  
-  Use a **generic icon** from a small approved set (trail, water, park, festival, music, sports, etc.).  
-  **Do not** spend Grok Imagine tokens generating custom art for operational map thumbnails. Imagine is reserved for character / carousel / hero art (see Style Document).
-
-### 5.2 Rules of use
-
-1. Before searching the web for a venue image, check the reference library first.
-2. If a usable image already exists for that venue/key → use it.
-3. If none exists and the venue is major/recognizable → find one good public image, add it to the library, then use it.
-4. If the place is obscure or no clean image is reasonably available → assign a generic icon. Move on.
-5. Never invent or hallucinate image URLs. Prefer stable, long-lived sources or locally stored copies under the library.
-6. Thumbnails on Ops hits are small and functional; they are not the place for high-effort generative art.
-
-### 5.3 Why this exists
-
-Re-scraping the same 15 stadiums every Tuesday wastes tokens and risks rate limits / broken thumbs. The library is the single source of truth for “what photo do we show for M&T Bank Stadium”.
-
----
-
-## 6. Ops Panel Image + Occasion Chips (LOCKED 2026-08-25)
-
-- `sports/index.html` contains `#panelHeroWrap` above the panel header.
-- `ops-core.js` `openPanel(id)`:
-  - If venue has `image` → render `<img class="panel-hero">` with onerror fallback to “No venue photo”.
-  - Else → “No venue photo yet”.
-  - Render venue-level `occasions` as chips inside `.occasion-row`.
-- CSS: `.panel-hero`, `.panel-hero-fallback`, `.occasion-row`, `.chip.occasion`.
-- Data contract: every venue in `soc-a.json` / `soc-b.json` should carry:
-  - `image` (URL string)
-  - `occasions` (array of 1–4 strings from the locked taxonomy)
-  - Events may also carry their own `occasions`.
-
----
-
-## 7. Image Library File
-
-- Path: `sports/data/image-library-index.json`
-- Shape: `{ "updated", "note", "venues": { "<venue_id>": { "image", "source", "desc" } } }`
-- Build Package / Research Lock steps **must** check this file first before any web image search.
-- Current interim source: Unsplash stable CDN (`images.unsplash.com/photo-...`).
-
----
-
-## 8. Time Filter Defaults
-
+### 4.4 Time filter defaults
 - UI buttons: 7d · 14d · 30d
 - **Default on load: 30d** (`rangeDays = 30`, active class on 30d button).
 - Date filter uses local-midnight parsing of `YYYY-MM-DD` to avoid UTC edge cases.
 - This ensures the 30-day sports window populates the Live Feed immediately.
+
+### 4.5 Critical rich fields (do not strip)
+- `people_love` / “why people love it” (revealed by Hype layer)
+- `history`, `fan_sentiment_score`, `fan_themes`
+- Event-level: `enthusiasm`, `weather`, `temp_f`, `outdoor`
+- Marquee fields + `venue_id`
+- Thumbnail / hero image on every hit
+
+### 4.6 Empty-file prevention (HARD RULE)
+- **Never push empty content to GitHub.**
+- After every push of `ops-core.js`, `map-app.js`, or any data JSON: verify GitHub raw (or API size) > 0 and contains expected markers (`openPanel`, `fieldSites`, `rangeDays`, etc.).
+- Empty `ops-core.js` has previously taken the entire Ops Center offline. Treat any 0-byte critical JS as a P0 incident.
+
+**Volume floors:**  
+Every research / Ops data package must target high volume across Sports + Field + Entertainment. These are credibility floors.
+
+---
+
+## 5. Venue Image System (LOCKED 2026-08-25)
+
+**Goal:** One durable set of custom hero images for all map pins. No weekly re-scraping of the same stadiums and parks.
+
+### 5.1 Canonical store
+- **Local files:** `sports/images/venues/*.jpg` (64 locked as of 2026-08-25)
+- **Index:** `sports/data/image-library-index.json`  
+  Shape: `{ "updated", "note", "venues": { "<venue_id>": { "image", "source", "desc", "status" } } }`  
+  `image` values are relative paths: `/sports/images/venues/<filename>.jpg`
+- **Master tracking sheet:** Drive `GOMA-venue-image-master` (status HAVE / live_path / filename)
+
+### 5.2 Special filename overrides (do not change)
+| venue_id key | Live filename |
+|--------------|---------------|
+| mtbank / m&t | `m&tbank.jpg` |
+| camden / camdenyards | `camdenyards.jpg` |
+| nats / nationals | `nationalspark.jpg` |
+| puskar / milan | `milan.jpg` |
+
+All other files follow the standard slug used in the master sheet.
+
+### 5.3 Sync rule (after any new JPG upload)
+1. Upload new JPG(s) into `sports/images/venues/`.
+2. Update `image-library-index.json` (path + source = goma-custom + status).
+3. Propagate the same `image` path into:
+   - `soc-a.json` / `soc-b.json` venue objects
+   - `field-sites.json` site objects
+4. Update Drive master sheet (status = HAVE, live_path, filename).
+5. Commit + push. Verify raw sizes > 0.
+6. After Deploy Now, smoke-check a Field pin and a Sports pin both open the panel with the correct hero.
+
+### 5.4 Rules of use
+1. Before searching the web for a venue image, check `image-library-index.json` first.
+2. If a usable goma-custom entry exists → use the local path.
+3. If none exists and the venue is major → create/generate the JPG, add to library + sheet, then use it.
+4. Obscure locations may still use a generic emoji icon on the map marker; the panel hero can remain empty or use a fallback.
+5. Never invent or hallucinate image URLs. Prefer the local `/sports/images/venues/` set.
+6. Grok Imagine is reserved for character / carousel / hero art (see Style Document), not for operational map thumbnails once the library is populated.
+
+### 5.5 Why this is architecture gold
+Repeated full scrapes waste time and tokens. The local 64-image set + index + field-sites/soc wiring makes every pin (Sports, Field, Entertainment) open a consistent intel panel with a real hero image. This is now the permanent pattern.
+
+---
+
+## 6. Disaster Recovery
+
+- **Site:** restore from git `main`. If needed, use Drive `GOMA-site-backups/` weekly zip for the week folder.
+- **Ops Center:** restore from production snapshots / latest clean run of ops-core.js + map-app.js + data files.
+- Redeploy only via “Deploy Now” after verify.
+
+### 6.1 Smoke check after every deploy (HARD RULES)
+
+After every production deploy, confirm:
+
+1. Homepage cards render
+2. weekends-hub + at least one region page render
+3. Ops Center:
+   - Correct public label (“Ops Center”)
+   - Layers panel present and ordered correctly (Sports + Field + Entertainment)
+   - Map loads with Sports + Field emoji pins
+   - Live Feed / marquee populate under the 30d default
+   - **Click a Sports pin → intel panel opens with hero image**
+   - **Click a Field/Entertainment pin (e.g. Sandy Point) → intel panel opens with hero image + note/dates/official**
+   - Hype reveal works when toggled
+4. **Hit count gate:**  
+   **There must be at least 200 hits visible / loaded on the Ops page.**  
+   **Less than 200 hits = something broke.** Do not set the READY flag. Investigate data files, loader, or deploy before proceeding.
+5. Critical JS files (`ops-core.js`, `map-app.js`) are non-zero byte on the live site.
+
+This 200-hit floor and the Field-pin-panel check are hard smoke-check failure conditions.
+
+---
+
+## 7. Hard Technical Rules
+
+- Grok writes site + sports under the repo; Dan controls Netlify publish
+- One research lock feeds site + socials
+- Carousels never post before that week’s site is live
+- Git is source of truth; Drive zips are mirrors only
+- Public name is Ops Center
+- Data-separated architecture is non-negotiable
+- Volume floors + rich fields + thumbnails/heroes are non-negotiable for Ops Center legitimacy
+- **Image library reuse is mandatory** for known venues
+- **Never push empty critical JS or data files**
+- **≥200 Ops hits after deploy** or the smoke check fails
+- **Every pin (Sports + Field + Entertainment) must open the intel panel**
+
+---
+
+## 8. Related Documents
+
+- 01-GOMA-Master-Curation-Research.md — volume, quality, Featured Shot / Hidden Gem, source strategy
+- 02-GOMA-Style-Document.md — visual system, character art, Grok Imagine process for site/carousel characters
+- 04-GOMA-Workflow-Automations.md — weekly clock and gates
+- occasion-taxonomy-lock.md — locked occasion vocabulary for chips
+
+---
+
+## 9. Changelog (architecture locks)
+
+- **v1.2 (2026-08-25)** — Architecture gold lock:
+  - Explicit ops-core.js / map-app.js runtime split
+  - Field/Entertainment pins open intel panel via openPanel → openFieldPanel
+  - Custom venue image system (64 JPGs under sports/images/venues/, special filenames, image-library-index.json, sync rule)
+  - Empty-file prevention elevated to HARD RULE
+  - Smoke check now requires Field pin → panel with hero
+  - Resolved prior “Known Gaps” on image library path/schema
+- v1.1 — Image library + panelHero + 30d default + occasion chips
+- v0.2 — Surviving image reference library, reuse-first policy, ≥200 hit floor
+
+---
+
+*This document is the single source of truth for Ops Center architecture. All future Build Package and Ops Refresh steps must preserve these contracts.*
