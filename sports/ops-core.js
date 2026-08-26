@@ -262,16 +262,18 @@
   document.querySelectorAll('#ops-sports input[data-type]').forEach(function(cb){
     cb.addEventListener('change',syncLayerVisibility);
   });
+  function setAllLayerChecks(on){
+    document.querySelectorAll('#ops-sports input[data-type]').forEach(function(cb){cb.checked=!!on;});
+    document.querySelectorAll('.field-layer-cb').forEach(function(cb){
+      cb.checked=!!on;
+      try{cb.dispatchEvent(new Event('change',{bubbles:true}));}catch(e){}
+    });
+    syncLayerVisibility();
+  }
   var btnSelectAll=document.getElementById('btnSelectAll');
   var btnClear=document.getElementById('btnClearLayers');
-  if(btnSelectAll)btnSelectAll.addEventListener('click',function(){
-    document.querySelectorAll('#ops-sports input[data-type]').forEach(function(cb){cb.checked=true;});
-    syncLayerVisibility();
-  });
-  if(btnClear)btnClear.addEventListener('click',function(){
-    document.querySelectorAll('#ops-sports input[data-type]').forEach(function(cb){cb.checked=false;});
-    syncLayerVisibility();
-  });
+  if(btnSelectAll)btnSelectAll.addEventListener('click',function(){setAllLayerChecks(true);});
+  if(btnClear)btnClear.addEventListener('click',function(){setAllLayerChecks(false);});
 
   var lyW=document.getElementById('lyWeather');
   var lyH=document.getElementById('lyHype');
