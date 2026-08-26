@@ -1,16 +1,16 @@
 {
-  "updated": "2026-08-25T00:50:00-04:00",
-  "headline": "30-day sports window live — stadium pics + occasion tags",
+  "updated": "2026-08-26T19:30:00-04:00",
+  "headline": "Rivalry Friday — Ravens–Commanders + Eagles home preseason",
   "big_money": [
-    {"tag": "NFL", "title": "Commanders at Ravens", "note": "Fri Aug 28 · 6pm · M&T Bank Stadium · Preseason finale", "url": "https://www.baltimoreravens.com/", "ends": "2026-08-28"},
-    {"tag": "College", "title": "NC State at Virginia", "note": "Sat Aug 29 · 3:30pm · Scott Stadium · ACC opener on ESPN", "url": "https://virginiasports.com/", "ends": "2026-08-29"},
-    {"tag": "MLB", "title": "Red Sox at Orioles", "note": "Sep 3–6 · Camden Yards · classic series", "url": "https://www.mlb.com/orioles", "ends": "2026-09-06"},
-    {"tag": "NFL", "title": "Commanders at Eagles", "note": "Sun Sep 13 · 4:25pm · Lincoln Financial Field · Week 1", "url": "https://www.philadelphiaeagles.com/", "ends": "2026-09-13"}
+    {"tag": "NFL", "title": "Commanders at Ravens", "note": "Fri Aug 28 · 6:00 PM ET · M&T Bank Stadium · Preseason Week 3 · NFL Network", "url": "https://www.baltimoreravens.com/", "ends": "2026-08-28"},
+    {"tag": "NFL", "title": "Bengals at Eagles", "note": "Fri Aug 28 · 8:00 PM ET · Lincoln Financial Field · Only home preseason · CBS", "url": "https://www.philadelphiaeagles.com/", "ends": "2026-08-28"},
+    {"tag": "Concert", "title": "Tedeschi Trucks Band", "note": "Fri Aug 28 · Wolf Trap Filene Center", "url": "https://www.wolftrap.org/", "ends": "2026-08-28"},
+    {"tag": "MLS", "title": "D.C. United vs LAFC", "note": "Sat Aug 29 · Audi Field", "url": "https://www.dcunited.com/", "ends": "2026-08-29"}
   ],
   "sleepers": [
-    {"tag": "MiLB", "title": "Flying Squirrels series", "note": "Richmond · The Diamond · Sea Dogs through Sun", "url": "https://www.milb.com/richmond", "ends": "2026-08-30"},
-    {"tag": "MLS", "title": "D.C. United vs LAFC", "note": "Sat Aug 29 · Audi Field · under the lights", "url": "https://www.dcunited.com/", "ends": "2026-08-29"},
-    {"tag": "College", "title": "Hampton at Maryland", "note": "Sat Sep 5 · SECU Stadium · Terps opener", "url": "https://umterps.com/", "ends": "2026-09-05"},
-    {"tag": "Field", "title": "Chester River Catfish Tournament", "note": "Sat Aug 29 · Eastern Shore · lines in 5:30am", "url": "", "ends": "2026-08-29"}
+    {"tag": "Festival", "title": "Maryland Renaissance Festival opens", "note": "Sat–Sun · Crownsville · 50th season · Children’s Weekend", "url": "https://www.rennfest.com/", "ends": "2026-08-30"},
+    {"tag": "Field", "title": "Spartan Trifecta — New River Gorge", "note": "Sat–Sun Aug 29–30 · Gorge area", "url": "", "ends": "2026-08-30"},
+    {"tag": "Concert", "title": "Chris Stapleton", "note": "Fri–Sat · Freedom Mortgage Pavilion, Camden", "url": "", "ends": "2026-08-29"},
+    {"tag": "Field", "title": "Cape Henlopen / Delaware Seashore", "note": "Sunday cleaner air after Fri–Sat clouds", "url": "", "ends": "2026-08-30"}
   ]
 }
