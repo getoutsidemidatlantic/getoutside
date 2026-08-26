@@ -1,0 +1,15 @@
+{
+  "updated": "2026-08-26T23:15:00Z",
+  "folder_name": "GetOutside - Featured Card Assets",
+  "folder_id": "1xo-kQ2evfEw29Pj1N0dSmpoEuAzejs1H",
+  "rule": "Build Package searches Drive for {region}-{scene}-sam.jpg, upserts this library, then writes drive-manifest.json for the lock week. Action resolves name → drive_id from this file.",
+  "images": {
+    "maryland-renfest-sam.jpg": "1-GwL0T9DXi3xUUR54qnWYkkkN0PNx6ra",
+    "virginia-wolftrap-sam.jpg": "1vbLPTHnEa5y_ct7I4WmmHLtKfecLWP1G",
+    "pennsylvania-eagles-sam.jpg": "1XCmVh7T8JdUF2xHefc4AhZD38ZC9kU9Q",
+    "delaware-cape-sam.jpg": "1Ig9INifAAIVZJV3UCe8G7mACmay2SlRr",
+    "westvirginia-gorge-sam.jpg": "11GfcI8I6H8D10jlGFbjvYdxfRJRSoIit",
+    "maryland-ag-fair-sam.jpg": "1VxAezr0xMGoOa7dJUw_tCQsxr06PZTPk",
+    "delaware-peach-sam.jpg": "1CJzbT4xjp76Ky8MArbpTnwNwqfyeMukM"
+  }
+}

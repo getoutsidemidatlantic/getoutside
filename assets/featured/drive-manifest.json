@@ -1,31 +1,13 @@
 {
   "week": "2026-08-28",
-  "note": "Drive is the binary master. GitHub Action pull-featured-from-drive.yml copies these onto assets/featured/*.jpg. Files must be Anyone with the link.",
+  "generated_at": "2026-08-26T23:15:00Z",
+  "auto": true,
+  "note": "Active week only. IDs resolved from drive-library.json during Action. Anyone-with-link required on Drive files.",
   "files": [
-    {
-      "dest": "assets/featured/maryland-renfest-sam.jpg",
-      "drive_id": "1-GwL0T9DXi3xUUR54qnWYkkkN0PNx6ra",
-      "name": "maryland-renfest-sam.jpg"
-    },
-    {
-      "dest": "assets/featured/virginia-wolftrap-sam.jpg",
-      "drive_id": "1vbLPTHnEa5y_ct7I4WmmHLtKfecLWP1G",
-      "name": "virginia-wolftrap-sam.jpg"
-    },
-    {
-      "dest": "assets/featured/pennsylvania-eagles-sam.jpg",
-      "drive_id": "1XCmVh7T8JdUF2xHefc4AhZD38ZC9kU9Q",
-      "name": "pennsylvania-eagles-sam.jpg"
-    },
-    {
-      "dest": "assets/featured/delaware-cape-sam.jpg",
-      "drive_id": "1Ig9INifAAIVZJV3UCe8G7mACmay2SlRr",
-      "name": "delaware-cape-sam.jpg"
-    },
-    {
-      "dest": "assets/featured/westvirginia-gorge-sam.jpg",
-      "drive_id": "11GfcI8I6H8D10jlGFbjvYdxfRJRSoIit",
-      "name": "westvirginia-gorge-sam.jpg"
-    }
+    {"name": "maryland-renfest-sam.jpg", "dest": "assets/featured/maryland-renfest-sam.jpg"},
+    {"name": "virginia-wolftrap-sam.jpg", "dest": "assets/featured/virginia-wolftrap-sam.jpg"},
+    {"name": "pennsylvania-eagles-sam.jpg", "dest": "assets/featured/pennsylvania-eagles-sam.jpg"},
+    {"name": "delaware-cape-sam.jpg", "dest": "assets/featured/delaware-cape-sam.jpg"},
+    {"name": "westvirginia-gorge-sam.jpg", "dest": "assets/featured/westvirginia-gorge-sam.jpg"}
   ]
 }
