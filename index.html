@@ -28,11 +28,12 @@ tailwind.config = {
 <style>
   .glass-card { background: rgba(15, 23, 42, 0.75); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1); }
   .card-img { width: 100%; height: 7rem; object-fit: cover; display: block; }
+  .scene-banner { width: 100%; height: 7rem; background: #0f172a; overflow: hidden; }
+  .scene-banner svg { width: 100%; height: 100%; display: block; }
 </style>
 </head>
 <body class="bg-slate-950 text-slate-100 font-sans antialiased">
 
-<!-- Navigation -->
 <nav class="fixed top-0 left-0 right-0 z-50 bg-slate-950/90 backdrop-blur-md border-b border-slate-800/80">
   <div class="max-w-6xl mx-auto px-4 sm:px-6">
     <div class="flex items-center justify-between h-16 sm:h-20">
@@ -57,26 +58,25 @@ tailwind.config = {
   </div>
 </nav>
 
-<!-- Hero -->
 <section id="hero" class="relative min-h-[85vh] pt-24 pb-16 flex items-center justify-center overflow-hidden">
   <div class="absolute inset-0 bg-gradient-to-b from-slate-900 via-slate-950 to-slate-950"></div>
   <div class="relative z-10 max-w-2xl mx-auto px-4 sm:px-6 text-center">
+    <p class="text-amber-400 text-sm font-semibold mb-3 tracking-wide uppercase">Aug 28–30 · last summer weekend for most families</p>
     <p class="text-slate-300 text-base sm:text-lg mb-4">Your guide to better weekends — outdoors and on the map.</p>
     <h1 class="font-display font-extrabold text-3xl sm:text-5xl text-white tracking-tight mb-6">
       Get Outside Mid Atlantic
     </h1>
     <p class="text-slate-300 text-base sm:text-lg leading-relaxed mb-8">
-      Weekends worth leaving the house for — trails, water, breweries, live music, and the only Mid-Atlantic
-      <span class="text-amber-400 font-semibold">Ops Center</span> that maps pro, college, practice, and outdoor action in one place.
+      Rivalry Friday. Faire Saturday. Gorge Sunday. Trails, water, breweries, live music, and the Mid-Atlantic
+      <span class="text-amber-400 font-semibold">Ops Center</span>.
     </p>
-    <a href="https://instagram.com/getoutsidemidatlantic" target="_blank" rel="noopener"
-       class="inline-flex px-8 py-4 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-sm sm:text-base transition-colors">
-      Follow @GetOutsideMidAtlantic
-    </a>
+    <div class="flex flex-col sm:flex-row gap-3 justify-center">
+      <a href="weekends-hub.html" class="inline-flex px-8 py-4 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-sm sm:text-base transition-colors">This weekend’s picks</a>
+      <a href="/sports/" class="inline-flex px-8 py-4 rounded-xl border border-slate-600 hover:border-amber-500 text-white font-bold text-sm sm:text-base transition-colors">Ops Center</a>
+    </div>
   </div>
 </section>
 
-<!-- This Week's Picks Preview — LOCK 2026-08-28 -->
 <section id="weekends-preview" class="py-16 bg-slate-900/50 border-y border-slate-800/80">
   <div class="max-w-6xl mx-auto px-4 sm:px-6">
     <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 mb-10">
@@ -85,7 +85,7 @@ tailwind.config = {
           <span class="text-amber-400 font-semibold text-sm">This Weekend · Aug 28–30</span>
         </div>
         <h2 class="font-display font-extrabold text-2xl sm:text-3xl text-white tracking-tight">
-          Top Picks Across the Region
+          Last summer weekend — get them outside
         </h2>
         <p class="mt-2 text-slate-400">
           Rivalry Friday · Ren Fest / Wolf Trap / Stapleton Saturday · Gorge + Shore Sunday
@@ -97,50 +97,49 @@ tailwind.config = {
     </div>
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
       <a href="weekends/2026-08-28/maryland.html" class="glass-card rounded-xl overflow-hidden hover:border-amber-500/40 transition-colors">
-        <img class="card-img" src="/assets/featured/maryland-renfest-sam.jpg" alt="Maryland Ren Fest - Sam" onerror="this.src='/assets/featured/maryland-renfest-sam.svg'">
+        <div class="scene-banner" data-region="maryland" data-scene="Ravens football Ren Fest"></div>
         <div class="p-4">
           <p class="text-amber-400 text-xs font-semibold mb-1">Maryland</p>
           <p class="font-display font-bold text-white text-sm">Ravens · Ren Fest · SUBSCAPE</p>
-          <p class="text-slate-400 text-xs mt-2">4 picks this weekend →</p>
+          <p class="text-slate-400 text-xs mt-2">Fri 6p M&T · Children’s Weekend →</p>
         </div>
       </a>
       <a href="weekends/2026-08-28/virginia.html" class="glass-card rounded-xl overflow-hidden hover:border-amber-500/40 transition-colors">
-        <img class="card-img" src="/assets/featured/virginia-wolftrap-sam.jpg" alt="Virginia Wolf Trap - Sam" onerror="this.src='/assets/featured/virginia-wolftrap-sam.svg'">
+        <div class="scene-banner" data-region="virginia" data-scene="Wolf Trap concert music"></div>
         <div class="p-4">
           <p class="text-amber-400 text-xs font-semibold mb-1">Virginia</p>
           <p class="font-display font-bold text-white text-sm">Tedeschi Trucks · Nats · DCU</p>
-          <p class="text-slate-400 text-xs mt-2">4 picks this weekend →</p>
+          <p class="text-slate-400 text-xs mt-2">Fri lawn · Audi Field Sat →</p>
         </div>
       </a>
       <a href="weekends/2026-08-28/pennsylvania.html" class="glass-card rounded-xl overflow-hidden hover:border-amber-500/40 transition-colors">
-        <img class="card-img" src="/assets/featured/pennsylvania-eagles-sam.jpg" alt="Pennsylvania Eagles - Sam" onerror="this.src='/assets/featured/pennsylvania-eagles-sam.svg'">
+        <div class="scene-banner" data-region="pennsylvania" data-scene="Eagles football Stapleton concert"></div>
         <div class="p-4">
           <p class="text-amber-400 text-xs font-semibold mb-1">Pennsylvania</p>
           <p class="font-display font-bold text-white text-sm">Eagles home · Stapleton</p>
-          <p class="text-slate-400 text-xs mt-2">3 picks this weekend →</p>
+          <p class="text-slate-400 text-xs mt-2">Fri 8p CBS · Corn Fest Sat →</p>
         </div>
       </a>
       <a href="weekends/2026-08-28/delaware.html" class="glass-card rounded-xl overflow-hidden hover:border-amber-500/40 transition-colors">
-        <img class="card-img" src="/assets/featured/delaware-cape-sam.jpg" alt="Delaware Cape - Sam" onerror="this.src='/assets/featured/delaware-cape-sam.svg'">
+        <div class="scene-banner" data-region="delaware" data-scene="Cape Henlopen brewery beer"></div>
         <div class="p-4">
           <p class="text-amber-400 text-xs font-semibold mb-1">Delaware</p>
           <p class="font-display font-bold text-white text-sm">Breweries · Cape Henlopen</p>
-          <p class="text-slate-400 text-xs mt-2">3 picks this weekend →</p>
+          <p class="text-slate-400 text-xs mt-2">Cleaner Sunday after showers →</p>
         </div>
       </a>
       <a href="weekends/2026-08-28/west-virginia.html" class="glass-card rounded-xl overflow-hidden hover:border-amber-500/40 transition-colors">
-        <img class="card-img" src="/assets/featured/westvirginia-gorge-sam.jpg" alt="West Virginia Gorge - Sam" onerror="this.src='/assets/featured/westvirginia-gorge-sam.svg'">
+        <div class="scene-banner" data-region="west-virginia" data-scene="Gorge camp Spartan"></div>
         <div class="p-4">
           <p class="text-amber-400 text-xs font-semibold mb-1">West Virginia</p>
           <p class="font-display font-bold text-white text-sm">Spartan · Yoga on the Gorge</p>
-          <p class="text-slate-400 text-xs mt-2">3 picks this weekend →</p>
+          <p class="text-slate-400 text-xs mt-2">Sat–Sun New River →</p>
         </div>
       </a>
     </div>
   </div>
 </section>
 
-<!-- Ops Center CTA -->
 <section class="py-16">
   <div class="max-w-4xl mx-auto px-4 sm:px-6 text-center">
     <h2 class="font-display font-extrabold text-2xl sm:text-3xl text-white mb-4">Ops Center</h2>
@@ -153,40 +152,31 @@ tailwind.config = {
   </div>
 </section>
 
-<!-- Socials -->
 <section id="socials" class="py-16 bg-slate-900/40 border-t border-slate-800/80">
   <div class="max-w-4xl mx-auto px-4 sm:px-6 text-center">
     <h2 class="font-display font-extrabold text-2xl text-white mb-3">Follow The Adventure</h2>
     <p class="text-slate-400 mb-8">Daily boating clips, hiking guides, and weekend ideas — all in one handle.</p>
     <div class="flex flex-wrap justify-center gap-3">
-      <a href="https://instagram.com/getoutsidemidatlantic" target="_blank" rel="noopener" class="px-5 py-3 rounded-xl bg-slate-800 border border-slate-700 hover:border-amber-400 transition-colors">📸 Instagram</a>
-      <a href="https://tiktok.com/@getoutsidemidatlantic" target="_blank" rel="noopener" class="px-5 py-3 rounded-xl bg-slate-800 border border-slate-700 hover:border-amber-400 transition-colors">🎵 TikTok</a>
-      <a href="https://facebook.com/getoutsidemidatlantic" target="_blank" rel="noopener" class="px-5 py-3 rounded-xl bg-slate-800 border border-slate-700 hover:border-amber-400 transition-colors">👥 Facebook</a>
-      <a href="https://youtube.com/@getoutsidemidatlantic" target="_blank" rel="noopener" class="px-5 py-3 rounded-xl bg-slate-800 border border-slate-700 hover:border-amber-400 transition-colors">▶️ YouTube</a>
+      <a href="https://instagram.com/getoutsidemidatlantic" target="_blank" rel="noopener" class="px-5 py-3 rounded-xl bg-slate-800 border border-slate-700 hover:border-amber-400 transition-colors">Instagram</a>
+      <a href="https://tiktok.com/@getoutsidemidatlantic" target="_blank" rel="noopener" class="px-5 py-3 rounded-xl bg-slate-800 border border-slate-700 hover:border-amber-400 transition-colors">TikTok</a>
+      <a href="https://facebook.com/getoutsidemidatlantic" target="_blank" rel="noopener" class="px-5 py-3 rounded-xl bg-slate-800 border border-slate-700 hover:border-amber-400 transition-colors">Facebook</a>
+      <a href="https://youtube.com/@getoutsidemidatlantic" target="_blank" rel="noopener" class="px-5 py-3 rounded-xl bg-slate-800 border border-slate-700 hover:border-amber-400 transition-colors">YouTube</a>
     </div>
   </div>
 </section>
 
-<!-- Footer -->
 <footer class="bg-slate-950 border-t border-slate-800/80 py-10">
   <div class="max-w-5xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-6">
     <div class="flex items-center gap-2">
       <span class="font-display font-extrabold text-slate-200 text-sm">
-        GET OUTSIDE <span class="text-amber-500">MID CLASSLANTIC</span>
+        GET OUTSIDE <span class="text-amber-500">MID ATLANTIC</span>
       </span>
-    </div>
-    <div class="flex items-center gap-3 text-sm">
-      <a href="https://instagram.com/getoutsidemidatlantic" target="_blank" aria-label="Instagram" class="p-2 rounded-lg bg-slate-900 border border-slate-800 hover:border-amber-400 transition-colors">📸</a>
-      <a href="https://tiktok.com/@getoutsidemidatlantic" target="_blank" aria-label="TikTok" class="p-2 rounded-lg bg-slate-900 border border-slate-800 hover:border-amber-400 transition-colors">🎵</a>
-      <a href="https://facebook.com/getoutsidemidatlantic" target="_blank" aria-label="Facebook" class="p-2 rounded-lg bg-slate-900 border border-slate-800 hover:border-amber-400 transition-colors">👥</a>
-      <a href="https://youtube.com/@getoutsidemidatlantic" target="_blank" aria-label="YouTube" class="p-2 rounded-lg bg-slate-900 border border-slate-800 hover:border-amber-400 transition-colors">▶️</a>
-      <a href="https://ko-fi.com/getoutsidemidatlantic" target="_blank" rel="noopener noreferrer" aria-label="Support on Ko-fi" title="Buy me a coffee ☕"
-         class="p-2 rounded-lg bg-slate-900 border border-slate-800 hover:border-amber-400 transition-colors">☕</a>
     </div>
     <span class="text-xs text-slate-500">&copy; <span id="current-year"></span> Get Outside Mid Atlantic</span>
   </div>
 </footer>
 
+<script src="scene-generator.js" defer></script>
 <script>
   document.getElementById('current-year').textContent = new Date().getFullYear();
   document.getElementById('mobile-menu-btn').addEventListener('click', () => {
