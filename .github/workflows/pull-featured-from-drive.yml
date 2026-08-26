@@ -1,0 +1,55 @@
+name: Pull featured JPGs from Drive
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - assets/featured/drive-manifest.json
+      - .github/workflows/pull-featured-from-drive.yml
+
+permissions:
+  contents: write
+
+jobs:
+  pull:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Download JPGs listed in Drive manifest
+        run: |
+          set -euo pipefail
+          python3 - << 'PY'
+          import json, subprocess, sys
+          from pathlib import Path
+          man = json.loads(Path('assets/featured/drive-manifest.json').read_text())
+          ok = 0
+          for item in man['files']:
+              dest = Path(item['dest'])
+              dest.parent.mkdir(parents=True, exist_ok=True)
+              url = f"https://drive.google.com/uc?export=download&id={item['drive_id']}"
+              print('GET', item['name'], url)
+              subprocess.check_call(['curl', '-L', '--fail', '-o', str(dest), url])
+              head = dest.read_bytes()[:3]
+              if head != b'\xff\xd8\xff':
+                  print('NOT A JPEG:', dest, 'first bytes', head, 'size', dest.stat().st_size)
+                  dest.unlink(missing_ok=True)
+                  continue
+              print('OK', dest, dest.stat().st_size)
+              ok += 1
+          if ok == 0:
+              print('No public JPEGs downloaded. Set Drive files to Anyone with the link.')
+              sys.exit(1)
+          PY
+
+      - name: Commit JPGs if changed
+        run: |
+          git config user.name "goma-drive-sync"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add assets/featured/*.jpg || true
+          if git diff --cached --quiet; then
+            echo "No JPG changes"
+          else
+            git commit -m "featured JPGs pulled from Drive (manifest week)"
+            git push
+          fi
