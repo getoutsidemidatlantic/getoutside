@@ -1,0 +1,155 @@
+name: GOMA Pipeline
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths-ignore:
+      - "assets/featured/*.jpg"
+      - "docs/**"
+
+concurrency:
+  group: goma-pipeline-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: write
+
+jobs:
+  validate:
+    name: Validate production contracts
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Hard gates
+        run: |
+          set -euo pipefail
+          python3 - << 'PY'
+          import json, sys
+          from pathlib import Path
+
+          def fail(msg):
+              print('::error::' + msg)
+              sys.exit(1)
+
+          required = [
+              'sports/ops-core.js',
+              'sports/map-app.js',
+              'sports/index.html',
+              'weekends-hub.html',
+              'index.html',
+              'sports/data/soc-a.json',
+              'sports/data/soc-b.json',
+              'sports/data/field-sites.json',
+              'sports/intel.json',
+              'assets/featured/drive-library.json',
+              'assets/featured/drive-manifest.json',
+          ]
+          for p in required:
+              path = Path(p)
+              if not path.exists() or path.stat().st_size == 0:
+                  fail(f'empty or missing: {p}')
+
+          ops = Path('sports/ops-core.js').read_text(errors='replace')
+          mp = Path('sports/map-app.js').read_text(errors='replace')
+          for token, blob, name in [
+              ('openPanel', ops, 'ops-core.js'),
+              ('rangeDays', ops, 'ops-core.js'),
+              ('fieldSites', mp, 'map-app.js'),
+              ('openPanel', mp, 'map-app.js'),
+          ]:
+              if token not in blob:
+                  fail(f'{name} missing marker {token}')
+
+          jsons = [
+              'sports/data/soc-a.json',
+              'sports/data/soc-b.json',
+              'sports/data/field-sites.json',
+              'sports/intel.json',
+              'assets/featured/drive-library.json',
+              'assets/featured/drive-manifest.json',
+          ]
+          parsed = {}
+          for p in jsons:
+              try:
+                  parsed[p] = json.loads(Path(p).read_text())
+              except Exception as e:
+                  fail(f'invalid JSON {p}: {e}')
+
+          lib = parsed['assets/featured/drive-library.json'].get('images') or {}
+          man = parsed['assets/featured/drive-manifest.json']
+          files = man.get('files') or []
+          if len(files) < 5:
+              fail('drive-manifest.json must list 5 weekly cards')
+          missing = []
+          for item in files:
+              name = item.get('name')
+              if not name:
+                  fail('manifest item missing name')
+              if name not in lib and not item.get('drive_id'):
+                  missing.append(name)
+          if missing:
+              fail('manifest names not in drive-library: ' + ', '.join(missing))
+
+          hub = Path('weekends-hub.html').read_text(errors='replace')
+          if '/sports/?intel=' not in hub:
+              fail('weekends-hub.html missing Ops intel deep links')
+          print('VALIDATE OK')
+          PY
+
+  featured-art:
+    name: Pull featured JPGs from Drive
+    needs: validate
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Download week JPGs (soft-fail if Drive is private)
+        id: pull
+        run: |
+          set -euo pipefail
+          python3 - << 'PY'
+          import json, subprocess, sys
+          from pathlib import Path
+          man = json.loads(Path('assets/featured/drive-manifest.json').read_text())
+          lib = json.loads(Path('assets/featured/drive-library.json').read_text()).get('images', {})
+          ok = 0
+          for item in man['files']:
+              name = item['name']
+              dest = Path(item.get('dest') or f'assets/featured/{name}')
+              drive_id = item.get('drive_id') or lib.get(name)
+              if not drive_id:
+                  print('::warning::no Drive id for', name)
+                  continue
+              dest.parent.mkdir(parents=True, exist_ok=True)
+              urls = [
+                  f'https://drive.google.com/uc?export=download&id={drive_id}',
+                  f'https://lh3.googleusercontent.com/d/{drive_id}=w1600',
+              ]
+              got = False
+              for url in urls:
+                  print('GET', name, url)
+                  r = subprocess.run(['curl', '-L', '-sS', '-o', str(dest), url])
+                  if r.returncode != 0 or not dest.exists():
+                      continue
+                  if dest.read_bytes()[:3] == b'\xff\xd8\xff' and dest.stat().st_size > 10000:
+                      print('OK', dest, dest.stat().st_size)
+                      ok += 1
+                      got = True
+                      break
+              if not got:
+                  print('::warning::Drive file not public JPEG:', name, drive_id)
+                  dest.unlink(missing_ok=True)
+          Path('/tmp/art_ok').write_text(str(ok))
+          print(f'pulled {ok}/{len(man["files"])} JPEGs')
+          PY
+      - name: Commit JPEGs if any landed
+        run: |
+          git config user.name "goma-pipeline"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add assets/featured/*.jpg || true
+          if git diff --cached --quiet; then
+            echo "No JPG changes (Drive likely still private — hub will use SVG/scene fallback)"
+          else
+            git commit -m "featured JPGs pulled from Drive [skip ci]"
+            git push
+          fi
