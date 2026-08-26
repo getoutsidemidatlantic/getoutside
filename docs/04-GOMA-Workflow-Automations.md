@@ -1,6 +1,6 @@
 # GOMA Workflow & Automations
 **Weekly Cycle · Triggers · Human Gates**  
-**Status:** v1.1 — locked 2026-08-25 (empty-file + Field-panel smoke rules)  
+**Status:** v1.3 — locked 2026-08-26 (featured Drive auto-manifest)  
 **Owner:** Grok · Review: Dan
 
 One research lock feeds the entire week.  
@@ -40,12 +40,20 @@ Calendar reminders: getoutsidemidatlantic@gmail.com
 - Stores packages in Drive
 - Generates carousel package (01–07 + CAPTION.txt + STATUS) under the correct socials/ structure
 - **Hard rule:** After any push of `ops-core.js`, `map-app.js`, or data JSON, verify raw/API size > 0. Empty critical files break the Ops Center.
+- **Featured card art (LOCKED):**
+  1. Generate Seneca-style Sam JPGs named `{region}-{scene}-sam.jpg`.
+  2. Upload to Drive folder `GetOutside - Featured Card Assets` (`1xo-kQ2evfEw29Pj1N0dSmpoEuAzejs1H`). Files must be Anyone with the link.
+  3. Search Drive for those filenames. Upsert IDs into `assets/featured/drive-library.json`.
+  4. Rewrite `assets/featured/drive-manifest.json` for the lock week (names + dest only). Do not hand-edit IDs on the manifest.
+  5. Commit those two JSON files. GitHub Action `pull-featured-from-drive.yml` resolves name → ID from the library, downloads JPGs onto `assets/featured/*.jpg`, and pushes the binaries.
+  6. Hub cards: `.jpg` → `.svg` → scene-banner.
 
 ### Ops Refresh (Sun 3 AM) — FULL
 - Updates Ops Center data, intel ticker, field-sites window, and weather
 - **Full refresh** (not light)
 - Field and Entertainment receive same depth and volume as Sports (≥100 floor)
 - Does **not** rewrite weekend lifestyle pages
+- Does **not** rewrite featured card art or the Drive manifest
 
 ---
 
@@ -62,10 +70,11 @@ Everything else is automation-first.
 ## 4. Deploy Now Procedure
 
 1. Confirm Review Gate is complete and `main` contains the correct week’s files
-2. Dan triggers a production deploy on Netlify (manual, to control credit use)
-3. Wait for the deploy to finish and the live site to update
-4. Smoke check: homepage cards, weekends-hub + region pages, Ops Center (layers, Hype, Sports pin → panel with hero, **Field pin → panel with hero**, non-zero ops-core.js / map-app.js)
-5. Only after the live site is confirmed correct is the **READY flag** set for social posting
+2. Confirm featured JPG pull Action is green (or hub fallback art is acceptable)
+3. Dan triggers a production deploy on Netlify (manual, to control credit use)
+4. Wait for the deploy to finish and the live site to update
+5. Smoke check: homepage cards, weekends-hub + region pages, Ops Center (layers, Hype, Sports pin → panel with hero, **Field pin → panel with hero**, non-zero ops-core.js / map-app.js)
+6. Only after the live site is confirmed correct is the **READY flag** set for social posting
 
 ---
 

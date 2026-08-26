@@ -1,6 +1,6 @@
 # GOMA Engineering Document
 **System Architecture, Configuration & Disaster Recovery**  
-**Status:** v1.2 — locked 2026-08-25 (architecture gold)  
+**Status:** v1.3 — locked 2026-08-26 (featured Drive auto-manifest)  
 **Owner:** Grok · Review: Dan
 
 This document is the canonical technical reference for how the system works.
@@ -67,6 +67,9 @@ File naming is flexible as long as content rules govern the payload. SOC-style n
 | `sports/data/field-sites.json` | Field + Entertainment sites |
 | `sports/data/image-library-index.json` | Venue image index (goma-custom paths) |
 | `sports/images/venues/` | 64 locked custom JPGs (hero images) |
+| `assets/featured/` | Weekly hub card art (JPG pulled from Drive + SVG fallback) |
+| `assets/featured/drive-library.json` | Name → Drive file ID for all featured JPGs |
+| `assets/featured/drive-manifest.json` | Active week file list (no hand-edited IDs) |
 | `sports/intel.json` | Ops intel ticker |
 | `sports/ops-layers.css` | Layer UI styles |
 | `docs/CHARACTER_BIBLE.md` | Character source of truth |
@@ -173,6 +176,23 @@ All other files follow the standard slug used in the master sheet.
 ### 5.5 Why this is architecture gold
 Repeated full scrapes waste time and tokens. The local 64-image set + index + field-sites/soc wiring makes every pin (Sports, Field, Entertainment) open a consistent intel panel with a real hero image. This is now the permanent pattern.
 
+### 5.6 Featured weekend cards — Drive is binary master (LOCKED 2026-08-26)
+Weekly hub art is **not** committed by the Grok GitHub connector (text-only). Drive holds the JPGs. Git receives binaries via Action.
+
+**Naming:** `{region}-{scene}-sam.jpg`  
+Regions: `maryland` `virginia` `pennsylvania` `delaware` `westvirginia`
+
+**Stores:**
+- Drive folder `GetOutside - Featured Card Assets` (`1xo-kQ2evfEw29Pj1N0dSmpoEuAzejs1H`)
+- `assets/featured/drive-library.json` — durable name → Drive ID map (upsert every Build)
+- `assets/featured/drive-manifest.json` — this week’s five dest names only
+- `assets/featured/*.jpg` — written by Action `pull-featured-from-drive.yml`
+- `assets/featured/*.svg` — text fallback (Drive image href or scene-generator)
+
+**Auto-manifest rule:** Build Package never hand-types Drive IDs into the weekly manifest. It searches Drive by filename, upserts the library, writes the week manifest as names + dest, commits JSON. The Action resolves IDs and commits JPEGs.
+
+**Hub load order:** `.jpg` → `.svg` → `scene-banner`.
+
 ---
 
 ## 6. Disaster Recovery
@@ -217,6 +237,7 @@ This 200-hit floor and the Field-pin-panel check are hard smoke-check failure co
 - **Never push empty critical JS or data files**
 - **≥200 Ops hits after deploy** or the smoke check fails
 - **Every pin (Sports + Field + Entertainment) must open the intel panel**
+- **Featured card JPGs come from Drive via Action, not the Grok text connector**
 
 ---
 
@@ -231,6 +252,7 @@ This 200-hit floor and the Field-pin-panel check are hard smoke-check failure co
 
 ## 9. Changelog (architecture locks)
 
+- **v1.3 (2026-08-26)** — Featured weekend cards: Drive binary master + `drive-library.json` + auto week manifest + GitHub Action pull onto `assets/featured/*.jpg`.
 - **v1.2 (2026-08-25)** — Architecture gold lock:
   - Explicit ops-core.js / map-app.js runtime split
   - Field/Entertainment pins open intel panel via openPanel → openFieldPanel
