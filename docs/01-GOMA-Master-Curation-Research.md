@@ -1,6 +1,6 @@
 # GOMA Master Curation / Research Document
 **Get Outside Mid-Atlantic · get-outside.info**  
-**Status:** v1.3 — locked 2026-08-25 (must-have targets + D2/D3 typing)  
+**Status:** v1.4 — locked 2026-08-25 (verbose must-have research targets)  
 **Owner:** Grok (production) · Review: Dan
 
 This is the single source of truth for weekly research standards.  
@@ -71,57 +71,249 @@ These are floor numbers for Ops Center credibility. Quality still gates inclusio
 
 ---
 
-## 3A. Must-Have Research Targets (LOCKED)
+## 3A. Must-Have Research Targets (LOCKED — verbose)
 
 Volume floors alone are not enough. The following are **always-scan** targets. If an item has a real, public, in-window home event or open date and it is missing from the Research Lock without a documented reason, the lock fails Review Gate.
 
-This list is a **never-miss floor**, not a maximum. Hidden gems and timely extras still go on top.
+This list is a **never-miss floor**, not a maximum. Hidden gems and timely extras still go on top.  
+Scan official calendars first (team sites, MiLB.com, NCAA, park systems, tourism boards). Real dates only.
+
+**Typing rules (HARD)**  
+- NFL / MLB / MiLB / soccer / golf / practice → use those types as today  
+- FBS + FCS primary programs → `college`  
+- **D2 + D3 football (and other D2/D3 outdoor when mapped)** → `d2` so the Ops Center D2/D3 layer populates  
+- Never fold D2/D3 into generic `college`. Never leave the D2/D3 layer at zero when home games exist in the window.
+
+---
 
 ### Sports — always scan (~30-day window)
 
-**Pro football (NFL)**  
-- Ravens (M&T Bank Stadium)  
-- Commanders (home stadium in corridor)  
-- Eagles (Lincoln Financial Field)  
-- Steelers (Acrisure Stadium)  
+#### NFL (all four corridor homes)
+| Team | Venue | Notes |
+|------|--------|------|
+| Baltimore Ravens | M&T Bank Stadium | Preseason + regular season |
+| Washington Commanders | Home stadium in corridor | All public home games |
+| Philadelphia Eagles | Lincoln Financial Field | |
+| Pittsburgh Steelers | Acrisure Stadium | |
 
-**Pro baseball**  
-- Orioles (Camden Yards)  
-- Nationals (Nationals Park)  
-- Primary MiLB affiliates in corridor (e.g. Norfolk Tides, Richmond Flying Squirrels, and other active home clubs in window)
+#### MLB
+| Team | Venue |
+|------|--------|
+| Baltimore Orioles | Oriole Park at Camden Yards |
+| Washington Nationals | Nationals Park |
 
-**College football — all levels with home games in MD / VA / PA / DE / WV**  
-- FBS / Power programs in corridor (e.g. Penn State, West Virginia, Maryland, Virginia, Virginia Tech, Pitt when in window)  
-- FCS programs with home games in corridor  
-- **D2 / D3 football** with home games in corridor (type as `d2` in data — do not fold into generic `college`)  
-  Examples to scan: Towson, Delaware (when applicable), Shippensburg, Frostburg, Shepherd, and other active Mid-Atlantic D2/D3 home schedules  
+#### MiLB — affiliated clubs in corridor (home games in window)
+**Maryland**  
+- Chesapeake Baysox (Bowie / Prince George’s Stadium) — Orioles AA  
+- Aberdeen IronBirds — Orioles High-A  
+- Delmarva Shorebirds (Salisbury) — Orioles Single-A  
+- Hagerstown Flying Boxcars (Atlantic League / independent — include when drawing)  
 
-**Other college outdoor (home / public meets)**  
-- Soccer, baseball, lacrosse, outdoor track where schedules are public and in window  
+**Virginia**  
+- Norfolk Tides — Orioles AAA  
+- Richmond Flying Squirrels — Giants AA  
+- Fredericksburg Nationals — Nationals Single-A  
+- Salem RidgeYaks (when in window / Red Sox chain)  
 
-**Other sports**  
-- MLS / NWSL home clubs in corridor (e.g. Union, D.C. United)  
-- Golf: PGA / Korn Ferry / notable regional events when in corridor and in window  
-- Practice / open training sessions when officially announced and public  
+**Pennsylvania**  
+- Lehigh Valley IronPigs (Allentown) — Phillies AAA  
+- Reading Fightin Phils — Phillies AA  
+- Harrisburg Senators — Nationals AA  
+- Altoona Curve — Pirates AA  
+- Scranton/Wilkes-Barre RailRiders — Yankees AAA  
+- Erie SeaWolves — Tigers AA  
 
-**Typing rule:** Use `college` for FBS/FCS-style primary programs; use `d2` for D2/D3 so the Ops Center D2/D3 layer populates. Never leave D2/D3 at zero when home games exist in window.
+**Delaware**  
+- Wilmington Blue Rocks — Nationals High-A  
+
+**West Virginia**  
+- Charleston Dirty Birds (Atlantic League) when active home dates  
+
+#### College football — FBS / power & primary corridor programs (`type: college`)
+Scan every home game in window:
+- Penn State (Beaver Stadium)  
+- West Virginia (Milan Puskar Stadium)  
+- Maryland (SECU Stadium)  
+- Virginia (Scott Stadium)  
+- Virginia Tech (Lane Stadium)  
+- Pittsburgh (when home in corridor window)  
+- Navy (Navy-Marine Corps Memorial Stadium)  
+- James Madison  
+- Old Dominion  
+- Delaware (now FBS — still scan; type `college`)  
+- Liberty (when home relevant to corridor audience)  
+
+#### College football — FCS (`type: college`)
+Home games in corridor, including but not limited to:
+- Towson  
+- Richmond  
+- William & Mary  
+- Villanova  
+- Georgetown  
+- Howard  
+- Norfolk State  
+- Morgan State  
+- Delaware State  
+- Hampton  
+- Lehigh, Lafayette, Bucknell (Patriot League)  
+- Duquesne, Robert Morris, and other PA FCS with home dates  
+
+#### D2 / D3 football (`type: d2` — HARD)
+Scan active home schedules in MD / VA / PA / DE / WV. Examples (not exhaustive — add any other active home program in window):
+
+**Maryland D2/D3**  
+- Frostburg State  
+- Bowie State  
+- Salisbury  
+- McDaniel  
+- Other CIAA / MEC / Centennial home programs in state  
+
+**Virginia D2/D3**  
+- Shepherd (WV/VA border — include)  
+- Shenandoah  
+- Randolph-Macon  
+- Hampden-Sydney  
+- Washington & Lee  
+- Bridgewater, Emory & Henry, and other ODAC / active VA home programs  
+
+**Pennsylvania D2/D3**  
+- Shippensburg  
+- Indiana (PA) / IUP  
+- California (PA)  
+- Slippery Rock  
+- East Stroudsburg  
+- West Chester  
+- Bloomsburg  
+- Millersville  
+- Kutztown  
+- Delaware Valley  
+- Franklin & Marshall, Gettysburg, Dickinson, Ursinus, and other Centennial / MAC home programs with public home dates  
+
+**West Virginia D2**  
+- Shepherd  
+- Fairmont State  
+- Concord  
+- Other Mountain East home programs in window  
+
+**Delaware**  
+- Any active D2/D3 home football in state in window  
+
+If a listed program has **no** home game in the research window, note that once in the lock; do not invent games.
+
+#### Other college outdoor (home / public)
+When schedules are public and in window:  
+- Men’s / women’s soccer (Power + strong mid-majors)  
+- Baseball (especially spring and midweek when overlapping window)  
+- Lacrosse (MD/VA/PA power programs — major draw)  
+- Outdoor track & field meets at major facilities  
+
+#### Soccer
+- Philadelphia Union (Subaru Park)  
+- D.C. United (Audi Field)  
+- Any NWSL or other pro outdoor soccer home dates in corridor  
+
+#### Golf
+- PGA / Korn Ferry / notable regional tournaments when the event is in MD/VA/PA/DE/WV and in window  
+- Major public courses only when a real tournament or signature public event is on the calendar (not every municipal tee time)  
+
+#### Practice / open sessions
+- NFL / college open practices when officially announced and public  
+
+---
 
 ### Field — always scan
 
-- Named **state parks** and major trail systems per region (MD, VA, PA, DE, WV)  
-- Peak **fishing** windows and known launches / piers with public access  
-- **Racing** (motorsport, bike, trail) when scheduled in corridor  
-- Signature outdoor draws (e.g. White Marlin Open class events, major regattas) when in season  
+#### State parks & major public lands (by region)
+Scan for open status, peak conditions, events, and access notes — not every trailhead, but the **named anchors**:
+
+**Maryland**  
+- Assateague / Ocean City–area public beaches & parks  
+- Sandy Point State Park  
+- Gunpowder Falls / Patapsco Valley  
+- Deep Creek Lake State Park  
+- Cunningham Falls / Catoctin  
+- Point Lookout  
+- Seneca Creek / Black Hill (when relevant)  
+
+**Virginia**  
+- Shenandoah National Park (Skyline Drive segments, major overlooks, campgrounds)  
+- First Landing / False Cape  
+- Lake Anna  
+- Grayson Highlands / Mount Rogers area  
+- Kiptopeke / Eastern Shore public sites  
+- James River & New River access nodes with public events  
+
+**Pennsylvania**  
+- Presque Isle  
+- Ohiopyle / Laurel Highlands  
+- Ricketts Glen  
+- Worlds End / R.B. Winter  
+- Gettysburg NMP (outdoor experience, not only museum)  
+- Delaware Water Gap corridor public sites  
+
+**Delaware**  
+- Cape Henlopen  
+- Delaware Seashore  
+- Trap Pond  
+- Killens Pond  
+
+**West Virginia**  
+- New River Gorge National Park & Preserve  
+- Blackwater Falls  
+- Canaan Valley  
+- Seneca Rocks / Spruce Knob area  
+- Coopers Rock  
+
+#### Fishing (first-class)
+- Chesapeake Bay public launches & piers (MD/VA) with seasonal bite notes when timely  
+- Inland lakes/rivers with known seasonal windows (e.g. Deep Creek, Smith Mountain, Susquehanna access)  
+- Surf / inlet fishing on DE/MD Atlantic when in peak  
+
+#### Racing
+- Motorsport: known corridor tracks with scheduled race weekends in window (e.g. regional paved/dirt when published)  
+- Major bike / trail race events when published  
+
+#### Signature outdoor
+- White Marlin Open class events (Ocean City) when in season  
+- Major regattas / sail events on Bay or inland lakes when published  
+- Peak leaf / bloom / migration weekends when they dominate regional demand  
+
+---
 
 ### Entertainment — always scan
 
-- Major outdoor festivals already in season  
-- Amphitheater / outdoor concert series with announced dates in window  
-- State / regional fairs when active  
+#### Outdoor music & amphitheaters
+- Merriweather Post Pavilion  
+- Jiffy Lube Live / major VA amphitheaters  
+- Stage AE / outdoor Pittsburgh dates when relevant  
+- Wolf Trap (Filene Center)  
+- Other published outdoor series with real dates in window  
 
-### Failure condition
+#### Festivals & fairs
+- Maryland Renaissance Festival (when season active)  
+- State fairs: Maryland, Virginia, Pennsylvania, West Virginia, Delaware when dates fall in window  
+- Major city/waterfront festivals already announced (e.g. Artscape-class, Harbor Fests, leaf festivals)  
+- Food & wine outdoor festivals with strong regional draw  
 
-Missing a must-have that has a real public date in the research window, with no note in the lock explaining why it was excluded, is a Review Gate failure. Do not ship the week with a silent gap on NFL, primary college football (including D2/D3 home games), primary MiLB, or signature Field/Entertainment draws.
+#### Concerts / one-offs
+- Stadium or park concerts at NFL/MLB venues when announced  
+- Campus outdoor concerts with public tickets  
+
+---
+
+### Failure condition (HARD)
+
+Missing a must-have that has a **real public date in the research window**, with no note in the lock explaining why it was excluded, is a **Review Gate failure**.
+
+Do not ship the week with a silent gap on:
+- Any of the four NFL homes  
+- Orioles or Nationals  
+- Primary MiLB clubs with home stands  
+- FBS/FCS home football in corridor  
+- **D2/D3 home football when games exist**  
+- Signature Field/Entertainment draws (White Marlin class, major amphitheater weekends, state fairs in season)
+
+Document exclusions in one short line in the lock (e.g. “Frostburg: no home game in window”). That is enough.
 
 ---
 
@@ -141,20 +333,6 @@ Missing a must-have that has a real public date in the research window, with no 
 
 ---
 
-## 5. Featured Shot & Hidden Gem Rules (LOCKED)
-
-Both are **mandatory** every week for every region.
-
-They are never random. Selection must be reasoned:
-
-- **Most popular / highest-demand** moment that week, **or**
-- **Timeliness / peak condition** (peak leaf color, cherry blossom bloom, ideal fishing window, race weekend atmosphere, etc.)
-
-Featured Shot = actionable photo moment tied to the above reasoning.  
-Hidden Gem = real, current, under-the-radar option that still fits the weekend context.
-
----
-
 ## 12. Locked Decisions (2026-08-25)
 
 1. Heat map on event congestion is an official toggleable layer.
@@ -168,10 +346,10 @@ Hidden Gem = real, current, under-the-radar option that still fits the weekend c
 9. Local custom venue image set is canonical for panel heroes.
 10. Ops Center default time filter = 30 days.
 11. Every map pin must open the intel panel with hero on click.
-12. **Must-Have Research Targets** (§3A) are always-scan; missing an in-window must-have without a documented reason fails Review Gate.
+12. **Must-Have Research Targets** (§3A verbose) are always-scan; missing an in-window must-have without a documented reason fails Review Gate.
 13. D2/D3 football home games in corridor are typed `d2` (not folded into generic `college`).
 14. Select All / Clear All toggles Sports **and** Field/Entertainment layer checkboxes.
 
 ---
 
-*v1.3 locked 2026-08-25: Must-Have Research Targets + D2/D3 typing rule + Select All/Clear All scope.*
+*v1.4 locked 2026-08-25: Verbose must-have list — NFL/MLB/MiLB by club, FBS/FCS/D2/D3 by program, state parks by region, amphitheaters, fairs; D2 typing HARD.*
