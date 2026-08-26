@@ -1,0 +1,15 @@
+{
+  "version": 1,
+  "folder_id": "1xo-kQ2evfEw29Pj1N0dSmpoEuAzejs1H",
+  "folder_name": "GetOutside - Featured Card Assets",
+  "regions": ["maryland", "virginia", "pennsylvania", "delaware", "westvirginia"],
+  "name_pattern": "{region}-{scene}-{cast}.jpg",
+  "search_steps": [
+    "google_drive_list_folder(folder_id)",
+    "google_drive_search(title_only=true, query=sam.jpg)",
+    "google_drive_search(title_only=true) once per region prefix"
+  ],
+  "library_path": "assets/featured/drive-library.json",
+  "manifest_path": "assets/featured/drive-manifest.json",
+  "rule": "Upsert every matching JPEG into the library by filename. Week manifest lists dest names only. GitHub Action resolves IDs. Never hand-type Drive IDs into the week manifest."
+}
