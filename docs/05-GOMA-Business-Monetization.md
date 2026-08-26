@@ -1,6 +1,6 @@
 # GOMA Business & Monetization
 **Executive Overview + Revenue Architecture**  
-**Status:** v1.0 — locked 2026-08-25  
+**Status:** v1.1 — locked 2026-08-25  
 **Owner:** Dan · Support: Grok
 
 ---
@@ -52,7 +52,13 @@ Founder time is the real cost. Automation exists to keep that under ~3–5 focus
 ### Near-term (0–12 months)
 - Local / regional sponsors (outdoor retail, breweries, tourism boards, venues)
 - Newsletter / hub sponsorships (geo-precise = higher CPM)
-- Affiliate: tickets, gear, experiences (Amazon Associates weekend kit page already exists at `/gear.html`)
+- **Amazon Associates (live 2026-08-25):**
+  - Hub: `/gear.html` (full weekend kit catalog)
+  - Contextual: Ops Center **intel panel only** — “Gear for this” (max 3 links)
+  - Data: `sports/data/affiliate-kits.json` (kits + by_venue_id / type / sublayer / occasion maps)
+  - Source sheet: Drive `assets/Affiliate links`
+  - Disclosure on every surface with links: “As an Amazon Associate I earn from qualifying purchases.”
+  - **Never** in Live Feed cards, map popups, or ticker
 - Social package sponsorship (“presented by” weekly trailer)
 - One solid monthly sponsor can clear the entire software floor
 
@@ -65,6 +71,7 @@ Founder time is the real cost. Automation exists to keep that under ~3–5 focus
 
 ### What to avoid early
 - Heavy ads on the map page
+- Affiliate product blocks in the Live Feed or map popups
 - Paid tools that create monthly burn before revenue
 - Broad “community membership” with no clear weekly deliverable
 - National expansion before Mid-Atlantic density
@@ -119,4 +126,4 @@ Buyers pay up for:
 ---
 
 *Source: GOMA Executive Strategy Deck (20 slides, August 2026) + recovered monetization notes and live Ko-fi / gear page status.*  
-*v1.0 locked 2026-08-25.*
+*v1.1: Amazon Associates intel-panel + affiliate-kits.json locked.*
