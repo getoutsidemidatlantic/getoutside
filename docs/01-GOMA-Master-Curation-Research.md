@@ -1,6 +1,6 @@
 # GOMA Master Curation / Research Document
 **Get Outside Mid-Atlantic · get-outside.info**  
-**Status:** v1.2 — locked 2026-08-25 (architecture gold)  
+**Status:** v1.3 — locked 2026-08-25 (must-have targets + D2/D3 typing)  
 **Owner:** Grok (production) · Review: Dan
 
 This is the single source of truth for weekly research standards.  
@@ -71,6 +71,60 @@ These are floor numbers for Ops Center credibility. Quality still gates inclusio
 
 ---
 
+## 3A. Must-Have Research Targets (LOCKED)
+
+Volume floors alone are not enough. The following are **always-scan** targets. If an item has a real, public, in-window home event or open date and it is missing from the Research Lock without a documented reason, the lock fails Review Gate.
+
+This list is a **never-miss floor**, not a maximum. Hidden gems and timely extras still go on top.
+
+### Sports — always scan (~30-day window)
+
+**Pro football (NFL)**  
+- Ravens (M&T Bank Stadium)  
+- Commanders (home stadium in corridor)  
+- Eagles (Lincoln Financial Field)  
+- Steelers (Acrisure Stadium)  
+
+**Pro baseball**  
+- Orioles (Camden Yards)  
+- Nationals (Nationals Park)  
+- Primary MiLB affiliates in corridor (e.g. Norfolk Tides, Richmond Flying Squirrels, and other active home clubs in window)
+
+**College football — all levels with home games in MD / VA / PA / DE / WV**  
+- FBS / Power programs in corridor (e.g. Penn State, West Virginia, Maryland, Virginia, Virginia Tech, Pitt when in window)  
+- FCS programs with home games in corridor  
+- **D2 / D3 football** with home games in corridor (type as `d2` in data — do not fold into generic `college`)  
+  Examples to scan: Towson, Delaware (when applicable), Shippensburg, Frostburg, Shepherd, and other active Mid-Atlantic D2/D3 home schedules  
+
+**Other college outdoor (home / public meets)**  
+- Soccer, baseball, lacrosse, outdoor track where schedules are public and in window  
+
+**Other sports**  
+- MLS / NWSL home clubs in corridor (e.g. Union, D.C. United)  
+- Golf: PGA / Korn Ferry / notable regional events when in corridor and in window  
+- Practice / open training sessions when officially announced and public  
+
+**Typing rule:** Use `college` for FBS/FCS-style primary programs; use `d2` for D2/D3 so the Ops Center D2/D3 layer populates. Never leave D2/D3 at zero when home games exist in window.
+
+### Field — always scan
+
+- Named **state parks** and major trail systems per region (MD, VA, PA, DE, WV)  
+- Peak **fishing** windows and known launches / piers with public access  
+- **Racing** (motorsport, bike, trail) when scheduled in corridor  
+- Signature outdoor draws (e.g. White Marlin Open class events, major regattas) when in season  
+
+### Entertainment — always scan
+
+- Major outdoor festivals already in season  
+- Amphitheater / outdoor concert series with announced dates in window  
+- State / regional fairs when active  
+
+### Failure condition
+
+Missing a must-have that has a real public date in the research window, with no note in the lock explaining why it was excluded, is a Review Gate failure. Do not ship the week with a silent gap on NFL, primary college football (including D2/D3 home games), primary MiLB, or signature Field/Entertainment draws.
+
+---
+
 ## 4. Quality Standards
 
 - Official sources and real dates only
@@ -101,86 +155,23 @@ Hidden Gem = real, current, under-the-radar option that still fits the weekend c
 
 ---
 
-## 6. Audience Badges
-
-Every card carries one primary audience badge from:  
-Family · Couples · Adventure · Squad · Girls Wknd
-
----
-
-## 7. “Why People Love It”
-
-Every curation hit requires a short “why people love it” / `people_love` statement.  
-Surfaced in the Ops Center via the Hype layer.
-
----
-
-## 8. Thumbnail / Hero Image
-
-- Every sports venue and field site object carries an `image` path (panel hero).
-- Canonical source: **local custom set** under `sports/images/venues/*.jpg` (64 locked) + `sports/data/image-library-index.json`.
-- Paths are relative (`/sports/images/venues/<filename>.jpg`). Special overrides: m&tbank.jpg, camdenyards.jpg, nationalspark.jpg, milan.jpg.
-- After any new JPG upload: run the venue-image sync (library + soc-a/soc-b + field-sites + Drive master sheet).
-- Fallback: “No venue photo yet” placeholder in panel. Never invent URLs.
-- Grok Imagine is **not** used for Ops Center map/panel heroes once the library is populated.
-
----
-
-## 9. Occasion Taxonomy (LOCKED)
-
-Use **1–4 tags** per venue or event from this vocabulary only. Same set on homepage cards, social carousels, and Ops Center intel panel.
-
-1. Family
-2. Couples
-3. Adventure
-4. Squad
-5. Girls Wknd
-6. Foodie
-7. Music
-8. Nature
-9. History
-10. Water
-11. Sports
-12. Seasonal
-
-Venue-level and event-level `occasions` arrays are required on sports data objects so the Ops panel can render chips.
-
----
-
-## 10. Image Library & Panel Heroes
-
-- Every sports venue and field site object carries an `image` path (panel hero).
-- Canonical source: **local custom set** under `sports/images/venues/*.jpg` (64 locked) + `sports/data/image-library-index.json`.
-- Paths are relative (`/sports/images/venues/<filename>.jpg`). Special overrides: m&tbank.jpg, camdenyards.jpg, nationalspark.jpg, milan.jpg.
-- After any new JPG upload: run the venue-image sync (library + soc-a/soc-b + field-sites + Drive master sheet).
-- Fallback: “No venue photo yet” placeholder in panel. Never invent URLs.
-- Grok Imagine is **not** used for Ops Center map/panel heroes once the library is populated.
-
----
-
-## 11. 30-Day Sports Window
-
-- Research Lock populates a rolling ~30-day sports window (venues + events).
-- Ops Center time filters: 7d / 14d / **30d (default on load)**.
-- Feed and panel “Upcoming” respect the active rangeDays filter.
-- Default rangeDays = 30 so the Ops Center feels complete immediately; user can tighten to 7/14.
-
----
-
 ## 12. Locked Decisions (2026-08-25)
 
 1. Heat map on event congestion is an official toggleable layer.
 2. Hard volume floors: 100+ per domain every run; Sports stretch to 200 when possible.
 3. “Why people love it” statement required on every hit; surfaced via Hype layer.
-4. Small thumbnail / hero (local custom or approved) required on every curation hit.
-5. Source list stays creative and rotating; missing major popular events (NASCAR, White Marlin Open, etc.) is a failure condition.
-6. Featured Shot + Hidden Gem are mandatory and must be reasoned (popularity or timeliness/peak condition).
-7. File naming is flexible; “SOC” is fine when it clearly means the combined multi-domain data.
+4. Small thumbnail required on every curation hit.
+5. Source list stays creative and rotating; missing major popular events is a failure condition.
+6. Featured Shot + Hidden Gem are mandatory and must be reasoned.
+7. File naming is flexible; “SOC” is fine when it means combined multi-domain data.
 8. Occasion tags locked to the 12-term list; 1–4 per venue/event.
-9. Local custom venue image set (`sports/images/venues/` + image-library-index.json) is canonical for all panel heroes; reuse only.
+9. Local custom venue image set is canonical for panel heroes.
 10. Ops Center default time filter = 30 days.
-11. Every map pin (Sports + Field + Entertainment) must open the intel panel with hero on click.
+11. Every map pin must open the intel panel with hero on click.
+12. **Must-Have Research Targets** (§3A) are always-scan; missing an in-window must-have without a documented reason fails Review Gate.
+13. D2/D3 football home games in corridor are typed `d2` (not folded into generic `college`).
+14. Select All / Clear All toggles Sports **and** Field/Entertainment layer checkboxes.
 
 ---
 
-*v1.2 locked 2026-08-25: custom venue image system + Field pin → panel architecture gold.*
+*v1.3 locked 2026-08-25: Must-Have Research Targets + D2/D3 typing rule + Select All/Clear All scope.*
