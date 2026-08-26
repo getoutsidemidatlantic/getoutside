@@ -11,8 +11,9 @@
 
   var map=L.map('map',{center:[39.2,-78.0],zoom:7});
   window.map=map;
-  L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',{
-    attribution:'© OSM © CARTO',subdomains:'abcd',maxZoom:19
+  L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}',{
+    attribution:'Tiles © Esri',
+    maxZoom:16
   }).addTo(map);
 
   var layersByType={
