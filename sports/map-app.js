@@ -36,6 +36,7 @@
   };
 
   const fieldLayerGroups = {};
+  window.fieldLayerGroups = fieldLayerGroups;
   function ensureGroup(sub) {
     if (!fieldLayerGroups[sub]) fieldLayerGroups[sub] = L.layerGroup();
     return fieldLayerGroups[sub];
