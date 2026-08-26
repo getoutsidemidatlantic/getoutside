@@ -1,8 +1,8 @@
 {
-  "updated": "2026-08-26T23:15:00Z",
+  "updated": "2026-08-26T23:20:00Z",
   "folder_name": "GetOutside - Featured Card Assets",
   "folder_id": "1xo-kQ2evfEw29Pj1N0dSmpoEuAzejs1H",
-  "rule": "Build Package searches Drive for {region}-{scene}-sam.jpg, upserts this library, then writes drive-manifest.json for the lock week. Action resolves name → drive_id from this file.",
+  "rule": "Built by Drive list_folder + title search. Week manifest uses names only.",
   "images": {
     "maryland-renfest-sam.jpg": "1-GwL0T9DXi3xUUR54qnWYkkkN0PNx6ra",
     "virginia-wolftrap-sam.jpg": "1vbLPTHnEa5y_ct7I4WmmHLtKfecLWP1G",
@@ -10,6 +10,9 @@
     "delaware-cape-sam.jpg": "1Ig9INifAAIVZJV3UCe8G7mACmay2SlRr",
     "westvirginia-gorge-sam.jpg": "11GfcI8I6H8D10jlGFbjvYdxfRJRSoIit",
     "maryland-ag-fair-sam.jpg": "1VxAezr0xMGoOa7dJUw_tCQsxr06PZTPk",
-    "delaware-peach-sam.jpg": "1CJzbT4xjp76Ky8MArbpTnwNwqfyeMukM"
+    "delaware-peach-sam.jpg": "1CJzbT4xjp76Ky8MArbpTnwNwqfyeMukM",
+    "pennsylvania-folk-dan.jpg": "1HPruxUt65orypIkCV6I9p7J-66a034Qn",
+    "virginia-riverfest-jax.jpg": "1GCs1zakdZOK-fXW1plb4PMH_M71duaGG",
+    "westvirginia-statefair-kevin.jpg": "1qvYSzpkbapvmtQh4G9l2nl8YTnA7Elhz"
   }
 }
