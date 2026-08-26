@@ -1,6 +1,6 @@
 # GOMA Master Curation / Research Document
 **Get Outside Mid-Atlantic · get-outside.info**  
-**Status:** v1.5 — locked 2026-08-25 (Phillies/Pirates, college add-ons, Anthem/CFG, ski resorts year-round)  
+**Status:** v1.6 — locked 2026-08-25 (outdoor breweries must-have MD/WV/PA/DE)  
 **Owner:** Grok (production) · Review: Dan
 
 This is the single source of truth for weekly research standards.  
@@ -11,129 +11,88 @@ Later steps do not re-research or invent new top picks.
 
 ## 1. Scope & Equal Treatment (HARD RULE)
 
-**Regions (equal treatment every week):**  
-Maryland · Virginia · Pennsylvania · Delaware · West Virginia
-
-**Domains (equal vigor, depth, volume, and timeliness):**  
-- **Sports** — pro, college, practice, racing, tournaments (~30-day window)  
-- **Field** — fishing, state parks, trails, outdoor activities with strong demand (first-class)  
-- **Entertainment** — festivals, outdoor concerts, fairs, related events (first-class)
-
-Sports, Field, and Entertainment are researched with the **same vigor**.  
-The Ops Center must contain enough real, current data in every domain to feel legitimate and complete.  
-Baseline volume in Field and Entertainment must be high enough for credibility.  
-Hidden gems are encouraged when genuinely good and current — but major popular events must never be missed.
-
-**Never invent events.** Official sources and real dates only.
+**Regions:** Maryland · Virginia · Pennsylvania · Delaware · West Virginia  
+**Domains (equal vigor):** Sports · Field · Entertainment  
+Never invent events. Official sources and real dates only.
 
 ---
 
 ## 3. Volume Targets (LOCKED)
 
-Every Research Lock must deliver:
-
-| Domain        | Minimum counts | Stretch target      |
-|---------------|----------------|---------------------|
-| Sports        | 100+           | Up to 200 if available |
-| Field         | 100+           | —                   |
-| Entertainment | 100+           | —                   |
+| Domain | Minimum | Stretch |
+|--------|---------|--------|
+| Sports | 100+ | up to 200 |
+| Field | 100+ | — |
+| Entertainment | 100+ | — |
 
 ---
 
 ## 3A. Must-Have Research Targets (LOCKED — verbose)
 
-Volume floors alone are not enough. Always-scan targets below. Missing an in-window must-have without a documented reason fails Review Gate. Never-miss floor, not a maximum.
+Always-scan floor. Missing an in-window must-have without a documented reason fails Review Gate.
 
 **Typing rules (HARD)**  
 - FBS + FCS → `college`  
-- **D2 + D3 → `d2`** so the Ops Center D2/D3 layer populates  
-- Never fold D2/D3 into generic `college`
+- **D2 + D3 → `d2`** so the Ops D2/D3 layer populates
 
-### Sports — always scan (~30-day window)
+### Sports
+**NFL:** Ravens · Commanders · Eagles · Steelers  
+**MLB:** Orioles · Nationals · **Phillies** · **Pirates**  
+**MiLB:** Baysox, IronBirds, Shorebirds, Tides, Squirrels, Fredericksburg Nats, IronPigs, Fightin Phils, Senators, Curve, RailRiders, SeaWolves, Blue Rocks, Dirty Birds  
+**FBS:** PSU · WVU · Maryland · UVA · VT · Pitt · Navy · JMU · **Old Dominion** · Delaware  
+**FCS:** Towson · Richmond · W&M · Villanova · Georgetown · Howard · **Norfolk State** · Morgan State · Hampton · Patriot League  
+**Other college outdoor:** **Virginia State** · **Johns Hopkins** · **McDaniel** · **Stevenson** · **Goucher** · **Mount St. Mary’s**  
+**D2/D3 (`d2`):** Frostburg · Bowie State · Salisbury · Stevenson · Goucher · Mt St Mary’s · Shepherd · Virginia State · Shenandoah · Shippensburg · IUP · Slippery Rock · West Chester · Fairmont · Concord · ODAC/MAC/Centennial  
+**Soccer:** Union · D.C. United
 
-#### NFL
-Ravens (M&T) · Commanders · Eagles (Linc) · Steelers (Acrisure)
+### Field
+**Parks:** Assateague · Sandy Point · Deep Creek · **Rocky Gap** · Shenandoah NP · Ohiopyle · **Seven Springs / Laurel Highlands** · Cape Henlopen · New River Gorge · Massanutten  
+**Ski resorts (year-round):** Seven Springs · Hidden Valley · Blue Knob · Ski Liberty · Wisp · Massanutten · Snowshoe · Timberline · Canaan Valley  
+**Fishing / signature:** Bay launches · White Marlin Open class · peak leaf/bloom
 
-#### MLB
-| Team | Venue |
-|------|--------|
-| Baltimore Orioles | Camden Yards |
-| Washington Nationals | Nationals Park |
-| Philadelphia Phillies | Citizens Bank Park |
-| Pittsburgh Pirates | PNC Park |
+### Entertainment
+**Amphitheaters:** Merriweather · Wolf Trap · Jiffy Lube Live · Stage AE · **Seven Springs Amphitheater** · **Wisp/Deep Creek concerts**  
+**Arenas:** **The Anthem (DC)** · **CFG Bank Arena (Baltimore)**  
+**Fairs:** five state fairs · MD Renaissance Festival · resort wing festivals
 
-#### MiLB (corridor affiliates — home games in window)
-MD: Baysox, IronBirds, Shorebirds, Hagerstown Flying Boxcars  
-VA: Tides, Squirrels, Fredericksburg Nationals, Salem RidgeYaks  
-PA: IronPigs, Fightin Phils, Senators, Curve, RailRiders, SeaWolves  
-DE: Blue Rocks  
-WV: Charleston Dirty Birds when active
+#### Outdoor breweries — always scan (patio / farm / garden)
+Must-do outdoor weekend targets when open and weather-friendly. Prefer true outdoor seating, farm/garden settings, or published event calendars.
 
-#### College football FBS (`college`)
-Penn State · West Virginia · Maryland · Virginia · Virginia Tech · Pittsburgh · Navy · James Madison · **Old Dominion** · Delaware · Liberty when relevant
+**Maryland**  
+- 1812 Brewery (Cumberland)  
+- Manor Hill Brewing (Ellicott City)  
+- Black Locust Farm Brewery (Freeland)  
+- Hopkins Farm Brewery (Havre de Grace)  
+- Brookeville Beer Farm (Brookeville)  
+- Locust Post Brewery (Little Orleans)  
+- Mountain State Brewing Co. (McHenry / Deep Creek)  
 
-#### College football FCS (`college`)
-Towson · Richmond · William & Mary · Villanova · Georgetown · Howard · **Norfolk State** · Morgan State · Delaware State · Hampton · Patriot League · Duquesne / Robert Morris
+**West Virginia**  
+- Mountain State Brewing Co. (Thomas)  
+- Weathered Ground Brewery (Ghent)  
+- Screech Owl Brewing (Bruceton Mills)  
+- Chestnut Ridge Brewing (Morgantown)  
 
-#### Other college outdoor programs (always scan)
-**Old Dominion** · **Norfolk State** · **Virginia State** · **Johns Hopkins** · **McDaniel** · **Stevenson** · **Goucher** · **Mount St. Mary’s** · other corridor D2/D3 with outdoor home schedules
+**Pennsylvania**  
+- Cobblehaus – At The Falls (Mercer)  
+- Rising River Brewing (Macungie)  
+- Wanderlust Beer Garden (Easton)  
+- Spoonwood Brewing Company (Pittsburgh)  
+- Independence Beer Garden (Philadelphia)  
+- Ship Bottom Brewery at Linvilla Orchards (Media)  
 
-#### D2 / D3 football (`d2` HARD)
-MD: Frostburg · Bowie State · Salisbury · McDaniel · Stevenson · Goucher · Mount St. Mary’s  
-VA: Shepherd · Virginia State · Shenandoah · Randolph-Macon · Hampden-Sydney · W&L · ODAC  
-PA: Shippensburg · IUP · California (PA) · Slippery Rock · ESU · West Chester · Bloomsburg · Millersville · Kutztown · Delaware Valley · Centennial/MAC  
-WV: Shepherd · Fairmont State · Concord · Mountain East
+**Delaware**  
+- Dogfish Head Craft Brewery (Milton)  
+- Crooked Hammock Brewery (Middletown & Lewes)  
+- Constitution Yards (Wilmington)  
+- Makers Alley (Wilmington)  
+- Dew Point Brewing Company (Yorklyn)  
 
-#### Soccer / golf / practice
-Union (Subaru) · D.C. United (Audi) · PGA/Korn Ferry in corridor · public open practices
-
-### Field — always scan
-
-#### State parks / anchors
-MD: Assateague · Sandy Point · Gunpowder/Patapsco · Deep Creek · **Rocky Gap State Park (casino/resort events)** · Catoctin · Point Lookout  
-VA: Shenandoah NP · First Landing · Lake Anna · Grayson Highlands · Eastern Shore · **Massanutten**  
-PA: Presque Isle · Ohiopyle/Laurel Highlands · **Seven Springs / Laurel Highlands amphitheater** · Ricketts Glen · Gettysburg NMP · Delaware Water Gap  
-DE: Cape Henlopen · Delaware Seashore · Trap Pond · Killens Pond  
-WV: New River Gorge · Blackwater Falls · Canaan Valley · Seneca Rocks · Coopers Rock · Snowshoe/Timberline calendars
-
-#### Ski resorts — year-round must-have
-Winter: snow reports + open status. Summer: concerts, wing festivals, mountain events when published.
-
-| Resort | State |
-|--------|-------|
-| Seven Springs | PA |
-| Hidden Valley | PA |
-| Blue Knob | PA |
-| Ski Liberty | PA |
-| Wisp | MD |
-| Massanutten | VA |
-| Snowshoe | WV |
-| Timberline | WV |
-| Canaan Valley | WV |
-
-#### Fishing / racing / signature
-Bay launches · inland peaks · White Marlin Open class · major regattas · peak leaf/bloom
-
-### Entertainment — always scan
-
-#### Outdoor / amphitheater
-Merriweather · Jiffy Lube Live · Wolf Trap · Stage AE · **Seven Springs Laurel Highlands Amphitheater** · **Wisp / Deep Creek concert series**
-
-#### Arena / major corridor concerts
-**The Anthem (DC)** · **CFG Bank Arena (Baltimore)** · high-demand weekend shows when public
-
-#### Festivals & fairs
-MD Renaissance Festival · five state fairs · waterfront/leaf festivals · resort wing festivals at Seven Springs, Wisp, Snowshoe, Massanutten · Rocky Gap resort calendar
+Virginia outdoor brewery anchors can be added when a locked regional list is ready.
 
 ### Failure condition (HARD)
-Silent gap on NFL homes · Orioles/Nationals/**Phillies/Pirates** · primary MiLB · FBS/FCS · **D2/D3 including Virginia State, JHU, McDaniel, Stevenson, Goucher, Mt St Mary’s when scheduled** · Merriweather/Wolf Trap/**Anthem/CFG**/state fairs/resort amphitheater shows · **winter ski conditions** or **summer resort calendars when published** = Review Gate failure. One-line exclusion notes OK.
+Silent gap on NFL · Orioles/Nationals/Phillies/Pirates · primary MiLB · FBS/FCS · D2/D3 (incl. listed colleges) · Merriweather/Wolf Trap/Anthem/CFG · state fairs · **locked outdoor breweries when open** · winter ski conditions / summer resort calendars = Review Gate failure. One-line exclusion notes OK.
 
 ---
 
-## 12. Locked Decisions
-
-Must-Have §3A is always-scan. D2 typed `d2`. Phillies/Pirates/Anthem/CFG/ski resorts year-round locked v1.5.
-
----
-
-*v1.5 locked 2026-08-25: Phillies/Pirates; ODU/Norfolk State/Virginia State/JHU/McDaniel/Stevenson/Goucher/Mt St Mary’s; Anthem + CFG; Rocky Gap; Seven Springs & Wisp amphitheaters; year-round ski resorts.*
+*v1.6 locked 2026-08-25: Outdoor breweries must-have MD/WV/PA/DE.*
