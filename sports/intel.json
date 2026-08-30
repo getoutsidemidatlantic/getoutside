@@ -1,16 +1,1 @@
-{
-  "updated": "2026-08-26T19:30:00-04:00",
-  "headline": "Rivalry Friday — Ravens–Commanders + Eagles home preseason",
-  "big_money": [
-    {"tag": "NFL", "title": "Commanders at Ravens", "note": "Fri Aug 28 · 6:00 PM ET · M&T Bank Stadium · Preseason Week 3 · NFL Network", "url": "https://www.baltimoreravens.com/", "ends": "2026-08-28"},
-    {"tag": "NFL", "title": "Bengals at Eagles", "note": "Fri Aug 28 · 8:00 PM ET · Lincoln Financial Field · Only home preseason · CBS", "url": "https://www.philadelphiaeagles.com/", "ends": "2026-08-28"},
-    {"tag": "Concert", "title": "Tedeschi Trucks Band", "note": "Fri Aug 28 · Wolf Trap Filene Center", "url": "https://www.wolftrap.org/", "ends": "2026-08-28"},
-    {"tag": "MLS", "title": "D.C. United vs LAFC", "note": "Sat Aug 29 · Audi Field", "url": "https://www.dcunited.com/", "ends": "2026-08-29"}
-  ],
-  "sleepers": [
-    {"tag": "Festival", "title": "Maryland Renaissance Festival opens", "note": "Sat–Sun · Crownsville · 50th season · Children’s Weekend", "url": "https://www.rennfest.com/", "ends": "2026-08-30"},
-    {"tag": "Field", "title": "Spartan Trifecta — New River Gorge", "note": "Sat–Sun Aug 29–30 · Gorge area", "url": "", "ends": "2026-08-30"},
-    {"tag": "Concert", "title": "Chris Stapleton", "note": "Fri–Sat · Freedom Mortgage Pavilion, Camden", "url": "", "ends": "2026-08-29"},
-    {"tag": "Field", "title": "Cape Henlopen / Delaware Seashore", "note": "Sunday cleaner air after Fri–Sat clouds", "url": "", "ends": "2026-08-30"}
-  ]
-}
+{"updated": "2026-08-30T02:00:00-04:00", "headline": "Labor Day week ahead — Ren Fest continues · NFL Week 1 Sept 13 · late-summer heat returns", "weather": {"summary": "Sun Aug 30: partly cloudy, mid-upper 80s, light shower chance late. Mon–Wed: hotter, low-mid 90s, humidity rising. Good outdoor window early week before midweek storm chances.", "regions": {"MD/DC/VA": "Sun 88–90 · Mon–Wed 90–95 · lower humidity early, then sticky", "PA": "Similar mid-80s Sun, climbing toward 90 midweek", "DE Shore": "Sun cleaner mid-80s, warmer midweek", "WV Highlands": "Cooler nights, days upper 80s–low 90s"}}, "big_money": [{"tag": "Festival", "title": "Maryland Renaissance Festival", "note": "Continues Sat–Sun Sep 5–7 (Labor Day weekend) · Crownsville · 50th season · 10 AM–7 PM", "url": "https://www.rennfest.com/", "ends": "2026-10-25"}, {"tag": "NFL", "title": "Week 1 approaching", "note": "Ravens at Colts · Commanders at Eagles · Falcons at Steelers · Sun Sep 13", "url": "https://www.nfl.com/schedules/", "ends": "2026-09-13"}, {"tag": "College", "title": "WVU season opener", "note": "Coastal Carolina at West Virginia · Sat Sep 5 · Milan Puskar Stadium", "url": "https://wvusports.com/", "ends": "2026-09-05"}], "sleepers": [{"tag": "Field", "title": "Cape Henlopen / Delaware Seashore", "note": "Sunday cleaner air · Labor Day beach window opens", "url": "", "ends": "2026-09-07"}, {"tag": "Field", "title": "New River Gorge / Spartan recovery", "note": "Post-Trifecta trails + overlooks still prime", "url": "", "ends": "2026-09-07"}, {"tag": "Concert", "title": "James Taylor Wolf Trap", "note": "Sun Aug 30 · Filene Center — last of the weekend outdoor shows", "url": "https://www.wolftrap.org/", "ends": "2026-08-30"}, {"tag": "Festival", "title": "Subscape closing", "note": "Sun Aug 30 last day · free DIY fest Baltimore", "url": "", "ends": "2026-08-30"}]}
