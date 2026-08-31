@@ -6,12 +6,16 @@
   const fieldColor = {
     Festivals: '#f59e0b', Concerts: '#a855f7', Camping: '#22c55e', Trails: '#16a34a',
     'Scenic Lookouts': '#0ea5e9', Lakes: '#06b6d4', History: '#a78bfa', Paddling: '#14b8a6',
-    Music: '#a855f7', Parks: '#14b8a6', Fairs: '#eab308', Food: '#f97316', Other: '#64748b'
+    Music: '#a855f7', Parks: '#14b8a6', Fairs: '#eab308', Food: '#f97316',
+    Breweries: '#b45309', 'Dock Bars': '#0369a1', Waterfalls: '#0284c7',
+    'MX / ORV': '#92400e', Fishing: '#0f766e', Other: '#64748b'
   };
   const fieldEmoji = {
     Festivals: '🎪', Concerts: '🎵', Camping: '⛺', Trails: '🥾',
-    'Scenic Lookouts': '🏔', Lakes: '💧', History: '🏛️', Paddling: '🛶',
-    Music: '🎵', Parks: '🌳', Fairs: '🎡', Food: '🁜', Other: '📍'
+    'Scenic Lookouts': '🏔️', Lakes: '💧', History: '🏛️', Paddling: '🛶',
+    Music: '🎵', Parks: '🏞️', Fairs: '🎡', Food: '🅱️',
+    Breweries: '🍺', 'Dock Bars': '🍹', Waterfalls: '💦',
+    'MX / ORV': '🏍️', Fishing: '🎣', Other: '📍'
   };
   const fieldLayerGroups = {};
   window.fieldLayerGroups = fieldLayerGroups;
