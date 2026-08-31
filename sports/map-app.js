@@ -1,4 +1,4 @@
-// Ops Center map-app.js — loads every field-sites*.json shard + intel ticker
+// Ops Center map-app.js — field shards + slow intel ticker
 (function () {
   const fieldColor = {Festivals:'#f59e0b',Concerts:'#a855f7',Camping:'#22c55e',Trails:'#16a34a','Scenic Lookouts':'#0ea5e9',Lakes:'#06b6d4',History:'#a78bfa',Paddling:'#14b8a6',Parks:'#14b8a6',Fairs:'#eab308',Food:'#f97316',Breweries:'#b45309','Dock Bars':'#0369a1',Waterfalls:'#0284c7','MX / ORV':'#92400e',Fishing:'#0f766e',Other:'#64748b'};
   const fieldEmoji = {Festivals:'🎪',Concerts:'🎵',Camping:'⛺',Trails:'🥾','Scenic Lookouts':'🏔️',Lakes:'💧',History:'🏛️',Paddling:'🛶',Parks:'🏞️',Fairs:'🎡',Food:'🍺',Breweries:'🍺','Dock Bars':'🍹',Waterfalls:'💦','MX / ORV':'🏍️',Fishing:'🎣',Other:'📍'};
@@ -11,14 +11,19 @@
   function grab(url){ return fetch(url,{cache:'no-store'}).then(function(r){ return r.ok?r.json():{sites:[]}; }).catch(function(){ return {sites:[]}; }); }
   function loadFieldSites(){ const urls=['./data/field-sites.json','./data/field-sites-extra.json','./data/field-sites-breweries.json','./data/field-sites-docks.json','./data/field-sites-camping.json','./data/field-sites-fairs.json','./data/field-sites-falls.json']; return Promise.all(urls.map(grab)).then(function(parts){ const m=window.map; if(!m){ setTimeout(loadFieldSites,400); return; } const seen={}, list=[]; parts.forEach(function(data){ ((data&&data.sites)||[]).forEach(function(s){ if(!s||!s.id||seen[s.id]) return; seen[s.id]=true; list.push(s); }); }); window.fieldSites=list; list.forEach(function(s){ const sub=s.sublayer||'Other'; const lg=ensureGroup(sub); const marker=L.marker(getLatLng(s),{icon:makeFieldIcon(sub)}); marker.bindPopup(popupHtml(s)); marker.on('click',function(){ if(typeof window.openPanel==='function') window.openPanel(s.id); }); lg.addLayer(marker); }); Object.values(fieldLayerGroups).forEach(function(lg){ if(!m.hasLayer(lg)) lg.addTo(m); }); injectLayerUI(list); }); }
   function loadIntelTicker(){
-    function line(x){ return x?[x.tag,x.title,x.note].filter(Boolean).join(' · '):''; }
+    function line(x){ return x?[x.tag,x.title].filter(Boolean).join(' · ')+(x.note?' — '+x.note:''):''; }
     Promise.all([grab('./intel.json'), grab('./data/intel.json')]).then(function(parts){
-      var data=parts[0]||parts[1]; if(!data||!data.headline&&!(data.big_money||[]).length) return;
+      var data=parts[0]||parts[1]; if(!data) return;
       var bits=[]; if(data.headline) bits.push(data.headline);
       (data.big_money||[]).forEach(function(x){ var l=line(x); if(l) bits.push(l); });
       (data.sleepers||[]).forEach(function(x){ var l=line(x); if(l) bits.push(l); });
       var tick=document.getElementById('tickerContent');
-      if(tick&&bits.length){ var t=bits.join('   ✦   '); tick.textContent=t+'   ✦   '+t+'   ✦   '; }
+      if(!tick||!bits.length) return;
+      var loop=bits.join('     ✦     ')+'     ✦     ';
+      tick.textContent=loop+loop;
+      var secs=Math.max(90, Math.min(220, Math.round(loop.length/5.5)));
+      tick.style.animationDuration=secs+'s';
+      tick.style.animationTimingFunction='linear';
     });
   }
   function boot(){ if(window.map){ loadFieldSites(); loadIntelTicker(); } else setTimeout(boot,200); }
