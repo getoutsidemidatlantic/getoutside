@@ -1,27 +1,18 @@
 {
-  "updated": "2026-08-31T11:40:00-04:00",
-  "headline": "Labor Day lock — Guide walk",
+  "updated": "2026-08-31T12:25:00-04:00",
+  "headline": "Labor Day — OC + Virginia Beach packed · then football Saturday",
   "big_money": [
+    {"tag": "Coast", "title": "Ocean City Labor Day crush", "note": "Fri Sep 4–Mon Sep 7. Biggest weekend of the OC year. Boardwalk Inlet–27th still live. Seacrets packed.", "url": "https://www.oceancitymd.gov/", "ends": "2026-09-07"},
+    {"tag": "Coast", "title": "Virginia Beach Oceanfront Labor Day", "note": "Super Girl Surf Fest Sat–Mon 2nd–12th. FREE concerts 17th/24th/31st parks 7:30 (Greensky, Aquabats, Carbon Leaf). Fireworks off 24th.", "url": "https://www.visitvirginiabeach.com/trip-ideas/labor-day-weekend-in-virginia-beach/", "ends": "2026-09-07"},
+    {"tag": "Coast", "title": "Rehoboth + Dewey last-summer weekend", "note": "Piping Out parade Labor Day Mon 6pm. Dewey Route 1 bottleneck.", "url": "https://www.visitrehoboth.com/", "ends": "2026-09-07"},
     {"tag": "College", "title": "Marshall at Penn State", "note": "Sat Sep 5 · 3:30pm FS1 · Beaver Stadium.", "url": "https://gopsusports.com/sports/football/schedule", "ends": "2026-09-05"},
-    {"tag": "MLB", "title": "Red Sox at Orioles", "note": "Thu–Sun Sep 3–6 · Camden Yards. Wild-card math.", "url": "https://www.mlb.com/orioles/schedule", "ends": "2026-09-06"},
-    {"tag": "MLB", "title": "Braves at Phillies", "note": "Fri–Mon Sep 4–7 · Citizens Bank Park. Labor Day 1:05.", "url": "https://www.mlb.com/phillies/schedule", "ends": "2026-09-07"},
-    {"tag": "Fest", "title": "Ren Fest Labor Day Monday", "note": "Sep 5–7 · Revel Grove 10a–7p. Only Monday of the 50th season.", "url": "https://rennfest.com/", "ends": "2026-09-07"},
-    {"tag": "Fair", "title": "Maryland State Fair · Weekend 2", "note": "Sep 3–7 · Timonium.", "url": "https://www.marylandstatefair.com/", "ends": "2026-09-07"},
-    {"tag": "College", "title": "Hampton at Maryland", "note": "Sat Sep 5 · 8pm BTN · SECU Stadium.", "url": "https://umterps.com/sports/football/schedule", "ends": "2026-09-05"},
-    {"tag": "College", "title": "Towson at Navy", "note": "Sat Sep 5 · Navy-Marine Corps Memorial Stadium.", "url": "https://navysports.com/sports/football/schedule", "ends": "2026-09-05"},
-    {"tag": "College", "title": "Coastal Carolina at WVU", "note": "Sat Sep 5 · Milan Puskar Stadium.", "url": "https://wvusports.com/sports/football/schedule", "ends": "2026-09-05"},
-    {"tag": "College", "title": "VMI at Virginia Tech", "note": "Sat Sep 5 · 7:30pm ACCN · Lane Stadium.", "url": "https://hokiesports.com/sports/football/schedule", "ends": "2026-09-05"},
-    {"tag": "Concert", "title": "Wolf Trap Labor Day lawn", "note": "Fri NSO Garcia / Sat NSO Hook / Sun Shreya Ghoshal (sold out).", "url": "https://www.wolftrap.org/calendar/", "ends": "2026-09-06"},
-    {"tag": "NFL", "title": "Commanders at Eagles", "note": "Sun Sep 13 · 4:25pm Fox · Lincoln Financial Field.", "url": "https://www.philadelphiaeagles.com/schedule/", "ends": "2026-09-13"},
-    {"tag": "NFL", "title": "Falcons at Steelers", "note": "Sun Sep 13 · 1pm Fox · Acrisure Stadium.", "url": "https://www.steelers.com/schedule/", "ends": "2026-09-13"},
-    {"tag": "Fest", "title": "Oceans Calling · Ocean City", "note": "Sep 25–27 · DMB, Twenty One Pilots, Mumford & Sons.", "url": "https://www.oceanscallingfestival.com/", "ends": "2026-09-27"},
-    {"tag": "Fest", "title": "All Things Go · Merriweather", "note": "Sep 25–27 · Mitski, Hayley Williams, Brandi Carlile.", "url": "https://www.allthingsgofestival.com/", "ends": "2026-09-27"}
+    {"tag": "College", "title": "Hampton at Maryland", "note": "Sat Sep 5 · 8pm BTN · SECU.", "url": "https://umterps.com/sports/football/schedule", "ends": "2026-09-05"},
+    {"tag": "College", "title": "Towson at Navy", "note": "Sat Sep 5 · Navy-Marine Corps.", "url": "https://navysports.com/sports/football/schedule", "ends": "2026-09-05"},
+    {"tag": "MLB", "title": "Red Sox at Orioles", "note": "Thu–Sun Sep 3–6 · Camden.", "url": "https://www.mlb.com/orioles/schedule", "ends": "2026-09-06"},
+    {"tag": "Fest", "title": "Ren Fest Labor Day Monday", "note": "Sep 5–7 · Revel Grove 10a–7p.", "url": "https://rennfest.com/", "ends": "2026-09-07"}
   ],
   "sleepers": [
-    {"tag": "College", "title": "Liberty at James Madison", "note": "Sat Sep 5 · Bridgeforth Stadium.", "url": "https://jmusports.com/sports/football", "ends": "2026-09-05"},
-    {"tag": "Field", "title": "Assateague last-summer camp", "note": "Labor Day Monday last easy beach weekend.", "url": "https://www.nps.gov/asis/", "ends": "2026-09-07"},
-    {"tag": "Fair", "title": "Great Frederick Fair", "note": "Sep 18–26 · Daughtry opens Friday 18.", "url": "https://thegreatfrederickfair.com/", "ends": "2026-09-26"},
-    {"tag": "NFL", "title": "Saints at Ravens", "note": "Sun Sep 20 · 1pm · M&T first home regular season.", "url": "https://www.baltimoreravens.com/schedule/", "ends": "2026-09-20"},
-    {"tag": "Fest", "title": "Country Calling · Ocean City", "note": "Oct 2–3 · Stapleton, Miranda, Lainey Wilson.", "url": "https://www.countrycallingfestival.com/", "ends": "2026-10-03"}
+    {"tag": "Fest", "title": "Super Girl Surf Festival", "note": "VB oceanfront Sep 5–7. 10k+/day.", "url": "https://virginiabeach.gov/", "ends": "2026-09-07"},
+    {"tag": "Field", "title": "Assateague / Chincoteague", "note": "Wild horses. Books out Labor Day.", "url": "https://www.nps.gov/asis/", "ends": "2026-09-07"}
   ]
 }
