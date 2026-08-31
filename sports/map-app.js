@@ -1,7 +1,4 @@
-// Ops Center map-app.js — Field + Entertainment layers
-// Sports stay in ops-core.js. Field + Entertainment load from data/field-sites.json
-// ALL layers on by default. Icons (not plain dots) for every sublayer.
-
+// Ops Center map-app.js — Field + Entertainment. Loads field-sites.json AND field-sites-extra.json.
 (function () {
   const fieldColor = {
     Festivals: '#f59e0b', Concerts: '#a855f7', Camping: '#22c55e', Trails: '#16a34a',
@@ -58,8 +55,7 @@
   function injectLayerUI(sites) {
     const box = document.getElementById('layers');
     if (!box || document.getElementById('opsFieldGroups')) return;
-    const fieldSubs = {};
-    const entSubs = {};
+    const fieldSubs = {}, entSubs = {};
     (sites || []).forEach(function (s) {
       const g = s.group || 'Field';
       const sub = s.sublayer || 'Other';
@@ -83,9 +79,7 @@
     }
     const wrap = document.createElement('div');
     wrap.id = 'opsFieldGroups';
-    wrap.innerHTML = '<div class="layers-divider" style="height:1px;background:#1e3a55;margin:6px 0"></div>' +
-      groupHtml('opsGroupField', 'Field', fieldSubs, true) +
-      groupHtml('opsGroupEnt', 'Entertainment', entSubs, true);
+    wrap.innerHTML = groupHtml('opsGroupField', 'Field', fieldSubs, true) + groupHtml('opsGroupEnt', 'Entertainment', entSubs, true);
     box.appendChild(wrap);
     wrap.querySelectorAll('.ops-group-toggle').forEach(function (btn) {
       btn.addEventListener('click', function () {
@@ -94,7 +88,6 @@
         if (!body) return;
         const open = body.style.display !== 'none';
         body.style.display = open ? 'none' : 'block';
-        btn.setAttribute('aria-expanded', open ? 'false' : 'true');
         const chev = btn.querySelector('.ops-group-chevron');
         if (chev) chev.textContent = open ? '▸' : '▾';
       });
@@ -113,24 +106,29 @@
     try {
       var q = new URLSearchParams(location.search || '');
       var id = q.get('intel') || q.get('venue') || '';
-      if (!id && location.hash) {
-        var h = String(location.hash).replace(/^#/, '');
-        if (h.indexOf('intel=') === 0) id = decodeURIComponent(h.slice(6));
-        else if (h.indexOf('venue=') === 0) id = decodeURIComponent(h.slice(6));
-        else if (h) id = decodeURIComponent(h);
-      }
       if (id && typeof window.openPanel === 'function') window.openPanel(id);
-    } catch (e) { console.warn('intel url', e); }
+    } catch (e) {}
   }
-  window.openIntelFromUrl = openIntelFromUrl;
+  function grab(url) {
+    return fetch(url, { cache: 'no-store' }).then(function (r) {
+      if (!r.ok) return { sites: [] };
+      return r.json();
+    }).catch(function () { return { sites: [] }; });
+  }
   function loadFieldSites() {
-    return fetch('./data/field-sites.json')
-      .then(function (r) { if (!r.ok) throw new Error('field-sites ' + r.status); return r.json(); })
-      .then(function (data) {
+    return Promise.all([grab('./data/field-sites.json'), grab('./data/field-sites-extra.json')])
+      .then(function (parts) {
         const m = window.map;
         if (!m) { setTimeout(loadFieldSites, 400); return; }
-        const sites = data.sites || data || [];
-        const list = Array.isArray(sites) ? sites : [];
+        const seen = {};
+        const list = [];
+        parts.forEach(function (data) {
+          ((data && data.sites) || []).forEach(function (s) {
+            if (!s || !s.id || seen[s.id]) return;
+            seen[s.id] = true;
+            list.push(s);
+          });
+        });
         window.fieldSites = list;
         list.forEach(function (s) {
           const sub = s.sublayer || 'Other';
