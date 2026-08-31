@@ -1,1 +1,27 @@
-{"updated": "2026-08-30T02:00:00-04:00", "headline": "Labor Day week ahead — Ren Fest continues · NFL Week 1 Sept 13 · late-summer heat returns", "weather": {"summary": "Sun Aug 30: partly cloudy, mid-upper 80s, light shower chance late. Mon–Wed: hotter, low-mid 90s, humidity rising. Good outdoor window early week before midweek storm chances.", "regions": {"MD/DC/VA": "Sun 88–90 · Mon–Wed 90–95 · lower humidity early, then sticky", "PA": "Similar mid-80s Sun, climbing toward 90 midweek", "DE Shore": "Sun cleaner mid-80s, warmer midweek", "WV Highlands": "Cooler nights, days upper 80s–low 90s"}}, "big_money": [{"tag": "Festival", "title": "Maryland Renaissance Festival", "note": "Continues Sat–Sun Sep 5–7 (Labor Day weekend) · Crownsville · 50th season · 10 AM–7 PM", "url": "https://www.rennfest.com/", "ends": "2026-10-25"}, {"tag": "NFL", "title": "Week 1 approaching", "note": "Ravens at Colts · Commanders at Eagles · Falcons at Steelers · Sun Sep 13", "url": "https://www.nfl.com/schedules/", "ends": "2026-09-13"}, {"tag": "College", "title": "WVU season opener", "note": "Coastal Carolina at West Virginia · Sat Sep 5 · Milan Puskar Stadium", "url": "https://wvusports.com/", "ends": "2026-09-05"}], "sleepers": [{"tag": "Field", "title": "Cape Henlopen / Delaware Seashore", "note": "Sunday cleaner air · Labor Day beach window opens", "url": "", "ends": "2026-09-07"}, {"tag": "Field", "title": "New River Gorge / Spartan recovery", "note": "Post-Trifecta trails + overlooks still prime", "url": "", "ends": "2026-09-07"}, {"tag": "Concert", "title": "James Taylor Wolf Trap", "note": "Sun Aug 30 · Filene Center — last of the weekend outdoor shows", "url": "https://www.wolftrap.org/", "ends": "2026-08-30"}, {"tag": "Festival", "title": "Subscape closing", "note": "Sun Aug 30 last day · free DIY fest Baltimore", "url": "", "ends": "2026-08-30"}]}
+{
+  "updated": "2026-08-31T11:40:00-04:00",
+  "headline": "Labor Day lock — Guide walk",
+  "big_money": [
+    {"tag": "College", "title": "Marshall at Penn State", "note": "Sat Sep 5 · 3:30pm FS1 · Beaver Stadium.", "url": "https://gopsusports.com/sports/football/schedule", "ends": "2026-09-05"},
+    {"tag": "MLB", "title": "Red Sox at Orioles", "note": "Thu–Sun Sep 3–6 · Camden Yards. Wild-card math.", "url": "https://www.mlb.com/orioles/schedule", "ends": "2026-09-06"},
+    {"tag": "MLB", "title": "Braves at Phillies", "note": "Fri–Mon Sep 4–7 · Citizens Bank Park. Labor Day 1:05.", "url": "https://www.mlb.com/phillies/schedule", "ends": "2026-09-07"},
+    {"tag": "Fest", "title": "Ren Fest Labor Day Monday", "note": "Sep 5–7 · Revel Grove 10a–7p. Only Monday of the 50th season.", "url": "https://rennfest.com/", "ends": "2026-09-07"},
+    {"tag": "Fair", "title": "Maryland State Fair · Weekend 2", "note": "Sep 3–7 · Timonium.", "url": "https://www.marylandstatefair.com/", "ends": "2026-09-07"},
+    {"tag": "College", "title": "Hampton at Maryland", "note": "Sat Sep 5 · 8pm BTN · SECU Stadium.", "url": "https://umterps.com/sports/football/schedule", "ends": "2026-09-05"},
+    {"tag": "College", "title": "Towson at Navy", "note": "Sat Sep 5 · Navy-Marine Corps Memorial Stadium.", "url": "https://navysports.com/sports/football/schedule", "ends": "2026-09-05"},
+    {"tag": "College", "title": "Coastal Carolina at WVU", "note": "Sat Sep 5 · Milan Puskar Stadium.", "url": "https://wvusports.com/sports/football/schedule", "ends": "2026-09-05"},
+    {"tag": "College", "title": "VMI at Virginia Tech", "note": "Sat Sep 5 · 7:30pm ACCN · Lane Stadium.", "url": "https://hokiesports.com/sports/football/schedule", "ends": "2026-09-05"},
+    {"tag": "Concert", "title": "Wolf Trap Labor Day lawn", "note": "Fri NSO Garcia / Sat NSO Hook / Sun Shreya Ghoshal (sold out).", "url": "https://www.wolftrap.org/calendar/", "ends": "2026-09-06"},
+    {"tag": "NFL", "title": "Commanders at Eagles", "note": "Sun Sep 13 · 4:25pm Fox · Lincoln Financial Field.", "url": "https://www.philadelphiaeagles.com/schedule/", "ends": "2026-09-13"},
+    {"tag": "NFL", "title": "Falcons at Steelers", "note": "Sun Sep 13 · 1pm Fox · Acrisure Stadium.", "url": "https://www.steelers.com/schedule/", "ends": "2026-09-13"},
+    {"tag": "Fest", "title": "Oceans Calling · Ocean City", "note": "Sep 25–27 · DMB, Twenty One Pilots, Mumford & Sons.", "url": "https://www.oceanscallingfestival.com/", "ends": "2026-09-27"},
+    {"tag": "Fest", "title": "All Things Go · Merriweather", "note": "Sep 25–27 · Mitski, Hayley Williams, Brandi Carlile.", "url": "https://www.allthingsgofestival.com/", "ends": "2026-09-27"}
+  ],
+  "sleepers": [
+    {"tag": "College", "title": "Liberty at James Madison", "note": "Sat Sep 5 · Bridgeforth Stadium.", "url": "https://jmusports.com/sports/football", "ends": "2026-09-05"},
+    {"tag": "Field", "title": "Assateague last-summer camp", "note": "Labor Day Monday last easy beach weekend.", "url": "https://www.nps.gov/asis/", "ends": "2026-09-07"},
+    {"tag": "Fair", "title": "Great Frederick Fair", "note": "Sep 18–26 · Daughtry opens Friday 18.", "url": "https://thegreatfrederickfair.com/", "ends": "2026-09-26"},
+    {"tag": "NFL", "title": "Saints at Ravens", "note": "Sun Sep 20 · 1pm · M&T first home regular season.", "url": "https://www.baltimoreravens.com/schedule/", "ends": "2026-09-20"},
+    {"tag": "Fest", "title": "Country Calling · Ocean City", "note": "Oct 2–3 · Stapleton, Miranda, Lainey Wilson.", "url": "https://www.countrycallingfestival.com/", "ends": "2026-10-03"}
+  ]
+}
