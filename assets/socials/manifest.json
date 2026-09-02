@@ -1,0 +1,25 @@
+{
+  "week": "2026-09-04",
+  "lock": "docs/RESEARCH-LOCK-2026-09-04.md",
+  "status": "missing",
+  "note": "2026-09-02 Build Package wrote site + featured IDs only. Seven Labor Day PNGs were not written. Path A blocked until status=ready.",
+  "type": {
+    "width": 1080,
+    "height": 1350,
+    "headline_px": [76, 80],
+    "title_px": [44, 48],
+    "events_per_slide": 2
+  },
+  "files": [
+    "01-cover.png",
+    "02-maryland.png",
+    "03-virginia.png",
+    "04-pennsylvania.png",
+    "05-delaware.png",
+    "06-westvirginia.png",
+    "07-cta.png"
+  ],
+  "copy": ["CAPTION.txt", "ALT.txt", "POST-ORDER.txt"],
+  "drive_folder_id": null,
+  "reuse_prior_week": false
+}

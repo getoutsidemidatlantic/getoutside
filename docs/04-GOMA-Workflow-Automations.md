@@ -1,7 +1,8 @@
 # GOMA Workflow & Automations
 **Weekly Cycle · Triggers · Human Gates**  
-**Status:** v1.3 — locked 2026-08-26 (featured Drive auto-manifest)  
-**Owner:** Grok · Review: Dan
+**Status:** v1.5 — social-pack HARD gate 2026-09-02  
+**Owner:** Grok · Review: Dan  
+**Canonical pipeline:** `docs/06-PIPELINE-GOLD.md` §2A.
 
 One research lock feeds the entire week.  
 Everything else is automation-first with minimal intentional human gates.
@@ -13,77 +14,54 @@ Everything else is automation-first with minimal intentional human gates.
 | Day / Time | Action | Owner / Method |
 |------------|--------|----------------|
 | **Tue 7:00 PM** | Research Lock | Grok automation |
-| **Wed 10:00 AM** | Build Package | Grok automation |
-| **Wed PM** | Review Gate | Dan (quality check only, ~5–10 min) |
-| **Wed night / Thu** | Deploy Now | Dan (Netlify production, manual) |
-| **Thu–Fri** | Social Path A | Dan (after live site + READY flag) |
-| **Sun 3:00 AM** | Ops Refresh (**FULL**) | Grok automation |
-
-Calendar reminders: getoutsidemidatlantic@gmail.com
+| **Wed 10:00 AM** | Build Package | Grok automation — **site + social pack, or the build is not done** |
+| **Wed PM** | Review Gate | Dan |
+| **Wed night / Thu** | Deploy Now | One Netlify publish (`stop_builds` stays) |
+| **After live + manifest ready** | Social Path A | Meta Business Suite |
+| **Sun 3:00 AM** | Ops Refresh (FULL) | Grok automation |
 
 ---
 
 ## 2. Automation Definitions
 
 ### Research Lock (Tue 7 PM)
-- Produces the single canonical weekly research package
-- Covers Sports + Field + Entertainment with equal vigor
-- Must meet volume floors: ≥100 per domain (Sports stretch to 200 when possible)
-- Includes mandatory reasoned Featured Shot + Hidden Gem per region
-- Includes “why people love it” statements + thumbnails for hits
-- Outputs feed homepage cards, region pages, hub, social packages, and Ops Center data
-- Later steps do **not** re-research or invent new top picks
+- Single canonical weekly package
+- Sports + Field + Entertainment equal vigor
+- Later steps do **not** re-research
 
 ### Build Package (Wed 10 AM)
-- Converts the lock into site surfaces + social assets
+- Converts the lock into site surfaces **and** social assets in the same run
 - Pushes to git `main`
-- Stores packages in Drive
-- Generates carousel package (01–07 + CAPTION.txt + STATUS) under the correct socials/ structure
-- **Hard rule:** After any push of `ops-core.js`, `map-app.js`, or data JSON, verify raw/API size > 0. Empty critical files break the Ops Center.
-- **Featured card art (LOCKED):**
-  1. Generate Seneca-style Sam JPGs named `{region}-{scene}-sam.jpg`.
-  2. Upload to Drive folder `GetOutside - Featured Card Assets` (`1xo-kQ2evfEw29Pj1N0dSmpoEuAzejs1H`). Files must be Anyone with the link.
-  3. Search Drive for those filenames. Upsert IDs into `assets/featured/drive-library.json`.
-  4. Rewrite `assets/featured/drive-manifest.json` for the lock week (names + dest only). Do not hand-edit IDs on the manifest.
-  5. Commit those two JSON files. GitHub Action `pull-featured-from-drive.yml` resolves name → ID from the library, downloads JPGs onto `assets/featured/*.jpg`, and pushes the binaries.
-  6. Hub cards: `.jpg` → `.svg` → scene-banner.
+- Writes Drive `socials/YYYY-MM-DD/` (7 PNG + CAPTION + ALT + POST-ORDER)
+- Writes `assets/socials/manifest.json` with `week` = lock date and `status` = `ready`
+- **HARD:** leaving `status=missing` means the build missed Path A. Do not set READY.
+- **HARD:** do not point `week` at last week's folder. Reuse of prior slides is a fail.
+- Empty-file rule still applies to ops-core / map-app / soc / field-sites / intel
 
-### Ops Refresh (Sun 3 AM) — FULL
-- Updates Ops Center data, intel ticker, field-sites window, and weather
-- **Full refresh** (not light)
-- Field and Entertainment receive same depth and volume as Sports (≥100 floor)
-- Does **not** rewrite weekend lifestyle pages
-- Does **not** rewrite featured card art or the Drive manifest
+### Ops Refresh (Sun 3 AM)
+- Data, ticker, field window, weather only
+- Does **not** rewrite lifestyle pages or the social pack
 
 ---
 
-## 3. Human Gates (Intentional & Minimal)
+## 3. Human Gates
 
-1. **Review Gate (Wednesday)** — quality check only  
-2. **Deploy Now** — Dan triggers and verifies Netlify production  
-3. **Social posting** — only after deploy + READY flag is set
-
-Everything else is automation-first.
+1. Review Gate — quality only  
+2. Deploy Now — production publish  
+3. Social — only if live smoke passed **and** `assets/socials/manifest.json` status is `ready` for this lock week
 
 ---
 
-## 4. Deploy Now Procedure
+## 4. Deploy Now
 
-1. Confirm Review Gate is complete and `main` contains the correct week’s files
-2. Confirm featured JPG pull Action is green (or hub fallback art is acceptable)
-3. Dan triggers a production deploy on Netlify (manual, to control credit use)
-4. Wait for the deploy to finish and the live site to update
-5. Smoke check: homepage cards, weekends-hub + region pages, Ops Center (layers, Hype, Sports pin → panel with hero, **Field pin → panel with hero**, non-zero ops-core.js / map-app.js)
-6. Only after the live site is confirmed correct is the **READY flag** set for social posting
+Validate job green is enough to publish the **site**.  
+`social-pack` job may be red; that blocks Path A, not the website.
 
 ---
 
-## 5. Social Path A Rules
+## 5. Social Path A
 
-- Built during Build Package from the same research lock + character art
-- Delivered to Drive `socials/` folders
-- Captions and visuals remain consistent with the live site
-- One permanent folder per real post
-- Create `READY-<foldername>.txt` **only once**, on the single final folder, after iteration is finished
-- After a post is confirmed live → immediately move that folder + its READY flag into the platform’s `_archive` subfolder
-- Platform roots stay pending/in-progress only
+- Same lock as the live cards
+- 1080×1350 PNG, headline 76–80px, title 44–48px, two events, Imagine heroes
+- Order: 01-cover … 07-cta
+- Schedule Fri 11:00 AM ET in Meta Business Suite until Graph tokens exist
