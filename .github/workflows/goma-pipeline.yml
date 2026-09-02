@@ -49,6 +49,7 @@ jobs:
               'sports/intel.json',
               'assets/featured/drive-library.json',
               'assets/featured/drive-manifest.json',
+              'assets/socials/manifest.json',
           ]
           for p in required:
               path = Path(p)
@@ -73,6 +74,7 @@ jobs:
               'sports/intel.json',
               'assets/featured/drive-library.json',
               'assets/featured/drive-manifest.json',
+              'assets/socials/manifest.json',
           ]
           parsed = {}
           for p in jsons:
@@ -99,7 +101,50 @@ jobs:
           hub = Path('weekends-hub.html').read_text(errors='replace')
           if '/sports/?intel=' not in hub:
               fail('weekends-hub.html missing Ops intel deep links')
+
+          sm = parsed['assets/socials/manifest.json']
+          need = ['01-cover.png','02-maryland.png','03-virginia.png','04-pennsylvania.png','05-delaware.png','06-westvirginia.png','07-cta.png']
+          if sm.get('files') != need:
+              fail('assets/socials/manifest.json files must be the 7 named PNGs in order')
+          if not sm.get('week') or not sm.get('lock'):
+              fail('socials manifest missing week or lock')
           print('VALIDATE OK')
+          PY
+
+  social-pack:
+    name: Social pack must match this lock week
+    needs: validate
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Gate Path A
+        run: |
+          set -euo pipefail
+          python3 - << 'PY'
+          import json, re, sys
+          from pathlib import Path
+
+          def fail(msg):
+              print('::error::' + msg)
+              sys.exit(1)
+
+          sm = json.loads(Path('assets/socials/manifest.json').read_text())
+          locks = sorted(Path('docs').glob('RESEARCH-LOCK-*.md'))
+          if not locks:
+              fail('no docs/RESEARCH-LOCK-YYYY-MM-DD.md')
+          latest = locks[-1].name
+          m = re.search(r'RESEARCH-LOCK-(\d{4}-\d{2}-\d{2})', latest)
+          lock_week = m.group(1) if m else ''
+          print('lock', lock_week, 'manifest week', sm.get('week'), 'status', sm.get('status'))
+          if sm.get('week') != lock_week:
+              fail(f"social week {sm.get('week')} != lock {lock_week}. Do not reuse last week's pack.")
+          if sm.get('reuse_prior_week') is True:
+              fail('reuse_prior_week=true is a fail')
+          if sm.get('status') != 'ready':
+              fail('Build Package incomplete: social pack status is not ready. Write 7 PNGs + CAPTION for this lock, set status=ready, then Path A.')
+          if not sm.get('drive_folder_id'):
+              fail('social pack ready but drive_folder_id empty')
+          print('SOCIAL PACK OK')
           PY
 
   featured-art:
@@ -168,8 +213,8 @@ jobs:
         run: |
           set -euo pipefail
           if [ -z "${HOOK}" ]; then
-            echo "::error::Set repo secret NETLIFY_BUILD_HOOK (Netlify → Site config → Build & deploy → Build hooks)."
+            echo "::error::Set repo secret NETLIFY_BUILD_HOOK."
             exit 1
           fi
           curl -fsS -X POST "$HOOK"
-          echo "Deploy Now sent. Watch Netlify Deploys for Published."
+          echo "Deploy Now sent."
