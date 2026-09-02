@@ -1,8 +1,8 @@
 {
-  "week": "2026-08-28",
-  "generated_at": "2026-08-26T23:30:00Z",
+  "week": "2026-09-04",
+  "generated_at": "2026-09-02T20:40:00Z",
   "auto": true,
-  "note": "Active week only. IDs resolved from drive-library.json during Action. Anyone-with-link required on Drive files.",
+  "note": "Labor Day lock. Same Drive featured IDs until new Sam JPGs land.",
   "files": [
     {"name": "maryland-renfest-sam.jpg", "dest": "assets/featured/maryland-renfest-sam.jpg"},
     {"name": "virginia-wolftrap-sam.jpg", "dest": "assets/featured/virginia-wolftrap-sam.jpg"},
