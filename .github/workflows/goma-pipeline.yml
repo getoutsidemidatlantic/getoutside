@@ -2,6 +2,11 @@ name: GOMA Pipeline
 
 on:
   workflow_dispatch:
+    inputs:
+      publish:
+        description: "Deploy Now — POST NETLIFY_BUILD_HOOK (once/week)"
+        type: boolean
+        default: false
   push:
     branches: [main]
     paths-ignore:
@@ -104,11 +109,10 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Download week JPGs (soft-fail if Drive is private)
-        id: pull
         run: |
           set -euo pipefail
           python3 - << 'PY'
-          import json, subprocess, sys
+          import json, subprocess
           from pathlib import Path
           man = json.loads(Path('assets/featured/drive-manifest.json').read_text())
           lib = json.loads(Path('assets/featured/drive-library.json').read_text()).get('images', {})
@@ -127,7 +131,6 @@ jobs:
               ]
               got = False
               for url in urls:
-                  print('GET', name, url)
                   r = subprocess.run(['curl', '-L', '-sS', '-o', str(dest), url])
                   if r.returncode != 0 or not dest.exists():
                       continue
@@ -139,7 +142,6 @@ jobs:
               if not got:
                   print('::warning::Drive file not public JPEG:', name, drive_id)
                   dest.unlink(missing_ok=True)
-          Path('/tmp/art_ok').write_text(str(ok))
           print(f'pulled {ok}/{len(man["files"])} JPEGs')
           PY
       - name: Commit JPEGs if any landed
@@ -148,8 +150,26 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add assets/featured/*.jpg || true
           if git diff --cached --quiet; then
-            echo "No JPG changes (Drive likely still private — hub will use SVG/scene fallback)"
+            echo "No JPG changes"
           else
             git commit -m "featured JPGs pulled from Drive [skip ci]"
             git push
           fi
+
+  publish:
+    name: Deploy Now (Netlify hook)
+    needs: validate
+    if: github.event_name == 'workflow_dispatch' && inputs.publish == true
+    runs-on: ubuntu-latest
+    steps:
+      - name: POST build hook
+        env:
+          HOOK: ${{ secrets.NETLIFY_BUILD_HOOK }}
+        run: |
+          set -euo pipefail
+          if [ -z "${HOOK}" ]; then
+            echo "::error::Set repo secret NETLIFY_BUILD_HOOK (Netlify → Site config → Build & deploy → Build hooks)."
+            exit 1
+          fi
+          curl -fsS -X POST "$HOOK"
+          echo "Deploy Now sent. Watch Netlify Deploys for Published."
