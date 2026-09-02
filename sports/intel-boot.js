@@ -2,7 +2,8 @@
   var ALIAS={
     navy:'navystad',
     navystadium:'navystad',
-    'wolftrap-ttb':'wolftrap',
+    wolftrap:'wolftrap-ttb',
+    'wolftrap-ttb':'wolftrap-ttb',
     mtbank:'mtbank',
     linc:'linc',
     lincoln:'linc'
