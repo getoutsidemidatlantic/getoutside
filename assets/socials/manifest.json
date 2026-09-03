@@ -2,7 +2,7 @@
   "week": "2026-09-04",
   "lock": "docs/RESEARCH-LOCK-2026-09-04.md",
   "status": "ready",
-  "note": "Seven 1080x1350 PNGs locked in project artifacts/socials-2026-09-04/. Imagine heroes reused; Labor Day copy.",
+  "note": "Seven PNGs + copy on Drive socials/2026-09-04.",
   "type": {
     "width": 1080,
     "height": 1350,
@@ -20,7 +20,7 @@
     "07-cta.png"
   ],
   "copy": ["CAPTION.txt", "ALT.txt", "POST-ORDER.txt"],
-  "drive_folder_id": "1RBGM3k_Xrc609h7YaDbA14Si8qujJv5r",
-  "local_folder": "artifacts/socials-2026-09-04",
+  "drive_folder_id": "1SXLmugdD6ZdpoRhU_3rV1-VKalqz4p9i",
+  "drive_url": "https://drive.google.com/drive/folders/1SXLmugdD6ZdpoRhU_3rV1-VKalqz4p9i",
   "reuse_prior_week": false
 }
