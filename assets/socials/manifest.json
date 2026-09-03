@@ -1,8 +1,8 @@
 {
   "week": "2026-09-04",
   "lock": "docs/RESEARCH-LOCK-2026-09-04.md",
-  "status": "missing",
-  "note": "2026-09-02 Build Package wrote site + featured IDs only. Seven Labor Day PNGs were not written. Path A blocked until status=ready.",
+  "status": "ready",
+  "note": "Seven 1080x1350 PNGs locked in project artifacts/socials-2026-09-04/. Imagine heroes reused; Labor Day copy.",
   "type": {
     "width": 1080,
     "height": 1350,
@@ -20,6 +20,7 @@
     "07-cta.png"
   ],
   "copy": ["CAPTION.txt", "ALT.txt", "POST-ORDER.txt"],
-  "drive_folder_id": null,
+  "drive_folder_id": "1RBGM3k_Xrc609h7YaDbA14Si8qujJv5r",
+  "local_folder": "artifacts/socials-2026-09-04",
   "reuse_prior_week": false
 }
