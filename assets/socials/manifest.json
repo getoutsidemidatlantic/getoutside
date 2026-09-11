@@ -1,26 +1,9 @@
 {
-  "week": "2026-09-04",
-  "lock": "docs/RESEARCH-LOCK-2026-09-04.md",
+  "week": "2026-09-11",
+  "lock": "docs/RESEARCH-LOCK-2026-09-11.md",
   "status": "ready",
-  "note": "Seven PNGs + copy on Drive socials/2026-09-04.",
-  "type": {
-    "width": 1080,
-    "height": 1350,
-    "headline_px": [76, 80],
-    "title_px": [44, 48],
-    "events_per_slide": 2
-  },
-  "files": [
-    "01-cover.png",
-    "02-maryland.png",
-    "03-virginia.png",
-    "04-pennsylvania.png",
-    "05-delaware.png",
-    "06-westvirginia.png",
-    "07-cta.png"
-  ],
-  "copy": ["CAPTION.txt", "ALT.txt", "POST-ORDER.txt"],
-  "drive_folder_id": "1SXLmugdD6ZdpoRhU_3rV1-VKalqz4p9i",
-  "drive_url": "https://drive.google.com/drive/folders/1SXLmugdD6ZdpoRhU_3rV1-VKalqz4p9i",
+  "drive_folder_id": "148EKzN4sxYw-E7SXrzBjj81qc2Bf-sxE",
+  "drive_url": "https://drive.google.com/drive/folders/148EKzN4sxYw-E7SXrzBjj81qc2Bf-sxE",
+  "files": ["01-cover.png","02-maryland.png","03-virginia.png","04-pennsylvania.png","05-delaware.png","06-westvirginia.png","07-cta.png"],
   "reuse_prior_week": false
 }
