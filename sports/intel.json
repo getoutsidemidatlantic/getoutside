@@ -1,17 +1,73 @@
 {
-  "updated": "2026-08-31T13:15:00-04:00",
-  "headline": "Labor Day coast + Curve at Harrisburg all week + football Saturday",
+  "updated": "2026-09-13T06:43:00-04:00",
+  "headline": "NFL Week 1 kickoff · RenFest Myth & Magic this weekend · State Fair + Songwriters final day · Pleasant outdoor window ahead",
   "big_money": [
-    {"tag": "MiLB", "title": "Altoona Curve at Harrisburg Senators", "note": "Tue Sep 1–Sun Sep 6 · FNB Field. Official EL. Fri 7pm fireworks. Sat 6pm fireworks. Sun 1pm.", "url": "https://www.milb.com/harrisburg/schedule", "ends": "2026-09-06"},
-    {"tag": "MiLB", "title": "Portland at Chesapeake Baysox", "note": "Tue Sep 1–Sun Sep 6 · Prince George's Stadium. Season finale. Sat fireworks.", "url": "https://www.milb.com/chesapeake", "ends": "2026-09-06"},
-    {"tag": "MiLB", "title": "IronPigs at RailRiders", "note": "Tue Sep 1–Sun Sep 6 · PNC Field, Moosic. Then WooSox at Coca-Cola Park Sep 8–13.", "url": "https://www.milb.com/scranton-wb", "ends": "2026-09-13"},
-    {"tag": "Coast", "title": "Ocean City Labor Day crush", "note": "Fri Sep 4–Mon Sep 7. Biggest OC weekend.", "url": "https://www.oceancitymd.gov/", "ends": "2026-09-07"},
-    {"tag": "Coast", "title": "Virginia Beach Oceanfront Labor Day", "note": "Super Girl Surf Fest Sat–Mon. Free concerts 17th/24th/31st.", "url": "https://www.visitvirginiabeach.com/", "ends": "2026-09-07"},
-    {"tag": "College", "title": "Marshall at Penn State", "note": "Sat Sep 5 · 3:30pm FS1 · Beaver.", "url": "https://gopsusports.com/sports/football/schedule", "ends": "2026-09-05"},
-    {"tag": "MLB", "title": "Red Sox at Orioles", "note": "Thu–Sun Sep 3–6 · Camden.", "url": "https://www.mlb.com/orioles/schedule", "ends": "2026-09-06"}
+    {
+      "tag": "NFL",
+      "title": "Ravens open season at Colts · Commanders at Eagles",
+      "note": "Sun Sep 13 · BAL @ IND 1pm CBS · WAS @ PHI 4:25pm FOX · Week 1 football",
+      "url": "https://www.nfl.com/",
+      "ends": "2026-09-13"
+    },
+    {
+      "tag": "Ren Faire",
+      "title": "Maryland Renaissance Festival — Myth & Magic Weekend",
+      "note": "Sep 12–13 · Crownsville · 50th season · special magic performances + ongoing weekends through Oct",
+      "url": "https://www.rennfest.com/",
+      "ends": "2026-10-25"
+    },
+    {
+      "tag": "Fair",
+      "title": "Maryland State Fair final day",
+      "note": "Last block ends today Sep 13 · Timonium · rides, livestock, classic fair energy",
+      "url": "https://www.marylandstatefair.com/",
+      "ends": "2026-09-13"
+    },
+    {
+      "tag": "MLB",
+      "title": "Nationals home vs Angels then Phillies",
+      "note": "Sun Sep 13 vs LAA 1:35 · then PHI Tue–Wed · Nationals Park outdoor baseball",
+      "url": "https://www.mlb.com/nationals",
+      "ends": "2026-09-16"
+    }
   ],
   "sleepers": [
-    {"tag": "MiLB", "title": "Erie at Reading Sep 8–13", "note": "FirstEnergy Stadium. Mega Blast fireworks Sat Sep 12.", "url": "https://www.milb.com/reading", "ends": "2026-09-13"},
-    {"tag": "Fest", "title": "Ren Fest Labor Day Monday", "note": "Sep 5–7 · Revel Grove.", "url": "https://rennfest.com/", "ends": "2026-09-07"}
-  ]
+    {
+      "tag": "Music",
+      "title": "Annapolis Songwriters Festival final day",
+      "note": "Ends today Sep 13 · outdoor stages + showcases · Young the Giant headlined",
+      "url": "https://www.annapolissongwritersfestival.com/",
+      "ends": "2026-09-13"
+    },
+    {
+      "tag": "Seafood",
+      "title": "Maryland Seafood Festival at Sandy Point",
+      "note": "Sep 12–13 · 60th year · crab, live music, Mama Duck, Skipjack Heritage",
+      "url": "https://mdseafoodfestival.com/",
+      "ends": "2026-09-13"
+    },
+    {
+      "tag": "Fair",
+      "title": "Great Frederick Fair next week",
+      "note": "Sep 18–26 · Frederick · Daughtry opens · major agricultural fair + grandstand",
+      "url": "https://www.thegreatfrederickfair.com/",
+      "ends": "2026-09-26"
+    },
+    {
+      "tag": "Nature",
+      "title": "Prime mid-September outdoor window",
+      "note": "After today showers: sunny midweek · highs 75–85 · ideal Skyline Drive, Assateague, C&O, trails",
+      "url": "https://get-outside.info/",
+      "ends": "2026-09-20"
+    }
+  ],
+  "weather_window": {
+    "summary": "Today (Sun 13): showers/t-storms possible, high ~85. Then excellent stretch — Mon–Wed sunny to mostly sunny, highs 75–83, comfortable. Ideal for trails, parks, and ballparks. Slightly warmer mid-to-late week.",
+    "sun": "2026-09-13",
+    "mon": "Partly sunny / clearing · 59–78",
+    "tue": "Sunny · 57–78",
+    "wed": "Sunny · 60–83",
+    "thu": "Sunny · 63–86",
+    "fri_sat": "Mostly sunny / partly cloudy · mid-80s"
+  }
 }
