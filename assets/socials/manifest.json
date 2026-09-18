@@ -1,9 +1,9 @@
 {
-  "week": "2026-09-11",
-  "lock": "docs/RESEARCH-LOCK-2026-09-11.md",
+  "week": "2026-09-18",
+  "lock": "docs/RESEARCH-LOCK-2026-09-18.md",
   "status": "ready",
-  "drive_folder_id": "148EKzN4sxYw-E7SXrzBjj81qc2Bf-sxE",
-  "drive_url": "https://drive.google.com/drive/folders/148EKzN4sxYw-E7SXrzBjj81qc2Bf-sxE",
+  "drive_folder_id": "1hwB9qRdnHg6Gogs6xEIKK9l4UeeZ4R8w",
+  "drive_url": "https://drive.google.com/drive/folders/1hwB9qRdnHg6Gogs6xEIKK9l4UeeZ4R8w",
   "files": ["01-cover.png","02-maryland.png","03-virginia.png","04-pennsylvania.png","05-delaware.png","06-westvirginia.png","07-cta.png"],
   "reuse_prior_week": false
 }
